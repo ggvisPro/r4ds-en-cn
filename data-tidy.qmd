@@ -1,0 +1,471 @@
+# 数据整理 {#sec-data-tidy}
+
+```{r}
+#| echo: false
+source("_common.R")
+showtext::showtext_auto()
+```
+
+## 引言
+
+> "Happy families are all alike; every unhappy family is unhappy in its own way."\
+> --- Leo Tolstoy\
+> "幸福的家庭都是相似的；不幸的家庭各有各的不幸。" \ 
+> --- 列夫·托尔斯泰
+
+
+> "Tidy datasets are all alike, but every messy dataset is messy in its own way."\
+> --- Hadley Wickham\
+> "整洁的数据集都是相似的，但每个凌乱的数据集各有各的凌乱。" \
+> --- 哈德利·威克姆
+
+
+在本章中，你将学习一种使用名为**整洁数据** (tidy data) 的系统来在 R 中一致地组织数据的方法。将数据转换成这种格式需要一些前期工作，但从长远来看，这些工作是值得的。一旦你有了整洁的数据和 tidyverse 中各个包提供的整洁工具，你将花更少的时间在不同表示形式之间转换数据，从而能将更多时间用于你所关心的数据问题上。
+
+在本章中，你将首先学习整洁数据的定义，并看到它如何应用于一个简单的示例数据集。然后，我们将深入探讨你将用于整理数据的主要工具：转换 (pivoting)。转换可以让你在不改变任何值的情况下改变数据的形态。
+
+### 先决条件
+
+在本章中，我们将重点关注 tidyr，这是一个提供了大量工具来帮助你整理凌乱数据集的包。tidyr 是核心 tidyverse 的成员之一。
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+```
+
+从本章开始，我们将抑制 `library(tidyverse)` 加载时显示的消息。
+
+## 整洁数据 {#sec-tidy-data}
+
+你可以用多种方式来表示相同的基础数据。下面的例子展示了用三种不同方式组织的相同数据。每个数据集都显示了四个变量的相同值：*country* (国家)、*year* (年份)、*population* (人口) 和记录在案的 *cases* (结核病案例) 数量，但每个数据集以不同的方式组织这些值。
+
+```{r}
+table1
+
+table2
+
+table3
+```
+
+这些都是相同基础数据的表示形式，但它们的使用便利性并不相同。其中之一，`table1`，在 tidyverse 中使用起来会容易得多，因为它是**整洁的** (tidy)。
+
+有三条相互关联的规则可以使一个数据集变得整洁：
+
+1.  每个变量是一列；每列是一个变量。
+2.  每个观测是一行；每行是一个观测。
+3.  每个值是一个单元格；每个单元格是一个值。
+
+@fig-tidy-structure 直观地展示了这些规则。
+
+```{r}
+#| label: fig-tidy-structure
+#| echo: false
+#| fig-cap: | 
+#|   以下三条规则构成一个整洁的数据集：变量是列，观测是行，值是单元格。
+#| fig-alt: | 
+#|   三个面板，每个代表一个整洁的数据框。第一个面板显示每个变量是一列。第二个面板显示每个观测是一行。第三个面板显示每个值是一个单元格。
+knitr::include_graphics("images/tidy-1.png", dpi = 270)
+```
+
+为什么需要确保你的数据是整洁的呢？主要有两个优点：
+
+1.  选择一种一致的方式来存储数据具有普遍的优势。如果你有了一致的数据结构，学习使用与之配套的工具就会更容易，因为它们具有内在的一致性。
+
+2.  将变量放在列中有其特殊的优势，因为这能让 R 的向量化特性大放异彩。正如你在 @sec-mutate 和 @sec-summarize 中学到的，大多数内置的 R 函数都处理值的向量。这使得转换整洁数据感觉特别自然。
+
+dplyr、ggplot2 以及 tidyverse 中的所有其他包都是为处理整洁数据而设计的。以下是一些小例子，展示了你可能会如何使用 `table1`。
+
+```{r}
+#| fig-width: 5
+#| fig-alt: |
+#|   该图显示了阿富汗、巴西和中国在 1999 年和 2000 年的病例数，x 轴是年份，y 轴是病例数。图上的每个点代表一个国家在某一年份的病例数。每个国家的点通过颜色和形状与其他国家区分开，并用线连接，形成了三条不平行、不相交的线。中国的病例数在 1999 年和 2000 年都是最高的，两年都超过了 200,000。巴西的病例数在 1999 年约为 40,000，在 2000 年约为 75,000。阿富汗的病例数在 1999 年和 2000 年都是最低的，在这个尺度上其值看起来非常接近 0。
+# 计算每万人的比率
+table1 |>
+  mutate(rate = cases / population * 10000)
+
+# 计算每年的总病例数
+table1 |> 
+  group_by(year) |> 
+  summarize(total_cases = sum(cases))
+
+# 可视化随时间的变化
+ggplot(table1, aes(x = year, y = cases)) +
+  geom_line(aes(group = country), color = "grey50") +
+  geom_point(aes(color = country, shape = country)) +
+  scale_x_continuous(breaks = c(1999, 2000)) # x 轴刻度在 1999 和 2000
+```
+
+### 练习
+
+1.  对于每个示例表格，描述每个观测和每列代表什么。
+
+2.  简要描述你将如何为 `table2` 和 `table3` 计算 `rate` 的过程。你需要执行四个操作：
+
+    a.  提取每个国家每年的结核病病例数。
+    b.  提取每个国家每年匹配的人口数。
+    c.  将病例数除以人口数，然后乘以 10000。
+    d.  将结果存回适当的位置。
+
+    你还没有学到实际执行这些操作所需的所有函数，但你应该能够思考出你需要的转换过程。
+
+## 拉长数据 {#sec-pivoting}
+
+整洁数据的原则可能看起来如此显而易见，以至于你可能会怀疑自己是否会遇到不整洁的数据集。然而，不幸的是，大多数真实数据都是不整洁的。主要有两个原因：
+
+1.  数据的组织方式通常是为了方便某些分析之外的目标。例如，为了方便数据录入而非分析而组织数据是很常见的。
+
+2.  大多数人并不熟悉整洁数据的原则，除非你花大量时间处理数据，否则很难自己推导出这些原则。
+
+这意味着大多数真实的分析至少需要一些整理工作。你将从弄清楚基础的变量和观测是什么开始。有时这很容易；其他时候你可能需要咨询最初生成数据的人。接下来，你将**转换** (pivot) 你的数据，使其成为变量在列、观测在行的整洁形式。
+
+tidyr 提供了两个用于转换数据的函数：`pivot_longer()` 和 `pivot_wider()`。我们先从 `pivot_longer()` 开始，因为这是最常见的情况。让我们来看一些例子。
+
+### 列名中包含数据 {#sec-billboard}
+
+`billboard` 数据集记录了 2000 年歌曲的广告牌排名：
+
+```{r}
+billboard
+```
+
+在这个数据集中，每个观测是一首歌。前三列 (`artist`, `track` 和 `date.entered`) 是描述歌曲的变量。然后我们有 76 列 (`wk1`-`wk76`) 描述了歌曲在每周的排名[^1]。在这里，列名是一个变量 (周，`week`)，而单元格的值是另一个变量 (排名，`rank`)。
+
+为了整理这个数据，我们将使用 `pivot_longer()`：
+
+```{r, R.options=list(pillar.print_min = 10)}
+billboard |> 
+  pivot_longer(
+    cols = starts_with("wk"), 
+    names_to = "week", 
+    values_to = "rank"
+  )
+```
+
+在数据之后，有三个关键参数：
+
+  - `cols` 指定哪些列需要被转换，即哪些列不是变量。这个参数使用与 `select()` 相同的语法，所以在这里我们可以使用 `!c(artist, track, date.entered)` 或 `starts_with("wk")`。
+  - `names_to` 为存储在列名中的变量命名，我们将其命名为 `week`。
+  - `values_to` 为存储在单元格值中的变量命名，我们将其命名为 `rank`。
+
+请注意，在代码中 `"week"` 和 `"rank"` 是带引号的，因为它们是我们正在创建的新变量，在运行 `pivot_longer()` 调用时它们还不存在于数据中。
+
+现在让我们把注意力转向结果中这个更长的数据框。如果一首歌在前 100 名的时间少于 76 周会发生什么？以 2 Pac 的 "Baby Don't Cry" 为例。上面的输出表明它只在前 100 名中待了 7 周，所有剩余的周都用缺失值填充。这些 `NA` 并不真正代表未知的观测；它们是被数据集的结构强制存在的[^2]，所以我们可以通过设置 `values_drop_na = TRUE` 来让 `pivot_longer()` 移除它们：
+
+```{r}
+billboard |> 
+  pivot_longer(
+    cols = starts_with("wk"), 
+    names_to = "week", 
+    values_to = "rank",
+    values_drop_na = TRUE
+  )
+```
+
+现在行数少了很多，这表明许多带有 `NA` 的行被删除了。
+
+你可能还会想，如果一首歌在前 100 名的时间超过 76 周会发生什么？我们无法从这些数据中得知，但你可能会猜到，数据集中会添加额外的列 `wk77`、`wk78`……
+
+这个数据现在是整洁的了，但我们可以通过使用 `mutate()` 和 `readr::parse_number()` 将 `week` 的值从字符字符串转换为数字，来使未来的计算更容易一些。`parse_number()` 是一个方便的函数，它会从字符串中提取第一个数字，忽略所有其他文本。
+
+```{r}
+billboard_longer <- billboard |> 
+  pivot_longer(
+    cols = starts_with("wk"), 
+    names_to = "week", 
+    values_to = "rank",
+    values_drop_na = TRUE
+  ) |> 
+  mutate(
+    week = parse_number(week)
+  )
+billboard_longer
+```
+
+现在我们把所有的周数都放在一个变量里，所有的排名值都放在另一个变量里，我们就很方便地可以可视化歌曲排名随时间的变化了。代码如下所示，结果在 @fig-billboard-ranks 中。我们可以看到，很少有歌曲在前 100 名中停留超过 20 周。
+
+```{r}
+#| label: fig-billboard-ranks
+#| fig-cap: |
+#|   一个折线图，显示了歌曲排名随时间的变化。
+#| fig-alt: |
+#|   一个折线图，x 轴是周数，y 轴是排名，每条线代表一首歌。大多数歌曲似乎从一个高排名开始，迅速攀升到一个低排名（排名数字小），然后再次下滑。在周数大于 20 且排名大于 50 的区域，歌曲数量出奇地少。
+billboard_longer |> 
+  ggplot(aes(x = week, y = rank, group = track)) + 
+  geom_line(alpha = 0.25) + 
+  scale_y_reverse()
+```
+
+### 转换是如何工作的？
+
+现在你已经看到了我们如何使用转换来重塑数据，让我们花一点时间来直观地理解转换对数据做了什么。让我们从一个非常简单的数据集开始，以便更容易地看到发生了什么。假设我们有三个病人，`id` 分别是 A、B 和 C，我们对每个病人进行了两次血压测量。我们将用 `tribble()` 创建数据，这是一个方便手动构建小型 tibble 的函数：
+
+```{r}
+df <- tribble(
+  ~id,  ~bp1, ~bp2,
+   "A",   100,  120,
+   "B",   140,  115,
+   "C",   120,  125
+)
+```
+
+我们希望我们的新数据集有三个变量：`id` (已存在)、`measurement` (测量，即列名) 和 `value` (值，即单元格值)。为了实现这一点，我们需要将 `df` 拉长：
+
+```{r}
+df |> 
+  pivot_longer(
+    cols = bp1:bp2,
+    names_to = "measurement",
+    values_to = "value"
+  )
+```
+
+重塑是如何工作的呢？如果我们逐列思考，就更容易理解了。如 @fig-pivot-variables 所示，原始数据集中已经是变量的列中的值 (`id`) 需要被重复，每个被转换的列重复一次。
+
+```{r}
+#| label: fig-pivot-variables
+#| echo: false
+#| fig-cap: | 
+#|   已经是变量的列需要被重复，每个被转换的列重复一次。
+#| fig-alt: | 
+#|   一个图表，展示了 `pivot_longer()` 如何转换一个简单的数据集，用颜色突出显示了 `id` 列中的值（“A”、“B”、“C”）在输出中每个都重复了两次，因为有两个列（“bp1”和“bp2”）正在被转换。
+knitr::include_graphics("diagrams/tidy-data/variables.png", dpi = 270)
+```
+
+列名会成为一个新变量中的值，该新变量的名称由 `names_to` 定义，如 @fig-pivot-names 所示。它们需要为原始数据集中的每一行重复一次。
+
+```{r}
+#| label: fig-pivot-names
+#| echo: false
+#| fig-cap: |
+#|   被转换列的列名成为新列中的值。这些值需要为原始数据集的每一行重复一次。
+#| fig-alt: | 
+#|   一个图表，展示了 `pivot_longer()` 如何转换一个简单的数据集，用颜色突出显示了列名（“bp1”和“bp2”）如何成为新的 `measurement` 列中的值。它们被重复了三次，因为输入中有三行。
+knitr::include_graphics("diagrams/tidy-data/column-names.png", dpi = 270)
+```
+
+单元格的值也成为一个新变量中的值，其名称由 `values_to` 定义。它们被逐行展开。@fig-pivot-values 展示了这个过程。
+
+```{r}
+#| label: fig-pivot-values
+#| echo: false
+#| fig-cap: |
+#|   值的数量被保留（不重复），但被逐行展开。
+#| fig-alt: | 
+#|   一个图表，展示了 `pivot_longer()` 如何转换数据，用颜色突出显示了单元格的值（血压测量值）如何成为新的 `value` 列中的值。它们被逐行展开，所以原始的行 (100,120)，然后 (140,115)，再然后 (120,125)，变成了一个从 100 到 125 的列。
+knitr::include_graphics("diagrams/tidy-data/cell-values.png", dpi = 270)
+```
+
+### 列名中包含多个变量
+
+一个更具挑战性的情况是，当你的列名中塞入了多条信息，而你希望将这些信息存储在不同的新变量中时。例如，拿 `who2` 数据集来说，这是你上面看到的 `table1` 及其他表格的来源：
+
+```{r}
+who2
+```
+
+这个由世界卫生组织收集的数据集记录了关于结核病诊断的信息。有两列已经是变量并且很容易解释：`country` 和 `year`。它们后面跟着 56 列，如 `sp_m_014`、`ep_m_4554` 和 `rel_m_3544`。如果你盯着这些列足够长的时间，你会注意到一个模式。每个列名都由三部分组成，用 `_` 分隔。第一部分，`sp`/`rel`/`ep`，描述了诊断所用的方法；第二部分，`m`/`f` 是 `gender` (性别，在这个数据集中编码为二元变量)；第三部分，`014`/`1524`/`2534`/`3544`/`4554`/`5564`/`65` 是 `age` (年龄) 范围 (例如，`014` 代表 0-14 岁)。
+
+所以在这种情况下，我们在 `who2` 中记录了六条信息：国家和年份 (已经是列)；诊断方法、性别类别和年龄范围类别 (包含在其他列名中)；以及该类别中的患者计数 (单元格值)。为了将这六条信息组织在六个独立的列中，我们使用 `pivot_longer()`，并为 `names_to` 提供一个列名向量，为 `names_sep` 提供将原始变量名拆分成块的指令，以及为 `values_to` 提供一个列名：
+
+```{r}
+who2 |> 
+  pivot_longer(
+    cols = !(country:year),
+    names_to = c("diagnosis", "gender", "age"), 
+    names_sep = "_",
+    values_to = "count"
+  )
+```
+
+`names_sep` 的一个替代方案是 `names_pattern`，在你学习了 @sec-regular-expressions 中的正则表达式后，可以用它从更复杂的命名场景中提取变量。
+
+从概念上讲，这只是你已经看过的更简单情况的一个小变种。@fig-pivot-multiple-names 展示了基本思想：现在，列名不再是转换成单个列，而是转换成多个列。你可以想象这分两步发生 (先转换再分离)，但实际上它是在一个步骤中完成的，因为这样更快。
+
+```{r}
+#| label: fig-pivot-multiple-names
+#| echo: false
+#| fig-cap: |
+#|   转换名称中包含多条信息的列，意味着每个列名现在都会填充到输出的多个列中。
+#| fig-alt: |
+#|   一个图表，用颜色说明了提供 `names_sep` 和多个 `names_to` 如何在输出中创建多个变量。输入有变量名“x_1”和“y_2”，它们被“_”分割，以在输出中创建 name 和 number 列。这与只有一个 `names_to` 的情况类似，但原本会是一个单一输出变量的现在被分成了多个变量。
+knitr::include_graphics("diagrams/tidy-data/multiple-names.png", dpi = 270)
+```
+
+### 列标题中包含数据和变量名
+
+复杂性的下一个台阶是当列名中混合了变量值和变量名。例如，拿 `household` 数据集来说：
+
+```{r}
+household
+```
+
+这个数据集包含了五个家庭的数据，以及最多两个孩子的姓名和出生日期。这个数据集中的新挑战是，列名包含了两个变量的名称 (`dob`、`name`) 和另一个变量 (`child`，值为 1 或 2) 的值。为了解决这个问题，我们再次需要向 `names_to` 提供一个向量，但这次我们使用特殊的 `".value"` 指示符；这不是一个变量名，而是一个告诉 `pivot_longer()` 做些不同事情的唯一值。这会覆盖通常的 `values_to` 参数，转而使用被转换列名的第一部分作为输出中的变量名。
+
+```{r}
+household |> 
+  pivot_longer(
+    cols = !family, 
+    names_to = c(".value", "child"), 
+    names_sep = "_", 
+    values_drop_na = TRUE
+  )
+```
+
+我们再次使用 `values_drop_na = TRUE`，因为输入的形状强制创建了显式的缺失变量 (例如，对于只有一个孩子的家庭)。
+
+@fig-pivot-names-and-values 用一个更简单的例子阐述了基本思想。当你在 `names_to` 中使用 `".value"` 时，输入中的列名同时贡献了输出中的值和变量名。
+
+```{r}
+#| label: fig-pivot-names-and-values
+#| echo: false
+#| fig-cap: |
+#|   使用 `names_to = c(".value", "num")` 进行转换会将列名分成两个部分：第一部分决定输出列的名称（`x` 或 `y`），第二部分决定 `num` 列的值。
+#| fig-alt: |
+#|   一个图表，用颜色说明了特殊的 ".value" 指示符是如何工作的。输入有名称 "x_1"、"x_2"、"y_1" 和 "y_2"，我们希望使用第一部分（"x"、"y"）作为变量名，第二部分（"1"、"2"）作为新 "num" 列的值。
+knitr::include_graphics("diagrams/tidy-data/names-and-values.png", dpi = 270)
+```
+
+## 加宽数据
+
+到目前为止，我们已经使用 `pivot_longer()` 来解决一类常见的问题，即值最终出现在列名中。接下来，我们将转向 `pivot_wider()`，它通过增加列数和减少行数来使数据集**变宽**，并在一个观测分布在多行时提供帮助。这种情况在现实世界中似乎不那么常见，但在处理政府数据时似乎经常出现。
+
+我们将从查看 `cms_patient_experience` 开始，这是一个来自医疗保险和医疗补助服务中心的数据集，收集了关于患者体验的数据：
+
+```{r}
+cms_patient_experience
+```
+
+被研究的核心单位是一个组织，但每个组织都分布在六行中，每一行对应于在该组织调查中进行的一次测量。我们可以通过使用 `distinct()` 来查看 `measure_cd` 和 `measure_title` 的完整值集：
+
+```{r}
+cms_patient_experience |> 
+  distinct(measure_cd, measure_title)
+```
+
+这两列都不会成为特别好的变量名：`measure_cd` 没有暗示变量的含义，而 `measure_title` 是一个包含空格的长句子。我们现在将使用 `measure_cd` 作为新列名的来源，但在实际分析中，你可能想要创建既简短又有意义的自己的变量名。
+
+`pivot_wider()` 的接口与 `pivot_longer()` 相反：我们不是选择新的列名，而是需要提供定义值的现有列 (`values_from`) 和定义列名的列 (`names_from`)：
+
+```{r}
+cms_patient_experience |> 
+  pivot_wider(
+    names_from = measure_cd,
+    values_from = prf_rate
+  )
+```
+
+输出看起来不太对；我们似乎每个组织仍然有多行。这是因为，我们还需要告诉 `pivot_wider()` 哪个或哪些列的值唯一标识每一行；在这种情况下，是那些以 `"org"` 开头的变量：
+
+```{r}
+cms_patient_experience |> 
+  pivot_wider(
+    id_cols = starts_with("org"),
+    names_from = measure_cd,
+    values_from = prf_rate
+  )
+```
+
+这样我们就得到了我们想要的输出。
+
+### `pivot_wider()` 是如何工作的？
+
+为了理解 `pivot_wider()` 是如何工作的，让我们再次从一个非常简单的数据集开始。这次我们有两个病人，`id` 分别是 A 和 B，我们对病人 A 进行了三次血压测量，对病人 B 进行了两次：
+
+```{r}
+df <- tribble(
+  ~id, ~measurement, ~value,
+  "A",        "bp1",    100,
+  "B",        "bp1",    140,
+  "B",        "bp2",    115, 
+  "A",        "bp2",    120,
+  "A",        "bp3",    105
+)
+```
+
+我们将从 `value` 列取值，从 `measurement` 列取名：
+
+```{r}
+df |> 
+  pivot_wider(
+    names_from = measurement,
+    values_from = value
+  )
+```
+
+为了开始这个过程，`pivot_wider()` 首先需要弄清楚行和列中将放什么。新的列名将是 `measurement` 的唯一值。
+
+```{r}
+df |> 
+  distinct(measurement) |> 
+  pull()
+```
+
+默认情况下，输出中的行由所有不进入新名称或值的变量决定。这些被称为 `id_cols`。这里只有一个列，但通常可以有任意数量。
+
+```{r}
+df |> 
+  select(-measurement, -value) |> 
+  distinct()
+```
+
+然后 `pivot_wider()` 结合这些结果生成一个空的数据框：
+
+```{r}
+df |> 
+  select(-measurement, -value) |> 
+  distinct() |> 
+  mutate(x = NA, y = NA, z = NA)
+```
+
+然后它用输入中的数据填充所有缺失值。在这种情况下，并非输出中的每个单元格在输入中都有对应的值，因为病人 B 没有第三次血压测量，所以那个单元格保持缺失。我们将在 @sec-missing-values 中回到 `pivot_wider()` 可以“制造”缺失值的这个概念。
+
+你可能还会想，如果输入中有多个行对应于输出中的一个单元格会发生什么。下面的例子有两行对应于 `id` "A" 和 `measurement` "bp1"：
+
+```{r}
+df <- tribble(
+  ~id, ~measurement, ~value,
+  "A",        "bp1",    100,
+  "A",        "bp1",    102,
+  "A",        "bp2",    120,
+  "B",        "bp1",    140, 
+  "B",        "bp2",    115
+)
+```
+
+如果我们尝试转换这个，我们会得到一个包含列表列 (list-columns) 的输出，你将在 @sec-rectangling 中学到更多关于它的知识：
+
+```{r}
+df |>
+  pivot_wider(
+    names_from = measurement,
+    values_from = value
+  )
+```
+
+因为你还不知道如何处理这种数据，你可能需要根据警告中的提示来找出问题所在：
+
+```{r}
+df |> 
+  group_by(id, measurement) |> 
+  summarize(n = n(), .groups = "drop") |> 
+  filter(n > 1)
+```
+
+然后就得由你来弄清楚你的数据出了什么问题，要么修复底层的数据损坏，要么使用你的分组和汇总技能来确保行和列值的每个组合只有一个单行。
+
+## 小结
+
+在本章中，你学习了关于整洁数据的知识：即变量在列、观测在行的数据。整洁数据使得在 tidyverse 中工作更容易，因为它是一个被大多数函数所理解的一致结构，主要的挑战是将你收到的任何结构的数据转换成整洁的格式。为此，你学习了 `pivot_longer()` 和 `pivot_wider()`，它们可以让你整理许多不整洁的数据集。我们在这里展示的例子是从 `vignette("pivot", package = "tidyr")` 中挑选的一部分，所以如果你遇到的问题本章没有帮助你解决，那么那个小品文是一个值得尝试的下一个地方。
+
+另一个挑战是，对于一个给定的数据集，可能无法将更长或更宽的版本标记为“整洁”的那个。这部分反映了我们对整洁数据的定义，我们说整洁数据每个列中有一个变量，但我们实际上没有定义什么是变量 (而且定义它出奇地困难)。务实地说，一个变量可以是任何使你的分析最容易的东西，这是完全可以接受的。所以如果你在 figuring out 如何进行某些计算时卡住了，考虑改变你的数据组织方式；不要害怕按需进行非整洁化、转换和重新整洁化！
+
+如果你喜欢本章并想了解更多关于其底层理论的知识，你可以在发表于《统计软件杂志》(Journal of Statistical Software) 的论文 [Tidy Data](https://www.jstatsoft.org/article/view/v059i10) 中了解更多关于其历史和理论基础。
+
+现在你正在编写大量的 R 代码，是时候学习更多关于将你的代码组织到文件和目录中的知识了。在下一章中，你将学习到脚本和项目的所有优点，以及它们提供的许多使你的生活更轻松的工具。
+
+[^1]:
+    只要一首歌在 2000 年的某个时间点进入过前 100 名，它就会被收录，并且在出现后最多被追踪 72 周。
+
+[^2]:
+    我们将在 @sec-missing-values 中回到这个概念。

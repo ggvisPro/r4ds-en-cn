@@ -1,0 +1,296 @@
+# 工作流：代码风格 {#sec-workflow-style}
+
+```{r}
+#| echo: false
+source("_common.R")
+showtext::showtext_auto()
+```
+
+良好的代码风格就像正确的标点符号：没有它也能行，但它确实能让内容更容易阅读。
+即使是编程新手，也应该努力培养良好的代码风格。
+使用一致的风格可以让其他人 (包括未来的你！) 更容易读懂你的代码，当需要从他人那里获得帮助时，这一点尤为重要。
+本章将介绍 [tidyverse 风格指南](https://style.tidyverse.org) 中最重要的几点，本书通篇都使用了该风格。
+
+一开始，对代码进行风格化会让你觉得有点乏味，但只要多加练习，它很快就会成为你的第二天性。
+此外，还有一些很棒的工具可以快速重塑现有代码的风格，比如 Lorenz Walthert 开发的 [**styler**](https://styler.r-lib.org) 包。
+用 `install.packages("styler")` 安装它之后，一个简便的使用方法是通过 RStudio 的**命令面板** (command palette)。
+命令面板可以让你使用任何内置的 RStudio 命令以及许多由包提供的插件。
+按 Cmd/Ctrl + Shift + P 打开命令面板，然后输入 "styler" 就可以看到 styler 提供的所有快捷方式。
+@fig-styler 展示了结果。
+
+```{r}
+#| label: fig-styler
+#| echo: false
+#| out-width: null
+#| fig-cap:
+#|   RStudio 的命令面板让你仅用键盘就能轻松访问 RStudio 的每一条命令。
+#| fig-alt:
+#|   一张截图，显示了输入“styler”后命令面板的显示结果，其中展示了该包提供的四种代码风格工具。
+knitr::include_graphics("screenshots/rstudio-palette.png")
+```
+
+在本章的代码示例中，我们将使用 tidyverse 和 nycflights13 包。
+
+```{r}
+#| label: setup
+#| message: false
+library(tidyverse)
+library(nycflights13)
+```
+
+## 命名
+
+我们在 @sec-whats-in-a-name 中简要讨论过命名。
+记住，变量名 (用 `<-` 创建的和用 `mutate()` 创建的) 应该只使用小写字母、数字和 `_`。
+使用 `_` 来分隔名称中的单词。
+
+```{r}
+#| eval: false
+# 提倡：
+short_flights <- flights |> filter(air_time < 60)
+
+# 避免：
+SHORTFLIGHTS <- flights |> filter(air_time < 60)
+```
+
+作为一条通用经验法则，最好是选择易于理解的长描述性名称，而不是为了输入快捷而使用简洁的名称。
+在编写代码时，短名称节省的时间相对较少 (特别是因为自动补全会帮你完成输入)，但当你回过头来看旧代码时，却可能要花很多时间去琢磨一个晦涩的缩写。
+
+如果你有一组相关事物的名称，请尽量保持一致。
+当你忘记了之前的约定，不一致的情况就很容易出现，所以如果你需要回去重命名一些东西，不要觉得不好意思。
+总的来说，如果你有一组属于同一主题的变量，最好给它们一个共同的前缀，而不是共同的后缀，因为自动补全在变量的开头部分效果最好。
+
+## 空格
+
+在数学运算符的两侧都要加上空格，除了 `^` (即 `+`、`-`、`==`、`<` 等)，在赋值运算符 (`<-`) 的两侧也要加上空格。
+
+```{r}
+#| eval: false
+# 提倡：
+z <- (a + b)^2 / d
+
+# 避免：
+z <- (a + b)^2 / d
+```
+
+在常规函数调用的括号内外不要加空格。
+逗号后面要始终加一个空格，就像标准的英语书写一样。
+
+```{r}
+#| eval: false
+# 提倡：
+mean(x, na.rm = TRUE)
+
+# 避免：
+mean(x, na.rm = TRUE)
+```
+
+如果能改善对齐，可以添加额外的空格。
+例如，如果你在 `mutate()` 中创建多个变量，你可能想添加空格以便所有的 `=` 对齐。[^1]
+这让代码更容易浏览。
+
+```{r}
+#| eval: false
+flights |>
+    mutate(
+        speed      = distance / air_time,
+        dep_hour   = dep_time %/% 100,
+        dep_minute = dep_time %% 100
+    )
+```
+
+## 管道 {#sec-pipes}
+
+`|>` 前面应该总有一个空格，并且通常应该是一行的最后一个字符。
+这使得添加新步骤、重新排列现有步骤、修改步骤中的元素以及通过浏览左侧的动词来获得宏观视角都变得更加容易。
+
+```{r}
+#| eval: false
+# 提倡：
+flights |>
+    filter(!is.na(arr_delay), !is.na(tailnum)) |>
+    count(dest)
+
+# 避免：
+flights |>
+    filter(!is.na(arr_delay), !is.na(tailnum)) |>
+    count(dest)
+```
+
+如果你正在管道输送到的函数有命名参数 (如 `mutate()` 或 `summarize()`)，请将每个参数放在新的一行。
+如果函数没有命名参数 (如 `select()` 或 `filter()`)，请将所有内容保持在一行，除非一行放不下，此时你应该将每个参数放在它自己的一行。
+
+```{r}
+#| eval: false
+# 提倡：
+flights |>
+    group_by(tailnum) |>
+    summarize(
+        delay = mean(arr_delay, na.rm = TRUE),
+        n = n()
+    )
+
+# 避免：
+flights |>
+    group_by(
+        tailnum
+    ) |>
+    summarize(delay = mean(arr_delay, na.rm = TRUE), n = n())
+```
+
+在管道的第一步之后，每一行都缩进两个空格。
+在 `|>` 后的换行符处，RStudio 会自动为你添加空格。
+如果你将每个参数放在单独的一行，则再额外缩进两个空格。
+确保 `)` 在它自己的一行，并且不缩进，与函数名的水平位置对齐。
+
+```{r}
+#| eval: false
+# 提倡：
+flights |>
+    group_by(tailnum) |>
+    summarize(
+        delay = mean(arr_delay, na.rm = TRUE),
+        n = n()
+    )
+
+# 避免：
+flights |>
+    group_by(tailnum) |>
+    summarize(
+        delay = mean(arr_delay, na.rm = TRUE),
+        n = n()
+    )
+
+# 避免：
+flights |>
+    group_by(tailnum) |>
+    summarize(
+        delay = mean(arr_delay, na.rm = TRUE),
+        n = n()
+    )
+```
+
+如果你的管道能很轻松地放在一行里，那么可以不遵循这些规则中的某几条。
+但根据我们的集体经验，短小的代码片段常常会变长，所以从一开始就留出足够的垂直空间，从长远来看通常会节省时间。
+
+```{r}
+#| eval: false
+# 这能紧凑地放在一行
+df |> mutate(y = x + 1)
+
+# 而这样虽然占用了 4 倍的行数，但未来很容易扩展到更多变量和更多步骤
+df |>
+    mutate(
+        y = x + 1
+    )
+```
+
+最后，要警惕编写非常长的管道，比如超过 10-15 行。
+尝试将它们分解成更小的子任务，并给每个任务一个信息丰富的名称。
+这些名称将有助于提示读者正在发生什么，并使得检查中间结果是否符合预期变得更容易。
+只要你能给某样东西起一个信息丰富的名字，你就应该这样做，例如，当你从根本上改变了数据的结构时 (比如在透视或汇总之后)。
+不要指望一次就能做对！
+这意味着如果存在可以获得好名称的中间状态，就应该把长管道拆分开。
+
+## ggplot2
+
+适用于管道的基本规则同样适用于 ggplot2；只需将 `+` 当作 `|>` 一样处理即可。
+
+```{r}
+#| eval: false
+flights |>
+    group_by(month) |>
+    summarize(
+        delay = mean(arr_delay, na.rm = TRUE)
+    ) |>
+    ggplot(aes(x = month, y = delay)) +
+    geom_point() +
+    geom_line()
+```
+
+同样，如果你无法将函数的所有参数放在一行，就将每个参数放在单独的一行：
+
+```{r}
+#| eval: false
+flights |>
+    group_by(dest) |>
+    summarize(
+        distance = mean(distance),
+        speed = mean(distance / air_time, na.rm = TRUE)
+    ) |>
+    ggplot(aes(x = distance, y = speed)) +
+    geom_smooth(
+        method = "loess",
+        span = 0.5,
+        se = FALSE,
+        color = "white",
+        linewidth = 4
+    ) +
+    geom_point()
+```
+
+注意从 `|>` 到 `+` 的转换。
+我们希望这种转换没有必要，但不幸的是，ggplot2 是在管道被发现之前编写的。
+
+## 分节注释
+
+当你的脚本变得越来越长时，你可以使用**分节** (sectioning) 注释将你的文件分成易于管理的小块：
+
+```{r}
+#| eval: false
+# 加载数据 --------------------------------------
+
+# 绘制数据 --------------------------------------
+```
+
+RStudio 提供了一个创建这些标题的键盘快捷键 (Cmd/Ctrl + Shift + R)，并会在编辑器左下角的代码导航下拉菜单中显示它们，如 @fig-rstudio-sections 所示。
+
+```{r}
+#| label: fig-rstudio-sections
+#| echo: false
+#| out-width: null
+#| fig-cap: |
+#|   向脚本添加分节注释后，你可以使用脚本编辑器左下角的代码导航工具轻松地跳转到它们。
+knitr::include_graphics("screenshots/rstudio-nav.png")
+```
+
+## 练习
+
+1.  按照上面的指导原则，重新调整以下管道的风格。
+
+    ```{r}
+#| eval: false
+flights |>
+    filter(dest == "IAH") |>
+    group_by(year, month, day) |>
+    summarize(
+        n = n(),
+        delay = mean(arr_delay, na.rm = TRUE)
+    ) |>
+    filter(n > 10)
+
+flights |>
+    filter(carrier == "UA", dest %in% c("IAH", "HOU"), sched_dep_time >
+        0900, sched_arr_time < 2000) |>
+    group_by(flight) |>
+    summarize(delay = mean(
+        arr_delay,
+        na.rm = TRUE
+    ), cancelled = sum(is.na(arr_delay)), n = n()) |>
+    filter(n > 10)
+    ```
+
+## 小结
+
+在本章中，你学习了代码风格最重要的原则。
+起初，这些可能感觉像是一套武断的规则 (因为它们确实是！)，但随着时间的推移，当你编写更多代码并与更多人共享代码时，你就会明白一致的风格有多么重要。
+别忘了 styler 包：它是一种快速改善风格不佳代码质量的好方法。
+
+在下一章中，我们将切换回数据科学工具，学习有关整洁数据 (tidy data) 的知识。
+整洁数据是一种组织数据框的一致方式，整个 tidyverse 都在使用它。
+这种一致性使你的生活更轻松，因为一旦你拥有了整洁数据，它就可以与绝大多数 tidyverse 函数一起工作。
+当然，生活从来都不是一帆风顺的，你在现实世界中遇到的大多数数据集都不会是现成整洁的。
+所以我们还将教你如何使用 tidyr 包来整理你的不整洁数据。
+
+[^1]:
+    由于 `dep_time` 的格式是 `HMM` 或 `HHMM`，我们使用整数除法 (`%/%`) 来获取小时，使用求余 (也称为模运算，`%%`) 来获取分钟。

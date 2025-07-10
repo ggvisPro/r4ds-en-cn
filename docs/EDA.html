@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund">
+<title>10&nbsp; 探索性数据分析 – R 数据科学 2e
+（中文版）</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./communication.html" rel="next">
+<link href="./layers.html" rel="prev">
+<link href="./cover.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-cfa698a38273543b64ee69d493127e2a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script defer="" data-domain="r4ds.hadley.nz" src="https://plausible.io/js/plausible.js"></script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./visualize.html">可视化</a></li><li class="breadcrumb-item"><a href="./EDA.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">探索性数据分析</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R 数据科学 2e （中文版）</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ggvisPro/r4ds-cn/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">欢迎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface-2e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第 2 版前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./whole-game.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">全局概览</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">数据可视化</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">工作流程：基础</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">数据转换</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">工作流：代码风格</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-tidy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">数据整理</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-scripts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">工作流：脚本和项目</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">数据导入</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">工作流：获取帮助</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">可视化</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">图层</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./EDA.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">探索性数据分析</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">沟通</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据转换</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logicals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">逻辑向量</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./numbers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">数值</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./strings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">字符串</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regexps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正则表达式</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">因子</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datetimes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">日期和时间</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing-values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">缺失值</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./joins.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">连接</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">导入</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spreadsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">电子表格</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">数据库</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Arrow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rectangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">层级数据</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./webscraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">网络抓取</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./program.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">编程</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">函数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">迭代</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./base-R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Base R 实战指南</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./communicate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">沟通</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-formats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Quarto 格式</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#%E5%BC%95%E8%A8%80" id="toc-引言" class="nav-link active" data-scroll-target="#%E5%BC%95%E8%A8%80"><span class="header-section-number">10.1</span> 引言</a>
+  <ul class="collapse">
+<li><a href="#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6" id="toc-先决条件" class="nav-link" data-scroll-target="#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6"><span class="header-section-number">10.1.1</span> 先决条件</a></li>
+  </ul>
+</li>
+  <li><a href="#%E9%97%AE%E9%A2%98" id="toc-问题" class="nav-link" data-scroll-target="#%E9%97%AE%E9%A2%98"><span class="header-section-number">10.2</span> 问题</a></li>
+  <li>
+<a href="#%E5%8F%98%E5%BC%82" id="toc-变异" class="nav-link" data-scroll-target="#%E5%8F%98%E5%BC%82"><span class="header-section-number">10.3</span> 变异</a>
+  <ul class="collapse">
+<li><a href="#%E5%85%B8%E5%9E%8B%E5%80%BC" id="toc-典型值" class="nav-link" data-scroll-target="#%E5%85%B8%E5%9E%8B%E5%80%BC"><span class="header-section-number">10.3.1</span> 典型值</a></li>
+  <li><a href="#%E5%BC%82%E5%B8%B8%E5%80%BC" id="toc-异常值" class="nav-link" data-scroll-target="#%E5%BC%82%E5%B8%B8%E5%80%BC"><span class="header-section-number">10.3.2</span> 异常值</a></li>
+  <li><a href="#%E7%BB%83%E4%B9%A0" id="toc-练习" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0"><span class="header-section-number">10.3.3</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-unusual-values-eda" id="toc-sec-unusual-values-eda" class="nav-link" data-scroll-target="#sec-unusual-values-eda"><span class="header-section-number">10.4</span> 异常值</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0-1" id="toc-练习-1" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-1"><span class="header-section-number">10.4.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#%E5%8D%8F%E5%8F%98" id="toc-协变" class="nav-link" data-scroll-target="#%E5%8D%8F%E5%8F%98"><span class="header-section-number">10.5</span> 协变</a>
+  <ul class="collapse">
+<li><a href="#sec-cat-num" id="toc-sec-cat-num" class="nav-link" data-scroll-target="#sec-cat-num"><span class="header-section-number">10.5.1</span> 一个分类变量和一个数值变量</a></li>
+  <li><a href="#%E4%B8%A4%E4%B8%AA%E5%88%86%E7%B1%BB%E5%8F%98%E9%87%8F" id="toc-两个分类变量" class="nav-link" data-scroll-target="#%E4%B8%A4%E4%B8%AA%E5%88%86%E7%B1%BB%E5%8F%98%E9%87%8F"><span class="header-section-number">10.5.2</span> 两个分类变量</a></li>
+  <li><a href="#%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%80%BC%E5%8F%98%E9%87%8F" id="toc-两个数值变量" class="nav-link" data-scroll-target="#%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%80%BC%E5%8F%98%E9%87%8F"><span class="header-section-number">10.5.3</span> 两个数值变量</a></li>
+  </ul>
+</li>
+  <li><a href="#%E6%A8%A1%E5%BC%8F%E5%92%8C%E6%A8%A1%E5%9E%8B" id="toc-模式和模型" class="nav-link" data-scroll-target="#%E6%A8%A1%E5%BC%8F%E5%92%8C%E6%A8%A1%E5%9E%8B"><span class="header-section-number">10.6</span> 模式和模型</a></li>
+  <li><a href="#%E6%80%BB%E7%BB%93" id="toc-总结" class="nav-link" data-scroll-target="#%E6%80%BB%E7%BB%93"><span class="header-section-number">10.7</span> 总结</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/EDA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./visualize.html">可视化</a></li><li class="breadcrumb-item"><a href="./EDA.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">探索性数据分析</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-exploratory-data-analysis" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">探索性数据分析</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="引言" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="引言">
+<span class="header-section-number">10.1</span> 引言</h2>
+<p>本章将向你展示如何使用可视化和转换来系统地探索数据，统计学家称这项任务为<strong>探索性数据分析</strong> (exploratory data analysis)，简称 <strong>EDA</strong>。 EDA 是一个迭代循环。 你需要：</p>
+<ol type="1">
+<li><p>生成关于数据的问题。</p></li>
+<li><p>通过可视化、转换和建模来寻找答案。</p></li>
+<li><p>利用你学到的知识来完善你的问题和/或生成新的问题。</p></li>
+</ol>
+<p>EDA 不是一个有着严格规则的正式流程。 更重要的是，EDA 是一种思维状态。 在 EDA 的初始阶段，你应该自由地探索你脑海中出现的每一个想法。 有些想法会成功，有些则会是死胡同。 随着探索的深入，你将逐渐聚焦于一些特别富有成效的见解，并最终将它们整理成文，与他人交流。</p>
+<p>EDA 是任何数据分析的重要组成部分，即使主要的研究问题已经现成地交给你，因为你总是需要调查数据的质量。 数据清理只是 EDA 的一个应用：你提出关于数据是否符合预期的问题。 要进行数据清理，你需要运用所有 EDA 的工具：可视化、转换和建模。</p>
+<section id="先决条件" class="level3" data-number="10.1.1"><h3 data-number="10.1.1" class="anchored" data-anchor-id="先决条件">
+<span class="header-section-number">10.1.1</span> 先决条件</h3>
+<p>在本章中，我们将结合你所学的 dplyr 和 ggplot2 知识，以交互方式提出问题，用数据回答问题，然后再提出新的问题。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr></section></section><section id="问题" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="问题">
+<span class="header-section-number">10.2</span> 问题</h2>
+<blockquote class="blockquote">
+<p>“没有常规的统计问题，只有值得怀疑的统计程序。(The greatest value of a picture is when it forces us to notice what we never expected to see.)”<br>
+— David Cox</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>“对正确问题的近似答案，远胜于对错误问题的精确答案；前者通常是模糊的，而后者总是可以做得很精确。(Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.)”<br>
+— John Tukey</p>
+</blockquote>
+<p>你在 EDA 过程中的目标是建立对数据的理解。最简单的方法是使用问题作为工具来引导你的探索。当你提出一个问题时，这个问题会将你的注意力集中到数据集的特定部分，并帮助你决定制作哪种图表、模型或进行何种转换。</p>
+<p>EDA 本质上是一个创造性的过程。和大多数创造性过程一样，提出<em>高质量</em>问题的关键在于生成<em>大量</em>的问题。在分析之初很难提出有启发性的问题，因为你不知道可以从数据集中获得哪些见解。另一方面，你每提出一个新问题，都会让你接触到数据的一个新方面，增加你做出发现的机会。如果你在每个问题之后，都根据你的发现提出一个新问题，你就能迅速深入到数据最有趣的部分，并形成一系列引人深思的问题。</p>
+<p>关于应该提出什么问题来指导研究，没有固定的规则。然而，有两类问题对于在数据中做出发现总是很有用的。你可以将这些问题粗略地表述为：</p>
+<ol type="1">
+<li><p>我的变量内部存在什么样的变异？</p></li>
+<li><p>我的变量之间存在什么样的协变？</p></li>
+</ol>
+<p>本章的其余部分将探讨这两个问题。我们将解释什么是变异和协变，并向你展示几种回答每个问题的方法。</p>
+<hr></section><section id="变异" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="变异">
+<span class="header-section-number">10.3</span> 变异</h2>
+<p><strong>变异 (Variation)</strong> 是指一个变量的值在不同测量中变化的趋势。你在现实生活中可以轻易看到变异；如果你对任何连续变量进行两次测量，你会得到两个不同的结果。即使你测量的是恒定的量，比如光速，也是如此。你的每一次测量都会包含少量的误差，这个误差在每次测量中都会有所不同。如果你在不同的主体（例如，不同人的眼睛颜色）或不同的时间（例如，一个电子在不同时刻的能量水平）进行测量，变量也会发生变化。每个变量都有其自身的变异模式，这可以揭示关于它在同一次观测的不同测量之间以及跨观测之间如何变化的有趣信息。理解这种模式的最佳方法是可视化变量值的分布，这在 <a href="data-visualize.html" class="quarto-xref"><span>Chapter 1</span></a> 中你已经学过了。</p>
+<p>我们将通过可视化 <code>diamonds</code> 数据集中约 54,000 颗钻石的重量（<code>carat</code>）分布来开始我们的探索。由于 <code>carat</code> 是一个数值变量，我们可以使用直方图：</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" alt="钻石克拉数的直方图，x 轴范围从 0 到 4.5，y 轴范围从 0 到 30000。 分布是右偏的，中心在 0 的条柱中钻石很少，中心在 0.5 的条柱中钻石接近 30000 颗， 中心在 1 的条柱中大约有 15000 颗钻石，而在中心在 1.5 的条柱中则少得多，大约 5000 颗。 在此之后，有一个拖尾。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>现在你已经可以可视化变异了，那么你应该在图表中寻找什么呢？你应该提出什么样的后续问题呢？我们整理了一份清单，列出了你在图中最可能找到的有用信息类型，以及针对每种信息的一些后续问题。提出好的后续问题的关键在于依赖你的好奇心（你想更多地了解什么？）以及你的怀疑精神（这可能是如何误导人的？）。</p>
+<section id="典型值" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="典型值">
+<span class="header-section-number">10.3.1</span> 典型值</h3>
+<p>在条形图和直方图中，高条显示了变量的常见值，而短条显示了不那么常见的值。没有条形图的地方揭示了你的数据中未曾出现的值。要将这些信息转化为有用的问题，请寻找任何意料之外的情况：</p>
+<ul>
+<li><p>哪些值是最常见的？为什么？</p></li>
+<li><p>哪些值是罕见的？为什么？这是否符合你的预期？</p></li>
+<li><p>你能看到任何不寻常的模式吗？可能是什么解释了它们？</p></li>
+</ul>
+<p>让我们看一下较小钻石的 <code>carat</code> 分布。</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">smaller</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">carat</span> <span class="op">&lt;</span> <span class="fl">3</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">smaller</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="钻石克拉数的直方图，x 轴范围从 0 到 3，y 轴范围从 0 到大约 2500。 组距很窄 (0.01)，导致了大量细长的条柱。分布是右偏的，有许多峰值， 随后是高度递减的条柱，直到下一个峰值处急剧增加。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>这个直方图引出了一些有趣的问题：</p>
+<ul>
+<li><p>为什么在整数克拉和常见的克拉分数处有更多的钻石？</p></li>
+<li><p>为什么在每个峰值右侧的钻石比左侧的要多？</p></li>
+</ul>
+<p>可视化还可以揭示聚类，这表明你的数据中存在子群。要理解这些子群，请问：</p>
+<ul>
+<li><p>每个子群内的观测值彼此之间有何相似之处？</p></li>
+<li><p>不同聚类中的观测值彼此之间有何不同？</p></li>
+<li><p>你如何解释或描述这些聚类？</p></li>
+<li><p>为什么聚类的出现可能是误导性的？</p></li>
+</ul>
+<p>这些问题中，有些可以用数据回答，有些则需要关于数据的领域专业知识。其中许多问题会促使你探索变量<em>之间</em>的关系，例如，看看一个变量的值是否能解释另一个变量的行为。我们很快就会谈到这一点。</p>
+</section><section id="异常值" class="level3" data-number="10.3.2"><h3 data-number="10.3.2" class="anchored" data-anchor-id="异常值">
+<span class="header-section-number">10.3.2</span> 异常值</h3>
+<p><strong>离群点 (Outliers)</strong> 是不寻常的观测值；即那些似乎不符合模式的数据点。有时离群点是数据录入错误，有时它们仅仅是在这次数据收集中碰巧观察到的极端值，而其他时候它们则预示着重要的新发现。当数据量很大时，离群点有时在直方图中很难看到。例如，看看 diamonds 数据集中 <code>y</code> 变量的分布。离群点的唯一证据是 x 轴上异常宽的范围。</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="钻石长度的直方图。x 轴范围从 0 到 60，y 轴范围从 0 到 12000。 在 5 附近有一个峰值，数据似乎完全聚集在峰值周围。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>在常见的组（bin）中有太多的观测值，以至于罕见的组非常短，使得它们很难被看到（尽管如果你仔细盯着 0 的位置，也许会发现些什么）。为了更容易地看到异常值，我们需要使用 <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian()</a></code> 来放大 y 轴的较小数值范围：</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="钻石长度的直方图。x 轴范围从 0 到 60，y 轴范围从 0 到 50。 在 5 附近有一个峰值，数据似乎完全聚集在峰值周围。 除了这些数据，在 0 处有一个高度约为 8 的条柱，在略高于 30 的地方有一个高度为 1 的条柱， 在略低于 60 的地方有另一个高度为 1 的条柱。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>当你需要放大 x 轴时，<code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian()</a></code> 也有一个 <code><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim()</a></code> 参数。ggplot2 还有 <code><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim()</a></code> 和 <code><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim()</a></code> 函数，它们的工作方式略有不同：它们会丢弃限制范围之外的数据。</p>
+<p>这让我们能看到有三个异常值：0、约 30 和约 60。我们用 dplyr 将它们提取出来：</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">unusual</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">y</span> <span class="op">&lt;</span> <span class="fl">3</span> <span class="op">|</span> <span class="va">y</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">price</span>, <span class="va">x</span>, <span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span><span class="va">unusual</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 4
+  price     x     y     z
+  &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  5139  0      0    0   
+2  6381  0      0    0   
+3 12800  0      0    0   
+4 15686  0      0    0   
+5 18034  0      0    0   
+6  2130  0      0    0   
+7  2130  0      0    0   
+8  2075  5.15  31.8  5.12
+9 12210  8.09  58.9  8.06</code></pre>
+</div>
+</div>
+<p><code>y</code> 变量测量的是这些钻石的三个维度之一，单位是毫米 (mm)。我们知道钻石的宽度不可能是 0mm，所以这些值肯定是错误的。通过进行 EDA，我们发现了被编码为 0 的缺失数据，而仅仅通过搜索 <code>NA</code> 是永远找不到的。接下来，我们可能会选择将这些值重新编码为 <code>NA</code>，以防止误导性的计算。我们可能还会怀疑 32mm 和 59mm 的测量值是不可信的：那些钻石超过一英寸长，但价格却没有数十万美元！</p>
+<p>一个好的做法是，在包含和不包含离群点的情况下重复你的分析。如果它们对结果的影响微乎其微，并且你无法弄清楚它们为什么存在，那么省略它们并继续分析是合理的。然而，如果它们对你的结果有重大影响，你就不应该在没有正当理由的情况下丢弃它们。你需要弄清楚是什么导致了它们（例如，数据录入错误），并在你的报告中披露你移除了它们。</p>
+</section><section id="练习" class="level3" data-number="10.3.3"><h3 data-number="10.3.3" class="anchored" data-anchor-id="练习">
+<span class="header-section-number">10.3.3</span> 练习</h3>
+<ol type="1">
+<li><p>探索 <code>diamonds</code> 数据集中 <code>x</code>、<code>y</code> 和 <code>z</code> 每个变量的分布。你学到了什么？思考一下一颗钻石，你可能会如何决定哪个维度是长度、宽度和深度。</p></li>
+<li><p>探索 <code>price</code> 的分布。你发现了什么不寻常或令人惊讶的事情吗？（提示：仔细考虑 <code>binwidth</code> 并确保你尝试了各种不同的值。）</p></li>
+<li><p>有多少颗钻石是 0.99 克拉？有多少是 1 克拉？你认为造成这种差异的原因是什么？</p></li>
+<li><p>在放大直方图时，比较并对比 <code><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian()</a></code> 与 <code><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim()</a></code> 或 <code><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim()</a></code>。如果你不设置 <code>binwidth</code> 会发生什么？如果你尝试放大到只显示半个条形会发生什么？</p></li>
+</ol>
+<hr></section></section><section id="sec-unusual-values-eda" class="level2" data-number="10.4"><h2 data-number="10.4" class="anchored" data-anchor-id="sec-unusual-values-eda">
+<span class="header-section-number">10.4</span> 异常值</h2>
+<p>如果你在数据集中遇到了异常值，并且只想继续进行其余的分析，你有两个选择。</p>
+<ol type="1">
+<li>
+<p>删除包含异常值的整行：</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds2</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/between.html">between</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">3</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>我们不推荐这个选项，因为一个无效值并不意味着该观测的所有其他值也无效。此外，如果你的数据质量较差，当你对每个变量都应用这种方法后，你可能会发现你已经没有任何数据了！</p>
+</li>
+<li>
+<p>相反，我们建议用缺失值替换异常值。最简单的方法是使用 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 将变量替换为一个修改后的副本。你可以使用 <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> 函数将异常值替换为 <code>NA</code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds2</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">y</span> <span class="op">&lt;</span> <span class="fl">3</span> <span class="op">|</span> <span class="va">y</span> <span class="op">&gt;</span> <span class="fl">20</span>, <span class="cn">NA</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+</ol>
+<p>ggplot2 不确定应该在哪里绘制缺失值，所以它不会在图表中包含它们，但它会警告说它们已被移除：</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 9 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" alt="钻石宽度与长度的散点图。两个变量之间存在强烈的线性关系。 除了一颗钻石外，所有钻石的长度都大于 3。那个离群点的长度为 0， 宽度约为 6.5。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>要抑制该警告，请设置 <code>na.rm = TRUE</code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>其他时候，你想要理解为什么有缺失值的观测值与有记录值的观测值不同。例如，在 <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">nycflights13::flights</a></code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 中，<code>dep_time</code> 变量中的缺失值表示航班被取消了。所以你可能想比较已取消和未取消航班的计划起飞时间。你可以通过创建一个新变量，使用 <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> 来检查 <code>dep_time</code> 是否缺失来做到这一点。</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">flights</a></span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    cancelled <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dep_time</span><span class="op">)</span>,</span>
+<span>    sched_hour <span class="op">=</span> <span class="va">sched_dep_time</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%/%</a></span> <span class="fl">100</span>,</span>
+<span>    sched_min <span class="op">=</span> <span class="va">sched_dep_time</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">100</span>,</span>
+<span>    sched_dep_time <span class="op">=</span> <span class="va">sched_hour</span> <span class="op">+</span> <span class="op">(</span><span class="va">sched_min</span> <span class="op">/</span> <span class="fl">60</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sched_dep_time</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">cancelled</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" alt="航班计划起飞时间的频率多边形图。两条线分别代表被取消和未被取消的航班。 x 轴范围从 0 到 25 分钟，y 轴范围从 0 到 10000。 未被取消的航班数量远高于被取消的航班。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>然而，这张图并不理想，因为未取消的航班数量远多于取消的航班。在下一节中，我们将探讨一些改善这种比较的技巧。</p>
+<section id="练习-1" class="level3" data-number="10.4.1"><h3 data-number="10.4.1" class="anchored" data-anchor-id="练习-1">
+<span class="header-section-number">10.4.1</span> 练习</h3>
+<ol type="1">
+<li><p>在直方图中，缺失值会怎么样？在条形图中，缺失值会怎么样？为什么在直方图和条形图中处理缺失值的方式有差异？</p></li>
+<li><p><code>na.rm = TRUE</code> 在 <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> 和 <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> 中有什么作用？</p></li>
+<li><p>重新创建按航班是否取消着色的 <code>scheduled_dep_time</code> 频率图。同时，按 <code>cancelled</code> 变量进行分面。尝试在分面函数中使用不同的 <code>scales</code> 变量值，以减轻未取消航班数量多于取消航班数量的影响。</p></li>
+</ol>
+<hr></section></section><section id="协变" class="level2" data-number="10.5"><h2 data-number="10.5" class="anchored" data-anchor-id="协变">
+<span class="header-section-number">10.5</span> 协变</h2>
+<p>如果说变异描述的是<em>单个</em>变量内部的行为，那么协变描述的就是变量<em>之间</em>的行为。<strong>协变 (Covariation)</strong> 是指两个或多个变量的值以一种相关联的方式共同变化的趋势。发现协变的最佳方法是可视化两个或多个变量之间的关系。</p>
+<section id="sec-cat-num" class="level3" data-number="10.5.1"><h3 data-number="10.5.1" class="anchored" data-anchor-id="sec-cat-num">
+<span class="header-section-number">10.5.1</span> 一个分类变量和一个数值变量</h3>
+<p>例如，让我们使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> 来探索钻石价格如何随其质量（以 <code>cut</code> 衡量）而变化：</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">cut</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">500</span>, linewidth <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" alt="钻石价格的频率多边形图，其中每种切工等级（Fair, Good, Very Good,  Premium, 和 Ideal）都用不同颜色的线表示。x 轴范围从 0 到 30000， y 轴范围从 0 到 5000。这些线大量重叠，表明钻石价格的频率分布相似。 一个显著的特点是，Ideal 级钻石在 1500 附近有最高的峰值。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>请注意，ggplot2 为 <code>cut</code> 使用了有序颜色标度，因为它在数据中被定义为一个有序因子变量。你将在 <a href="factors.html#sec-ordered-factors" class="quarto-xref"><span>Section 16.6</span></a> 中学习更多关于这些的内容。</p>
+<p><code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> 的默认外观在这里不是很有用，因为高度（由总计数决定）在不同的 <code>cut</code> 之间差异很大，这使得很难看出它们分布形状的差异。</p>
+<p>为了使比较更容易，我们需要更换 y 轴上显示的内容。我们将不再显示计数，而是显示<strong>密度 (density)</strong>，即计数经过标准化，使得每个频率多边形下的面积为一。</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">price</span>, y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">cut</span><span class="op">)</span>, binwidth <span class="op">=</span> <span class="fl">500</span>, linewidth <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" alt="钻石价格密度的频率多边形图，其中每种切工等级（Fair, Good, Very Good, Premium, 和 Ideal）都用不同颜色的线表示。x 轴范围从 0 到 20000。 这些线大量重叠，表明钻石价格的密度分布相似。一个显著的特点是， 除了 Fair 级钻石外，所有钻石在价格 1500 附近都有高峰， 而 Fair 级钻石的均值高于其他等级。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>注意，我们将密度映射到 <code>y</code>，但由于 <code>density</code> 不是 <code>diamonds</code> 数据集中的变量，我们需要先计算它。我们使用 <code><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat()</a></code> 函数来完成这个计算。</p>
+<p>这张图中有一些相当令人惊讶的事情 —— 似乎 Fair 级钻石（质量最低）的平均价格最高！但这也许是因为频率多边形有点难以解读 —— 这张图中信息量太大了。</p>
+<p>用于探索这种关系的一种视觉上更简单的图是并排的箱线图。</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" alt="按切工等级排列的钻石价格的并排箱线图。每种切工等级（Fair, Good, Very Good, Premium, 和 Ideal）的价格分布都是右偏的。中位数彼此接近， Ideal 级钻石的中位数最低，而 Fair 级最高。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>我们看到的关于分布的信息少了很多，但是箱线图更加紧凑，所以我们可以更容易地比较它们（并且可以在一张图上容纳更多）。它支持了那个与直觉相反的发现：质量更好的钻石通常更便宜！在练习中，你将面临挑战，去找出原因。</p>
+<p><code>cut</code> 是一个有序因子：fair 比 good 差，good 又比 very good 差，依此类推。许多分类变量没有这种内在的顺序，所以你可能想重新排序它们以获得信息更丰富的展示。一种方法是使用 <code><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder()</a></code>。你将在 <a href="factors.html#sec-modifying-factor-order" class="quarto-xref"><span>Section 16.4</span></a> 中学习更多关于这个函数的内容，但我们想在这里给你一个快速预览，因为它非常有用。例如，看看 <code>mpg</code> 数据集中的 <code>class</code> 变量。你可能想知道高速公路里程是如何因车型而异的：</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">class</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" alt="按车型类别显示的汽车高速公路里程的并排箱线图。类别在 x 轴上 （2seaters, compact, midsize, minivan, pickup, subcompact, and suv）。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>为了让趋势更容易看清，我们可以根据 <code>hwy</code> 的中位数重新排序 <code>class</code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">class</span>, <span class="va">hwy</span>, <span class="va">median</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" alt="按车型类别显示的汽车高速公路里程的并排箱线图。类别在 x 轴上， 并按高速公路里程中位数的升序排列（pickup, suv, minivan, 2seater,  subcompact, compact, and midsize）。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>如果你的变量名很长，<code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code> 将其翻转 90° 会效果更好。你可以通过交换 x 和 y 的美学映射来实现。</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hwy</span>, y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">class</span>, <span class="va">hwy</span>, <span class="va">median</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" alt="按车型类别显示的汽车高速公路里程的并排箱线图。类别在 y 轴上， 并按高速公路里程中位数的升序排列。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="练习-2" class="level4" data-number="10.5.1.1"><h4 data-number="10.5.1.1" class="anchored" data-anchor-id="练习-2">
+<span class="header-section-number">10.5.1.1</span> 练习</h4>
+<ol type="1">
+<li><p>利用你所学到的知识，改进已取消航班与未取消航班出发时间的可视化。</p></li>
+<li><p>根据 EDA，<code>diamonds</code> 数据集中的哪个变量似乎对预测钻石价格最重要？该变量与切工 <code>cut</code> 有何关联？为什么这两个关系的组合会导致质量较低的钻石反而更昂贵？</p></li>
+<li><p>不要交换 x 和 y 变量，而是在垂直箱线图中添加 <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip()</a></code> 作为一个新图层来创建水平箱线图。这与交换变量相比如何？</p></li>
+<li><p>箱线图的一个问题是，它们是在数据集小得多的时代发展起来的，并且倾向于显示过多的“离群值”。解决这个问题的一种方法是字母值图 (letter value plot)。安装 <code>lvplot</code> 包，并尝试使用 <code>geom_lv()</code> 来显示价格与切工的分布。你学到了什么？你如何解释这些图？</p></li>
+<li><p>使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin()</a></code>、分面的 <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>、彩色的 <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> 和彩色的 <code><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density()</a></code>，分别创建一个钻石价格与 <code>diamonds</code> 数据集中某个分类变量的可视化。比较和对比这四种图。基于一个分类变量的水平来可视化一个数值变量的分布，每种方法的优缺点是什么？</p></li>
+<li><p>如果你的数据集很小，有时使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> 来避免过度绘制，从而更容易地看到连续变量和分类变量之间的关系是很有用的。<code>ggbeeswarm</code> 包提供了许多类似于 <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> 的方法。列出它们并简要描述每种方法的作用。</p></li>
+</ol></section></section><section id="两个分类变量" class="level3" data-number="10.5.2"><h3 data-number="10.5.2" class="anchored" data-anchor-id="两个分类变量">
+<span class="header-section-number">10.5.2</span> 两个分类变量</h3>
+<p>要可视化分类变量之间的协变，你需要计算这些分类变量每个水平组合的观测数量。一种方法是依赖内置的 <code><a href="https://ggplot2.tidyverse.org/reference/geom_count.html">geom_count()</a></code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">color</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_count.html">geom_count</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" alt="钻石颜色与切工的散点图。对于切工（Fair, Good, Very Good, Premium, 和 Ideal）和颜色（D, E, F, G, H, I, 和 J）的每个组合都有一个点。 点的大小代表该组合的观测数量。图例显示这些大小在 1000 到 4000 之间。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>图中每个圆圈的大小显示了在每个值组合处有多少观测值。协变将表现为特定 x 值和特定 y 值之间的强相关性。</p>
+<p>探索这些变量之间关系的另一种方法是使用 dplyr 计算计数：</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span>, <span class="va">cut</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 35 × 3
+   color cut           n
+   &lt;ord&gt; &lt;ord&gt;     &lt;int&gt;
+ 1 D     Fair        163
+ 2 D     Good        662
+ 3 D     Very Good  1513
+ 4 D     Premium    1603
+ 5 D     Ideal      2834
+ 6 E     Fair        224
+ 7 E     Good        933
+ 8 E     Very Good  2400
+ 9 E     Premium    2337
+10 E     Ideal      3903
+# ℹ 25 more rows</code></pre>
+</div>
+</div>
+<p>然后使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile()</a></code> 和 <code>fill</code> 美学进行可视化：</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">color</span>, <span class="va">cut</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" alt="钻石切工与颜色的瓦片图。每个瓦片代表一个切工/颜色组合， 瓦片根据每个瓦片中的观测数量着色。Ideal 切工的钻石比其他切工多， 其中数量最多的是颜色为 G 的 Ideal 钻石。Fair 切工和颜色为 I 的钻石 频率最低。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>如果分类变量是无序的，你可能想使用 <code>seriation</code> 包来同时重新排列行和列，以便更清晰地揭示有趣的模式。对于更大的图，你可能想尝试 <code>heatmaply</code> 包，它可以创建交互式图。</p>
+<section id="练习-3" class="level4" data-number="10.5.2.1"><h4 data-number="10.5.2.1" class="anchored" data-anchor-id="练习-3">
+<span class="header-section-number">10.5.2.1</span> 练习</h4>
+<ol type="1">
+<li><p>你如何重新缩放上面的计数数据集，以更清晰地显示颜色内的切工分布，或切工内的颜色分布？</p></li>
+<li><p>如果将颜色映射到 <code>x</code> 美学，将 <code>cut</code> 映射到 <code>fill</code> 美学，使用分段条形图你会得到什么不同的数据见解？计算落入每个分段的计数。</p></li>
+<li><p>使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile()</a></code> 和 dplyr 来探索平均航班起飞延迟如何随目的地和年份中的月份而变化。是什么使得图表难以阅读？你如何改进它？</p></li>
+</ol></section></section><section id="两个数值变量" class="level3" data-number="10.5.3"><h3 data-number="10.5.3" class="anchored" data-anchor-id="两个数值变量">
+<span class="header-section-number">10.5.3</span> 两个数值变量</h3>
+<p>你已经见过一种可视化两个数值变量之间协变的绝佳方法：用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> 绘制散点图。你可以将协变看作是点的模式。例如，你可以看到钻石的克拉大小和价格之间存在正相关关系：克拉数越大的钻石价格越高。这种关系是指数级的。</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">smaller</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" alt="价格与克拉的散点图。关系是正向的、有些强、并且是指数型的。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>（在本节中，我们将使用 <code>smaller</code> 数据集，以专注于小于 3 克拉的大部分钻石）</p>
+<p>随着数据集规模的增长，散点图的用处会减小，因为点开始重叠（overplot），堆积成均匀的黑色区域，使得难以判断数据在二维空间中密度的差异，也难以发现趋势。你已经见过一种解决这个问题的方法：使用 <code>alpha</code> 美学来增加透明度。</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">smaller</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">100</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" alt="价格与克拉的散点图。关系是正向的、有些强、并且是指数型的。 点是透明的，显示出点数高于其他区域的聚类。最明显的聚类是 1 克拉、1.5 克拉和 2 克拉的钻石。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>但是对于非常大的数据集，使用透明度可能具有挑战性。另一个解决方案是使用分箱 (bin)。之前你使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> 和 <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly()</a></code> 在一维空间中进行分箱。现在你将学习如何使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_bin_2d.html">geom_bin2d()</a></code> 和 <code><a href="https://ggplot2.tidyverse.org/reference/geom_hex.html">geom_hex()</a></code> 在二维空间中进行分箱。</p>
+<p><code><a href="https://ggplot2.tidyverse.org/reference/geom_bin_2d.html">geom_bin2d()</a></code> 和 <code><a href="https://ggplot2.tidyverse.org/reference/geom_hex.html">geom_hex()</a></code> 将坐标平面划分为二维的箱子，然后使用填充颜色来显示有多少个点落入每个箱子。<code><a href="https://ggplot2.tidyverse.org/reference/geom_bin_2d.html">geom_bin2d()</a></code> 创建矩形箱子。<code><a href="https://ggplot2.tidyverse.org/reference/geom_hex.html">geom_hex()</a></code> 创建六边形箱子。你需要安装 <code>hexbin</code> 包才能使用 <code><a href="https://ggplot2.tidyverse.org/reference/geom_hex.html">geom_hex()</a></code>。</p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">smaller</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bin_2d.html">geom_bin2d</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co"># install.packages("hexbin")</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">smaller</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_hex.html">geom_hex</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="EDA_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" alt="图1：价格与克拉的分箱密度图。图2：价格与克拉的六边形分箱图。 两张图都显示，密度最高的钻石具有低克拉数和低价格。" width="288"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="EDA_files/figure-html/unnamed-chunk-24-2.png" class="img-fluid" alt="图1：价格与克拉的分箱密度图。图2：价格与克拉的六边形分箱图。 两张图都显示，密度最高的钻石具有低克拉数和低价格。" width="288"></p>
+</div>
+</div>
+</div>
+<p>另一个选择是将一个连续变量分箱，使其像一个分类变量一样。然后你可以使用你学过的可视化分类变量和连续变量组合的技巧之一。例如，你可以将 <code>carat</code> 分箱，然后为每个组显示一个箱线图：</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">smaller</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/cut_interval.html">cut_width</a></span><span class="op">(</span><span class="va">carat</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" alt="按克拉分组的价格的并排箱线图。每个箱线图代表重量相差 0.1 克拉的钻石。 箱线图显示，随着克拉数的增加，价格中位数也在增加。此外， 1.5 克拉或更低的钻石价格分布呈右偏，1.5 到 2 克拉的价格分布大致对称， 而更重的钻石价格分布呈左偏。更便宜、更小的钻石有高端的离群值， 更昂贵、更大的钻石有低端的离群值。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>cut_width(x, width)</code>，如上所述，将 <code>x</code> 分成宽度为 <code>width</code> 的箱。默认情况下，无论有多少观测值，箱线图看起来都大致相同（除了离群点的数量），所以很难看出每个箱线图总结了不同数量的点。一种显示这一点的方法是让箱线图的宽度与点的数量成正比，使用 <code>varwidth = TRUE</code>。</p>
+<section id="练习-4" class="level4" data-number="10.5.3.1"><h4 data-number="10.5.3.1" class="anchored" data-anchor-id="练习-4">
+<span class="header-section-number">10.5.3.1</span> 练习</h4>
+<ol type="1">
+<li><p>除了用箱线图总结条件分布，你还可以使用频率多边形。在使用 <code><a href="https://ggplot2.tidyverse.org/reference/cut_interval.html">cut_width()</a></code> 与 <code><a href="https://ggplot2.tidyverse.org/reference/cut_interval.html">cut_number()</a></code> 时，你需要考虑什么？这对 <code>carat</code> 和 <code>price</code> 的二维分布的可视化有何影响？</p></li>
+<li><p>可视化按 <code>price</code> 划分的 <code>carat</code> 的分布。</p></li>
+<li><p>非常大的钻石与小钻石的价格分布相比如何？是如你所料，还是让你感到惊讶？</p></li>
+<li><p>结合你学到的两种技巧，来可视化 <code>cut</code>、<code>carat</code> 和 <code>price</code> 的组合分布。</p></li>
+<li>
+<p>二维图揭示了在一维图中不可见的离群点。例如，下图中有些点的 <code>x</code> 和 <code>y</code> 值组合不寻常，这使得这些点成为离群点，即使它们的 <code>x</code> 和 <code>y</code> 值在单独检查时看起来正常。为什么在这种情况下，散点图比分箱图更适合显示？</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">11</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">11</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+<li>
+<p>除了用 <code><a href="https://ggplot2.tidyverse.org/reference/cut_interval.html">cut_width()</a></code> 创建等宽的箱子，我们还可以用 <code><a href="https://ggplot2.tidyverse.org/reference/cut_interval.html">cut_number()</a></code> 创建包含大致相等数量的点的箱子。这种方法的优缺点是什么？</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">smaller</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/cut_interval.html">cut_number</a></span><span class="op">(</span><span class="va">carat</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+</ol>
+<hr></section></section></section><section id="模式和模型" class="level2" data-number="10.6"><h2 data-number="10.6" class="anchored" data-anchor-id="模式和模型">
+<span class="header-section-number">10.6</span> 模式和模型</h2>
+<p>如果两个变量之间存在系统性关系，它将以数据中的模式出现。如果你发现一个模式，问问自己：</p>
+<ul>
+<li><p>这个模式可能是由于巧合（即随机机会）吗？</p></li>
+<li><p>你如何描述该模式所暗示的关系？</p></li>
+<li><p>该模式所暗示的关系有多强？</p></li>
+<li><p>还有哪些其他变量可能会影响这种关系？</p></li>
+<li><p>如果你观察数据的各个子群，这种关系会改变吗？</p></li>
+</ul>
+<p>数据中的模式提供了关于关系的线索，即它们揭示了协变。如果你把变异看作是一种产生不确定性的现象，那么协变就是一种减少不确定性的现象。如果两个变量协变，你可以利用一个变量的值来更好地预测另一个变量的值。如果协变是由于因果关系（一种特殊情况），那么你可以利用一个变量的值来控制另一个变量的值。</p>
+<p>模型是从数据中提取模式的工具。例如，考虑钻石数据。很难理解切工和价格之间的关系，因为切工和克拉，以及克拉和价格是紧密相关的。可以使用一个模型来移除价格和克拉之间非常强的关系，这样我们就可以探索剩下的细微差别。下面的代码拟合了一个从 <code>carat</code> 预测 <code>price</code> 的模型，然后计算残差（预测值和实际值之间的差异）。残差为我们提供了一个视角，来看待在移除了克拉的影响之后钻石的价格。请注意，我们没有使用 <code>price</code> 和 <code>carat</code> 的原始值，而是先对它们进行对数转换，并对对数转换后的值拟合一个模型。然后，我们对残差进行指数化，将其放回到原始价格的尺度上。</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org">tidymodels</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">diamonds</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    log_price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span>,</span>
+<span>    log_carat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">carat</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">diamonds_fit</span> <span class="op">&lt;-</span> <span class="fu">linear_reg</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">fit</span><span class="op">(</span><span class="va">log_price</span> <span class="op">~</span> <span class="va">log_carat</span>, data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">diamonds_aug</span> <span class="op">&lt;-</span> <span class="fu">augment</span><span class="op">(</span><span class="va">diamonds_fit</span>, new_data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>.resid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="va">.resid</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds_aug</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">carat</span>, y <span class="op">=</span> <span class="va">.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" alt="钻石残差与克拉的散点图。x 轴范围从 0 到 5，y 轴范围从 0 到近 4。 大部分数据聚集在低克拉和低残差值附近。有一条清晰的曲线模式， 显示残差随着克拉的增加而减少。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>一旦你移除了克拉和价格之间的强关系，你就可以在切工和价格之间的关系中看到你所期望的：相对于它们的大小，质量更好的钻石更昂贵。</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">diamonds_aug</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="EDA_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" alt="按切工分类的残差的并排箱线图。x 轴显示了各种切工（从 Fair 到 Ideal）， y 轴范围从 0 到近 5。中位数非常相似，大约在 0.75 到 1.25 之间。 每个残差分布都是右偏的，有许多高端的离群值。" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>我们在这本书中不讨论建模，因为理解模型是什么以及它们如何工作，在你掌握了数据整理和编程的工具之后会最容易。</p>
+</section><section id="总结" class="level2" data-number="10.7"><h2 data-number="10.7" class="anchored" data-anchor-id="总结">
+<span class="header-section-number">10.7</span> 总结</h2>
+<p>在本章中，你学习了各种工具来帮助你理解数据中的变异。你看到了处理单个变量和一对变量的技巧。如果你的数据中有几十个或几百个变量，这可能看起来很痛苦地受限，但它们是所有其他技术构建的基础。</p>
+<p>在下一章中，我们将专注于我们可以用来交流我们结果的工具。</p>
+
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>请记住，当我们需明确指出一个函数（或数据集）的来源时，我们会使用特殊形式 <code>package::function()</code> 或 <code>package::dataset</code>。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ggvispro\.github\.io\/r4ds-cn\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./layers.html" class="pagination-link" aria-label="图层">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">图层</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./communication.html" class="pagination-link" aria-label="沟通">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">沟通</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/EDA.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

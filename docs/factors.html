@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund">
+<title>16&nbsp; 因子 – R 数据科学 2e
+（中文版）</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./datetimes.html" rel="next">
+<link href="./regexps.html" rel="prev">
+<link href="./cover.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-cfa698a38273543b64ee69d493127e2a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script defer="" data-domain="r4ds.hadley.nz" src="https://plausible.io/js/plausible.js"></script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transform.html">数据转换</a></li><li class="breadcrumb-item"><a href="./factors.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">因子</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R 数据科学 2e （中文版）</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ggvisPro/r4ds-cn/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">欢迎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface-2e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第 2 版前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./whole-game.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">全局概览</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">数据可视化</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">工作流程：基础</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">数据转换</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">工作流：代码风格</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-tidy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">数据整理</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-scripts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">工作流：脚本和项目</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">数据导入</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">工作流：获取帮助</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">可视化</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">图层</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">探索性数据分析</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">沟通</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据转换</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logicals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">逻辑向量</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./numbers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">数值</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./strings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">字符串</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regexps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正则表达式</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./factors.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">因子</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datetimes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">日期和时间</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing-values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">缺失值</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./joins.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">连接</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">导入</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spreadsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">电子表格</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">数据库</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Arrow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rectangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">层级数据</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./webscraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">网络抓取</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./program.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">编程</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">函数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">迭代</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./base-R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Base R 实战指南</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./communicate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">沟通</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-formats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Quarto 格式</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#%E5%BC%95%E8%A8%80" id="toc-引言" class="nav-link active" data-scroll-target="#%E5%BC%95%E8%A8%80"><span class="header-section-number">16.1</span> 引言</a>
+  <ul class="collapse">
+<li><a href="#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6" id="toc-先决条件" class="nav-link" data-scroll-target="#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6"><span class="header-section-number">16.1.1</span> 先决条件</a></li>
+  </ul>
+</li>
+  <li><a href="#%E5%9B%A0%E5%AD%90%E5%9F%BA%E7%A1%80" id="toc-因子基础" class="nav-link" data-scroll-target="#%E5%9B%A0%E5%AD%90%E5%9F%BA%E7%A1%80"><span class="header-section-number">16.2</span> 因子基础</a></li>
+  <li>
+<a href="#%E7%BB%BC%E5%90%88%E7%A4%BE%E4%BC%9A%E8%B0%83%E6%9F%A5" id="toc-综合社会调查" class="nav-link" data-scroll-target="#%E7%BB%BC%E5%90%88%E7%A4%BE%E4%BC%9A%E8%B0%83%E6%9F%A5"><span class="header-section-number">16.3</span> 综合社会调查</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0" id="toc-练习" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0"><span class="header-section-number">16.3.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-modifying-factor-order" id="toc-sec-modifying-factor-order" class="nav-link" data-scroll-target="#sec-modifying-factor-order"><span class="header-section-number">16.4</span> 修改因子顺序</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0-1" id="toc-练习-1" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-1"><span class="header-section-number">16.4.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#%E4%BF%AE%E6%94%B9%E5%9B%A0%E5%AD%90%E6%B0%B4%E5%B9%B3" id="toc-修改因子水平" class="nav-link" data-scroll-target="#%E4%BF%AE%E6%94%B9%E5%9B%A0%E5%AD%90%E6%B0%B4%E5%B9%B3"><span class="header-section-number">16.5</span> 修改因子水平</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0-2" id="toc-练习-2" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-2"><span class="header-section-number">16.5.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li><a href="#sec-ordered-factors" id="toc-sec-ordered-factors" class="nav-link" data-scroll-target="#sec-ordered-factors"><span class="header-section-number">16.6</span> 有序因子</a></li>
+  <li><a href="#%E6%80%BB%E7%BB%93" id="toc-总结" class="nav-link" data-scroll-target="#%E6%80%BB%E7%BB%93"><span class="header-section-number">16.7</span> 总结</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/factors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transform.html">数据转换</a></li><li class="breadcrumb-item"><a href="./factors.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">因子</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-factors" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">因子</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="引言" class="level2" data-number="16.1"><h2 data-number="16.1" class="anchored" data-anchor-id="引言">
+<span class="header-section-number">16.1</span> 引言</h2>
+<p>因子 (factor) 用于处理分类变量，即那些具有固定且已知的一组可能值的变量。当你希望以非字母顺序显示字符向量时，因子也很有用。</p>
+<p>我们将首先阐述为什么数据分析需要因子<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>，以及你如何用 <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code> 创建它们。接着，我们将向你介绍 <code>gss_cat</code> 数据集，其中包含大量分类变量供你试验。然后，你将使用该数据集练习修改因子的顺序和值，最后我们以讨论有序因子作为结束。</p>
+<section id="先决条件" class="level3" data-number="16.1.1"><h3 data-number="16.1.1" class="anchored" data-anchor-id="先决条件">
+<span class="header-section-number">16.1.1</span> 先决条件</h3>
+<p>R base 提供了一些创建和操作因子的基本工具。我们将用 <strong>forcats</strong> 包来补充这些工具，该包是核心 tidyverse 的一部分。它提供了一系列处理<strong>分</strong>类变量 (<strong>cat</strong>egorical variables) 的工具（并且它也是 factors 的一个字母重组词！），包含了大量用于处理因子的辅助函数。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="因子基础" class="level2" data-number="16.2"><h2 data-number="16.2" class="anchored" data-anchor-id="因子基础">
+<span class="header-section-number">16.2</span> 因子基础</h2>
+<p>假设你有一个记录月份的变量：</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jan"</span>, <span class="st">"Mar"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>使用字符串来记录这个变量有两个问题：</p>
+<ol type="1">
+<li>
+<p>只有十二个可能的月份，但没有任何东西能防止你打字错误：</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jam"</span>, <span class="st">"Mar"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+<li>
+<p>它的排序方式没有用处：</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Apr" "Dec" "Jan" "Mar"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+</ol>
+<p>你可以用因子来解决这两个问题。要创建一个因子，你必须首先创建一个有效<strong>水平 (levels)</strong> 的列表：</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">month_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>, </span>
+<span>  <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>现在你可以创建一个因子：</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x1</span>, levels <span class="op">=</span> <span class="va">month_levels</span><span class="op">)</span></span>
+<span><span class="va">y1</span></span>
+<span><span class="co">#&gt; [1] Dec Apr Jan Mar</span></span>
+<span><span class="co">#&gt; Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">y1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] Jan Mar Apr Dec</span></span>
+<span><span class="co">#&gt; Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>任何不在水平中的值都会被静默地转换为 NA：</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x2</span>, levels <span class="op">=</span> <span class="va">month_levels</span><span class="op">)</span></span>
+<span><span class="va">y2</span></span>
+<span><span class="co">#&gt; [1] Dec  Apr  &lt;NA&gt; Mar </span></span>
+<span><span class="co">#&gt; Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这看起来有风险，所以你可能想改用 <code><a href="https://forcats.tidyverse.org/reference/fct.html">forcats::fct()</a></code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct.html">fct</a></span><span class="op">(</span><span class="va">x2</span>, levels <span class="op">=</span> <span class="va">month_levels</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in `fct()`:</span></span>
+<span><span class="co">#&gt; ! All values of `x` must appear in `levels` or `na`</span></span>
+<span><span class="co">#&gt; ℹ Missing level: "Jam"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果你省略了水平，它们将从数据中按字母顺序提取：</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] Dec Apr Jan Mar</span></span>
+<span><span class="co">#&gt; Levels: Apr Dec Jan Mar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>按字母顺序排序有点风险，因为并非每台计算机都会以相同的方式对字符串进行排序。所以 <code><a href="https://forcats.tidyverse.org/reference/fct.html">forcats::fct()</a></code> 会按首次出现的顺序排序：</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct.html">fct</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] Dec Apr Jan Mar</span></span>
+<span><span class="co">#&gt; Levels: Dec Apr Jan Mar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果你需要直接访问有效的水平集，你可以使用 <code><a href="https://rdrr.io/r/base/levels.html">levels()</a></code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">y2</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>你也可以在使用 readr 读取数据时，通过 <code><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor()</a></code> 创建一个因子：</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">csv</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<span><span class="st">month,value</span></span>
+<span><span class="st">Jan,12</span></span>
+<span><span class="st">Feb,56</span></span>
+<span><span class="st">Mar,12"</span></span>
+<span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">csv</span>, col_types <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">col_factor</a></span><span class="op">(</span><span class="va">month_levels</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">month</span></span>
+<span><span class="co">#&gt; [1] Jan Feb Mar</span></span>
+<span><span class="co">#&gt; Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="综合社会调查" class="level2" data-number="16.3"><h2 data-number="16.3" class="anchored" data-anchor-id="综合社会调查">
+<span class="header-section-number">16.3</span> 综合社会调查</h2>
+<p>在本章的其余部分，我们将使用 <code><a href="https://forcats.tidyverse.org/reference/gss_cat.html">forcats::gss_cat</a></code>。这是来自<a href="https://gss.norc.org">综合社会调查 (General Social Survey)</a> 的数据样本，该调查是由芝加哥大学的独立研究机构 NORC 进行的一项长期美国调查。该调查有数千个问题，在 <code>gss_cat</code> 中，Hadley 选择了一小部分，用以说明你在处理因子时会遇到的一些常见挑战。</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span></span>
+<span><span class="co">#&gt; # A tibble: 21,483 × 9</span></span>
+<span><span class="co">#&gt;    year marital         age race  rincome        partyid           </span></span>
+<span><span class="co">#&gt;   &lt;int&gt; &lt;fct&gt;         &lt;int&gt; &lt;fct&gt; &lt;fct&gt;          &lt;fct&gt;             </span></span>
+<span><span class="co">#&gt; 1  2000 Never married    26 White $8000 to 9999  Ind,near rep      </span></span>
+<span><span class="co">#&gt; 2  2000 Divorced         48 White $8000 to 9999  Not str republican</span></span>
+<span><span class="co">#&gt; 3  2000 Widowed          67 White Not applicable Independent       </span></span>
+<span><span class="co">#&gt; 4  2000 Never married    39 White Not applicable Ind,near rep      </span></span>
+<span><span class="co">#&gt; 5  2000 Divorced         25 White Not applicable Not str democrat  </span></span>
+<span><span class="co">#&gt; 6  2000 Married          25 White $20000 - 24999 Strong democrat   </span></span>
+<span><span class="co">#&gt; # ℹ 21,477 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: relig &lt;fct&gt;, denom &lt;fct&gt;, tvhours &lt;int&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>（请记住，由于这个数据集是由一个包提供的，你可以使用 <code><a href="https://forcats.tidyverse.org/reference/gss_cat.html">?gss_cat</a></code> 获取更多关于变量的信息。）</p>
+<p>当因子存储在 tibble 中时，你无法轻易看到它们的水平。一种查看它们的方法是使用 <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">race</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 2</span></span>
+<span><span class="co">#&gt;   race      n</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 Other  1959</span></span>
+<span><span class="co">#&gt; 2 Black  3129</span></span>
+<span><span class="co">#&gt; 3 White 16395</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>在处理因子时，两个最常见的操作是改变水平的顺序和改变水平的值。这些操作将在下面的章节中描述。</p>
+<section id="练习" class="level3" data-number="16.3.1"><h3 data-number="16.3.1" class="anchored" data-anchor-id="练习">
+<span class="header-section-number">16.3.1</span> 练习</h3>
+<ol type="1">
+<li><p>探索 <code>rincome</code>（报告的收入）的分布。是什么使得默认的条形图难以理解？你如何改进这个图？</p></li>
+<li><p>在这次调查中，最常见的 <code>relig</code>（宗教）是什么？最常见的 <code>partyid</code>（政党认同）是什么？</p></li>
+<li><p><code>denom</code>（教派）适用于哪个 <code>relig</code>？你如何通过表格找出答案？你如何通过可视化找出答案？</p></li>
+</ol></section></section><section id="sec-modifying-factor-order" class="level2" data-number="16.4"><h2 data-number="16.4" class="anchored" data-anchor-id="sec-modifying-factor-order">
+<span class="header-section-number">16.4</span> 修改因子顺序</h2>
+<p>在可视化中改变因子水平的顺序通常很有用。例如，假设你想探索不同宗教每天平均观看电视的小时数：</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">relig_summary</span> <span class="op">&lt;-</span> <span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">relig</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
+<span>    tvhours <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">tvhours</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">relig_summary</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">tvhours</span>, y <span class="op">=</span> <span class="va">relig</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="factors_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" alt="一个散点图，x 轴为 tvhours，y 轴为 religion。 y 轴的排序看起来是任意的，这使得很难看出整体模式。" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>这个图很难读，因为没有整体模式。我们可以通过使用 <code><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder()</a></code> 来重新排序 <code>relig</code> 的水平来改进它。<code><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder()</a></code> 接受三个参数：</p>
+<ul>
+<li>
+<code>.f</code>，你想要修改其水平的因子。</li>
+<li>
+<code>.x</code>，你想要用来重新排序水平的数值向量。</li>
+<li>可选的 <code>.fun</code>，一个函数，如果 <code>.f</code> 的每个值对应多个 <code>.x</code> 的值，则使用该函数。默认值是 <code>median</code>。</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">relig_summary</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">tvhours</span>, y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">relig</span>, <span class="va">tvhours</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="factors_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" alt="与上图相同的散点图，但现在 religion 按 tvhours 的升序显示。 &quot;Other eastern&quot; 的 tvhours 最少，不到 2 小时，而 &quot;Don't know&quot; 最高（超过 5 小时）。" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>重新排序宗教使得更容易看出“不知道”类别的人看电视的时间要多得多，而印度教和其他东方宗教的人看电视的时间要少得多。</p>
+<p>当你开始进行更复杂的转换时，我们建议将它们从 <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> 中移出，放到一个单独的 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 步骤中。例如，你可以像下面这样重写上面的图：</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">relig_summary</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    relig <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">relig</span>, <span class="va">tvhours</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">tvhours</span>, y <span class="op">=</span> <span class="va">relig</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果我们创建一个类似的图，看看平均年龄在不同报告收入水平上是如何变化的呢？</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">rincome_summary</span> <span class="op">&lt;-</span> <span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">rincome</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
+<span>    age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">age</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">rincome_summary</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">rincome</span>, <span class="va">age</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="factors_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" alt="一个散点图，x 轴为 age，y 轴为 income。income 已按平均年龄重新排序， 但这没什么意义。y 轴的一个部分从 $6000-6999，然后是 <$1000， 再然后是 $8000-9999。" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>在这里，任意重新排序水平不是一个好主意！这是因为 <code>rincome</code> 已经有了一个我们不应该打乱的原则性顺序。请将 <code><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder()</a></code> 保留给那些水平是任意排序的因子。</p>
+<p>然而，将“不适用 (Not applicable)”和其他特殊水平一起移到前面是有意义的。你可以使用 <code><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel()</a></code>。它接受一个因子 <code>.f</code>，然后是任意数量的你想要移到最前面的水平。</p>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">rincome_summary</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel</a></span><span class="op">(</span><span class="va">rincome</span>, <span class="st">"Not applicable"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="factors_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" alt="与上图相同的散点图，但现在 &quot;Not Applicable&quot; 显示在 y 轴的底部。 总的来说，收入和年龄之间存在正相关关系，而平均年龄最高的收入 区间是 &quot;Not applicable&quot;。" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>你认为为什么“不适用”的平均年龄这么高？</p>
+<p>当你在图上为线条着色时，另一种类型的重新排序也很有用。<code>fct_reorder2(.f, .x, .y)</code> 通过与最大 <code>.x</code> 值相关联的 <code>.y</code> 值来重新排序因子 <code>.f</code>。这使得图更容易阅读，因为图右侧的线条颜色将与图例对齐。</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">by_age</span> <span class="op">&lt;-</span> <span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">marital</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    prop <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">by_age</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">prop</span>, color <span class="op">=</span> <span class="va">marital</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">by_age</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, y <span class="op">=</span> <span class="va">prop</span>, color <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder2</a></span><span class="op">(</span><span class="va">marital</span>, <span class="va">age</span>, <span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"marital"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="factors_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" alt="一个线图，x 轴为 age，y 轴为 proportion。 每种婚姻状况都有一条线：无答案、从未结婚、分居、离婚、丧偶和已婚。 这个图有点难读，因为图例的顺序与图上的线条无关。 重新排列图例使得图更容易阅读，因为图例颜色现在与图右侧 线条的顺序相匹配。你可以看到一些不出所料的模式：从未结婚的比例 随年龄增长而下降，已婚的比例呈倒 U 形，丧偶的比例开始时很低， 但在 60 岁后急剧增加。" width="288"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="factors_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid" alt="一个线图，x 轴为 age，y 轴为 proportion。 每种婚姻状况都有一条线：无答案、从未结婚、分居、离婚、丧偶和已婚。 这个图有点难读，因为图例的顺序与图上的线条无关。 重新排列图例使得图更容易阅读，因为图例颜色现在与图右侧 线条的顺序相匹配。你可以看到一些不出所料的模式：从未结婚的比例 随年龄增长而下降，已婚的比例呈倒 U 形，丧偶的比例开始时很低， 但在 60 岁后急剧增加。" width="288"></p>
+</div>
+</div>
+</div>
+<p>最后，对于条形图，你可以使用 <code><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq()</a></code> 按频率降序排列水平：这是最简单的重新排序类型，因为它不需要任何额外的变量。如果你希望它们按频率升序排列，可以与 <code><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev()</a></code> 结合使用，这样在条形图中最大的值就会在右边，而不是左边。</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>marital <span class="op">=</span> <span class="va">marital</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">marital</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="factors_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" alt="一个婚姻状况的条形图，从最少到最常见排序： 无答案（~0）、分居（~1,000）、丧偶（~2,000）、离婚（~3,000）、 从未结婚（~5,000）、已婚（~10,000）。" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="练习-1" class="level3" data-number="16.4.1"><h3 data-number="16.4.1" class="anchored" data-anchor-id="练习-1">
+<span class="header-section-number">16.4.1</span> 练习</h3>
+<ol type="1">
+<li><p><code>tvhours</code> 中有一些可疑的高数值。均值是一个好的汇总统计量吗？</p></li>
+<li><p>对于 <code>gss_cat</code> 中的每个因子，判断其水平的顺序是任意的还是有原则的。</p></li>
+<li><p>为什么将“不适用 (Not applicable)”移到水平的前面会使它移动到图的底部？</p></li>
+</ol></section></section><section id="修改因子水平" class="level2" data-number="16.5"><h2 data-number="16.5" class="anchored" data-anchor-id="修改因子水平">
+<span class="header-section-number">16.5</span> 修改因子水平</h2>
+<p>比改变水平顺序更强大的是改变它们的值。这可以让你为出版物澄清标签，并为高层次的展示折叠水平。最通用和最强大的工具是 <code><a href="https://forcats.tidyverse.org/reference/fct_recode.html">fct_recode()</a></code>。它允许你重编码或更改每个水平的值。例如，以 <code>gss_cat</code> 数据框中的 <code>partyid</code> 变量为例：</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">partyid</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 2</span></span>
+<span><span class="co">#&gt;   partyid                n</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;              &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 No answer            154</span></span>
+<span><span class="co">#&gt; 2 Don't know             1</span></span>
+<span><span class="co">#&gt; 3 Other party          393</span></span>
+<span><span class="co">#&gt; 4 Strong republican   2314</span></span>
+<span><span class="co">#&gt; 5 Not str republican  3032</span></span>
+<span><span class="co">#&gt; 6 Ind,near rep        1791</span></span>
+<span><span class="co">#&gt; # ℹ 4 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这些水平很简短且不一致。让我们调整它们，让它们更长并使用平行的结构。像 tidyverse 中大多数重命名和重编码函数一样，新值在左边，旧值在右边：</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    partyid <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_recode.html">fct_recode</a></span><span class="op">(</span><span class="va">partyid</span>,</span>
+<span>      <span class="st">"Republican, strong"</span>    <span class="op">=</span> <span class="st">"Strong republican"</span>,</span>
+<span>      <span class="st">"Republican, weak"</span>      <span class="op">=</span> <span class="st">"Not str republican"</span>,</span>
+<span>      <span class="st">"Independent, near rep"</span> <span class="op">=</span> <span class="st">"Ind,near rep"</span>,</span>
+<span>      <span class="st">"Independent, near dem"</span> <span class="op">=</span> <span class="st">"Ind,near dem"</span>,</span>
+<span>      <span class="st">"Democrat, weak"</span>        <span class="op">=</span> <span class="st">"Not str democrat"</span>,</span>
+<span>      <span class="st">"Democrat, strong"</span>      <span class="op">=</span> <span class="st">"Strong democrat"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">partyid</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 2</span></span>
+<span><span class="co">#&gt;   partyid                   n</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;                 &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 No answer               154</span></span>
+<span><span class="co">#&gt; 2 Don't know                1</span></span>
+<span><span class="co">#&gt; 3 Other party             393</span></span>
+<span><span class="co">#&gt; 4 Republican, strong     2314</span></span>
+<span><span class="co">#&gt; 5 Republican, weak       3032</span></span>
+<span><span class="co">#&gt; 6 Independent, near rep  1791</span></span>
+<span><span class="co">#&gt; # ℹ 4 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code><a href="https://forcats.tidyverse.org/reference/fct_recode.html">fct_recode()</a></code> 会保持未明确提及的水平不变，并且如果你意外地引用了不存在的水平，它会警告你。</p>
+<p>要组合组别，你可以将多个旧水平分配给同一个新水平：</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    partyid <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_recode.html">fct_recode</a></span><span class="op">(</span><span class="va">partyid</span>,</span>
+<span>      <span class="st">"Republican, strong"</span>    <span class="op">=</span> <span class="st">"Strong republican"</span>,</span>
+<span>      <span class="st">"Republican, weak"</span>      <span class="op">=</span> <span class="st">"Not str republican"</span>,</span>
+<span>      <span class="st">"Independent, near rep"</span> <span class="op">=</span> <span class="st">"Ind,near rep"</span>,</span>
+<span>      <span class="st">"Independent, near dem"</span> <span class="op">=</span> <span class="st">"Ind,near dem"</span>,</span>
+<span>      <span class="st">"Democrat, weak"</span>        <span class="op">=</span> <span class="st">"Not str democrat"</span>,</span>
+<span>      <span class="st">"Democrat, strong"</span>      <span class="op">=</span> <span class="st">"Strong democrat"</span>,</span>
+<span>      <span class="st">"Other"</span>                 <span class="op">=</span> <span class="st">"No answer"</span>,</span>
+<span>      <span class="st">"Other"</span>                 <span class="op">=</span> <span class="st">"Don't know"</span>,</span>
+<span>      <span class="st">"Other"</span>                 <span class="op">=</span> <span class="st">"Other party"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>请谨慎使用这种技术：如果你将真正不同的类别组合在一起，你最终会得到误导性的结果。</p>
+<p>如果你想折叠很多水平，<code><a href="https://forcats.tidyverse.org/reference/fct_collapse.html">fct_collapse()</a></code> 是 <code><a href="https://forcats.tidyverse.org/reference/fct_recode.html">fct_recode()</a></code> 的一个有用变体。对于每个新变量，你可以提供一个旧水平的向量：</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    partyid <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_collapse.html">fct_collapse</a></span><span class="op">(</span><span class="va">partyid</span>,</span>
+<span>      <span class="st">"other"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No answer"</span>, <span class="st">"Don't know"</span>, <span class="st">"Other party"</span><span class="op">)</span>,</span>
+<span>      <span class="st">"rep"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Strong republican"</span>, <span class="st">"Not str republican"</span><span class="op">)</span>,</span>
+<span>      <span class="st">"ind"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ind,near rep"</span>, <span class="st">"Independent"</span>, <span class="st">"Ind,near dem"</span><span class="op">)</span>,</span>
+<span>      <span class="st">"dem"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Not str democrat"</span>, <span class="st">"Strong democrat"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">partyid</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span><span class="co">#&gt;   partyid     n</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 other     548</span></span>
+<span><span class="co">#&gt; 2 rep      5346</span></span>
+<span><span class="co">#&gt; 3 ind      8409</span></span>
+<span><span class="co">#&gt; 4 dem      7180</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>有时你只是想把小的组别集中在一起，以简化图表或表格。这就是 <code>fct_lump_*()</code> 系列函数的工作。<code><a href="https://forcats.tidyverse.org/reference/fct_lump.html">fct_lump_lowfreq()</a></code> 是一个简单的起点，它逐步将最小的组别类别归入“Other”，并始终保持“Other”为最小的类别。</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>relig <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_lump.html">fct_lump_lowfreq</a></span><span class="op">(</span><span class="va">relig</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">relig</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 2</span></span>
+<span><span class="co">#&gt;   relig          n</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;      &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 Protestant 10846</span></span>
+<span><span class="co">#&gt; 2 Other      10637</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>在这种情况下，它不是很有帮助：这次调查中大多数美国人确实是新教徒，但我们可能想看到更多细节！相反，我们可以使用 <code><a href="https://forcats.tidyverse.org/reference/fct_lump.html">fct_lump_n()</a></code> 来指定我们想要恰好 10 个组别：</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">gss_cat</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>relig <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_lump.html">fct_lump_n</a></span><span class="op">(</span><span class="va">relig</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">relig</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 10 × 2</span></span>
+<span><span class="co">#&gt;   relig          n</span></span>
+<span><span class="co">#&gt;   &lt;fct&gt;      &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1 Protestant 10846</span></span>
+<span><span class="co">#&gt; 2 Catholic    5124</span></span>
+<span><span class="co">#&gt; 3 None        3523</span></span>
+<span><span class="co">#&gt; 4 Christian    689</span></span>
+<span><span class="co">#&gt; 5 Other        458</span></span>
+<span><span class="co">#&gt; 6 Jewish       388</span></span>
+<span><span class="co">#&gt; # ℹ 4 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>阅读文档以了解 <code><a href="https://forcats.tidyverse.org/reference/fct_lump.html">fct_lump_min()</a></code> 和 <code><a href="https://forcats.tidyverse.org/reference/fct_lump.html">fct_lump_prop()</a></code>，它们在其他情况下很有用。</p>
+<section id="练习-2" class="level3" data-number="16.5.1"><h3 data-number="16.5.1" class="anchored" data-anchor-id="练习-2">
+<span class="header-section-number">16.5.1</span> 练习</h3>
+<ol type="1">
+<li><p>认同为民主党、共和党和独立派的人的比例随时间有何变化？</p></li>
+<li><p>你如何将 <code>rincome</code> 折叠成一小组类别？</p></li>
+<li><p>注意在上面的 <code>fct_lump</code> 示例中有 9 个组（不包括 other）。为什么不是 10 个？（提示：输入 <code><a href="https://forcats.tidyverse.org/reference/fct_lump.html">?fct_lump</a></code>，找到 <code>other_level</code> 参数的默认值是 “Other”。）</p></li>
+</ol></section></section><section id="sec-ordered-factors" class="level2" data-number="16.6"><h2 data-number="16.6" class="anchored" data-anchor-id="sec-ordered-factors">
+<span class="header-section-number">16.6</span> 有序因子</h2>
+<p>在继续之前，有必要简要提及一种特殊类型的因子：有序因子 (ordered factors)。用 <code><a href="https://rdrr.io/r/base/factor.html">ordered()</a></code> 函数创建的有序因子意味着水平之间存在严格的顺序，但没有指定水平之间差异的大小。当你知道水平有排名，但没有精确的数值排名时，你会使用有序因子。</p>
+<p>当一个有序因子被打印时，你可以识别它，因为它在因子水平之间使用 <code>&lt;</code> 符号：</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">ordered</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] a b c</span></span>
+<span><span class="co">#&gt; Levels: a &lt; b &lt; c</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>在 R base 和 tidyverse 中，有序因子的行为与常规因子非常相似。只有在两个地方你可能会注意到不同的行为：</p>
+<ul>
+<li>如果你在 ggplot2 中将一个有序因子映射到颜色或填充，它将默认为 <code>scale_color_viridis()</code>/<code>scale_fill_viridis()</code>，这是一个暗示排名的颜色标度。</li>
+<li>如果你在线性模型中使用一个有序预测变量，它将使用“多项式对比”。这些有点用，但除非你有统计学博士学位，否则你不太可能听说过它们，即使那样，你可能也不常解释它们。如果你想了解更多，我们推荐 Lisa DeBruine 的 <code>vignette("contrasts", package = "faux")</code>。</li>
+</ul>
+<p>就本书而言，正确区分常规因子和有序因子并不是特别重要。然而，在更广泛的范围内，某些领域（特别是社会科学）确实广泛使用有序因子。在这些背景下，正确识别它们很重要，以便其他分析包可以提供适当的行为。</p>
+</section><section id="总结" class="level2" data-number="16.7"><h2 data-number="16.7" class="anchored" data-anchor-id="总结">
+<span class="header-section-number">16.7</span> 总结</h2>
+<p>本章向你介绍了用于处理因子的便捷 forcats 包，并介绍了最常用的函数。forcats 包含了我们没有篇幅在这里讨论的各种其他辅助函数，所以每当你遇到以前没有遇到过的因子分析挑战时，我强烈建议你浏览一下<a href="https://forcats.tidyverse.org/reference/index.html">参考索引</a>，看看是否有现成的函数可以帮助解决你的问题。</p>
+<p>如果你在阅读本章后想了解更多关于因子的信息，我们推荐阅读 Amelia McNamara 和 Nicholas Horton 的论文 <a href="https://peerj.com/preprints/3163/"><em>Wrangling categorical data in R</em></a>。这篇论文阐述了在 <a href="https://simplystatistics.org/posts/2015-07-24-stringsasfactors-an-unauthorized-biography/"><em>stringsAsFactors: An unauthorized biography</em></a> 和 <a href="https://notstatschat.tumblr.com/post/124987394001/stringsasfactors-sigh"><em>stringsAsFactors = &lt;sigh&gt;</em></a> 中讨论的一些历史，并比较了本书中概述的 tidyverse 分类数据处理方法与 R base 方法。该论文的早期版本帮助激发和确定了 forcats 包的范围；感谢 Amelia 和 Nick！</p>
+<p>在下一章中，我们将转换方向，开始学习 R 中的日期和时间。日期和时间看起来 deceptively 简单，但你很快就会看到，你对它们了解得越多，它们似乎就变得越复杂！</p>
+
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>它们对于建模也非常重要。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ggvispro\.github\.io\/r4ds-cn\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./regexps.html" class="pagination-link" aria-label="正则表达式">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正则表达式</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./datetimes.html" class="pagination-link" aria-label="日期和时间">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">日期和时间</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/factors.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

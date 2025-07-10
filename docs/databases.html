@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund">
+<title>21&nbsp; 数据库 – R 数据科学 2e
+（中文版）</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./arrow.html" rel="next">
+<link href="./spreadsheets.html" rel="prev">
+<link href="./cover.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-cfa698a38273543b64ee69d493127e2a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script defer="" data-domain="r4ds.hadley.nz" src="https://plausible.io/js/plausible.js"></script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./import.html">导入</a></li><li class="breadcrumb-item"><a href="./databases.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">数据库</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R 数据科学 2e （中文版）</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ggvisPro/r4ds-cn/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">欢迎</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface-2e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">第 2 版前言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">引言</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./whole-game.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">全局概览</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">数据可视化</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">工作流程：基础</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">数据转换</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">工作流：代码风格</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-tidy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">数据整理</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-scripts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">工作流：脚本和项目</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">数据导入</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">工作流：获取帮助</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">可视化</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">图层</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">探索性数据分析</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">沟通</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据转换</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logicals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">逻辑向量</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./numbers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">数值</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./strings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">字符串</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regexps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正则表达式</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">因子</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datetimes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">日期和时间</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing-values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">缺失值</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./joins.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">连接</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">导入</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spreadsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">电子表格</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./databases.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">数据库</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Arrow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rectangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">层级数据</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./webscraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">网络抓取</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./program.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">编程</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">函数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">迭代</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./base-R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Base R 实战指南</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./communicate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">沟通</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-formats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Quarto 格式</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#%E5%BC%95%E8%A8%80" id="toc-引言" class="nav-link active" data-scroll-target="#%E5%BC%95%E8%A8%80"><span class="header-section-number">21.1</span> 引言</a>
+  <ul class="collapse">
+<li><a href="#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6" id="toc-前提条件" class="nav-link" data-scroll-target="#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="header-section-number">21.1.1</span> 前提条件</a></li>
+  </ul>
+</li>
+  <li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80" id="toc-数据库基础" class="nav-link" data-scroll-target="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9F%BA%E7%A1%80"><span class="header-section-number">21.2</span> 数据库基础</a></li>
+  <li>
+<a href="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93" id="toc-连接到数据库" class="nav-link" data-scroll-target="#%E8%BF%9E%E6%8E%A5%E5%88%B0%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="header-section-number">21.3</span> 连接到数据库</a>
+  <ul class="collapse">
+<li><a href="#%E6%9C%AC%E4%B9%A6%E4%B8%AD" id="toc-本书中" class="nav-link" data-scroll-target="#%E6%9C%AC%E4%B9%A6%E4%B8%AD"><span class="header-section-number">21.3.1</span> 本书中</a></li>
+  <li><a href="#sec-load-data" id="toc-sec-load-data" class="nav-link" data-scroll-target="#sec-load-data"><span class="header-section-number">21.3.2</span> 加载一些数据</a></li>
+  <li><a href="#dbi-%E5%9F%BA%E7%A1%80" id="toc-dbi-基础" class="nav-link" data-scroll-target="#dbi-%E5%9F%BA%E7%A1%80"><span class="header-section-number">21.3.3</span> DBI 基础</a></li>
+  </ul>
+</li>
+  <li><a href="#dbplyr-%E5%9F%BA%E7%A1%80" id="toc-dbplyr-基础" class="nav-link" data-scroll-target="#dbplyr-%E5%9F%BA%E7%A1%80"><span class="header-section-number">21.4</span> dbplyr 基础</a></li>
+  <li>
+<a href="#sql" id="toc-sql" class="nav-link" data-scroll-target="#sql"><span class="header-section-number">21.5</span> SQL</a>
+  <ul class="collapse">
+<li><a href="#sql-%E5%9F%BA%E7%A1%80" id="toc-sql-基础" class="nav-link" data-scroll-target="#sql-%E5%9F%BA%E7%A1%80"><span class="header-section-number">21.5.1</span> SQL 基础</a></li>
+  <li><a href="#select" id="toc-select" class="nav-link" data-scroll-target="#select"><span class="header-section-number">21.5.2</span> SELECT</a></li>
+  <li><a href="#from" id="toc-from" class="nav-link" data-scroll-target="#from"><span class="header-section-number">21.5.3</span> FROM</a></li>
+  <li><a href="#group-by" id="toc-group-by" class="nav-link" data-scroll-target="#group-by"><span class="header-section-number">21.5.4</span> GROUP BY</a></li>
+  <li><a href="#where" id="toc-where" class="nav-link" data-scroll-target="#where"><span class="header-section-number">21.5.5</span> WHERE</a></li>
+  <li><a href="#order-by" id="toc-order-by" class="nav-link" data-scroll-target="#order-by"><span class="header-section-number">21.5.6</span> ORDER BY</a></li>
+  <li><a href="#%E5%AD%90%E6%9F%A5%E8%AF%A2" id="toc-子查询" class="nav-link" data-scroll-target="#%E5%AD%90%E6%9F%A5%E8%AF%A2"><span class="header-section-number">21.5.7</span> 子查询</a></li>
+  <li><a href="#%E8%BF%9E%E6%8E%A5" id="toc-连接" class="nav-link" data-scroll-target="#%E8%BF%9E%E6%8E%A5"><span class="header-section-number">21.5.8</span> 连接</a></li>
+  <li><a href="#%E5%85%B6%E4%BB%96%E5%8A%A8%E8%AF%8D" id="toc-其他动词" class="nav-link" data-scroll-target="#%E5%85%B6%E4%BB%96%E5%8A%A8%E8%AF%8D"><span class="header-section-number">21.5.9</span> 其他动词</a></li>
+  <li><a href="#%E7%BB%83%E4%B9%A0" id="toc-练习" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0"><span class="header-section-number">21.5.10</span> 练习</a></li>
+  </ul>
+</li>
+  <li><a href="#sec-sql-expressions" id="toc-sec-sql-expressions" class="nav-link" data-scroll-target="#sec-sql-expressions"><span class="header-section-number">21.6</span> 函数翻译</a></li>
+  <li><a href="#%E6%80%BB%E7%BB%93" id="toc-总结" class="nav-link" data-scroll-target="#%E6%80%BB%E7%BB%93"><span class="header-section-number">21.7</span> 总结</a></li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/databases.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./import.html">导入</a></li><li class="breadcrumb-item"><a href="./databases.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">数据库</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-import-databases" class="quarto-section-identifier"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">数据库</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="引言" class="level2" data-number="21.1"><h2 data-number="21.1" class="anchored" data-anchor-id="引言">
+<span class="header-section-number">21.1</span> 引言</h2>
+<p>大量的数据存储在数据库中，因此了解如何访问这些数据至关重要。有时你可以请人为你下载一个快照到 <code>.csv</code> 文件中，但这很快就会变得痛苦：每当你需要做一次更改，你就必须与另一个人沟通。你希望能够直接访问数据库，在需要时获取所需的数据。</p>
+<p>在本章中，你将首先学习 DBI 包的基础知识：如何使用它连接到数据库，然后用 SQL<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 查询检索数据。<strong>SQL</strong>，即<strong>结构化查询语言 (structured query language)</strong> 的缩写，是数据库的通用语言，也是所有数据科学家需要学习的一门重要语言。话虽如此，我们不会从 SQL 开始，而是会教你 dbplyr，它可以将你的 dplyr 代码翻译成 SQL。我们将以此为途径，教你一些 SQL 最重要的特性。在本章结束时，你不会成为 SQL 大师，但你将能够识别最重要的组件并理解它们的作用。</p>
+<section id="前提条件" class="level3" data-number="21.1.1"><h3 data-number="21.1.1" class="anchored" data-anchor-id="前提条件">
+<span class="header-section-number">21.1.1</span> 前提条件</h3>
+<p>在本章中，我们将介绍 DBI 和 dbplyr。DBI 是一个底层接口，用于连接数据库和执行 SQL；dbplyr 是一个高层接口，它将你的 dplyr 代码翻译成 SQL 查询，然后用 DBI 执行它们。</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dbi.r-dbi.org">DBI</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dbplyr.tidyverse.org/">dbplyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section><section id="数据库基础" class="level2" data-number="21.2"><h2 data-number="21.2" class="anchored" data-anchor-id="数据库基础">
+<span class="header-section-number">21.2</span> 数据库基础</h2>
+<p>在最简单的层面上，你可以把数据库看作是数据框的集合，在数据库术语中称为<strong>表 (tables)</strong>。就像数据框一样，数据库表是命名列的集合，其中一列中的每个值都是相同类型的。数据框和数据库表之间有三个高层次的区别：</p>
+<ul>
+<li><p>数据库表存储在磁盘上，可以任意大。数据框存储在内存中，并且有根本的大小限制（尽管这个限制对于许多问题来说仍然足够大）。</p></li>
+<li><p>数据库表几乎总是有索引。就像书的索引一样，数据库索引可以快速找到感兴趣的行，而无需查看每一行。数据框和 tibble 没有索引，但 data.table 有，这是它们速度快的原因之一。</p></li>
+<li><p>大多数传统数据库都是为快速收集数据而优化的，而不是为分析现有数据。这些数据库被称为<strong>行式 (row-oriented)</strong> 数据库，因为数据是逐行存储的，而不是像 R 那样逐列存储。最近，<strong>列式 (column-oriented)</strong> 数据库得到了很大发展，它使得分析现有数据变得更快。</p></li>
+</ul>
+<p>数据库由数据库管理系统（<strong>DBMS</strong>）运行，DBMS 有三种基本形式：</p>
+<ul>
+<li>
+<strong>客户端-服务器 (Client-server)</strong> DBMS 运行在一台强大的中央服务器上，你从你的计算机（客户端）连接到它。它们非常适合在组织内与多人共享数据。流行的客户端-服务器 DBMS 包括 PostgreSQL、MariaDB、SQL Server 和 Oracle。</li>
+<li>
+<strong>云 (Cloud)</strong> DBMS，如 Snowflake、Amazon 的 RedShift 和 Google 的 BigQuery，与客户端-服务器 DBMS 类似，但它们运行在云端。这意味着它们可以轻松处理极大的数据集，并可以根据需要自动提供更多的计算资源。</li>
+<li>
+<strong>进程内 (In-process)</strong> DBMS，如 SQLite 或 duckdb，完全在你的计算机上运行。它们非常适合处理你是主要用户的大型数据集。</li>
+</ul></section><section id="连接到数据库" class="level2" data-number="21.3"><h2 data-number="21.3" class="anchored" data-anchor-id="连接到数据库">
+<span class="header-section-number">21.3</span> 连接到数据库</h2>
+<p>要从 R 连接到数据库，你需要使用一对包：</p>
+<ul>
+<li><p>你总是会使用 DBI（<strong>d</strong>ata<strong>b</strong>ase <strong>i</strong>nterface，数据库接口），因为它提供了一组通用函数，用于连接数据库、上传数据、运行 SQL 查询等。</p></li>
+<li><p>你还需要一个为你所连接的 DBMS 定制的包。这个包将通用的 DBI 命令翻译成特定 DBMS 所需的具体指令。通常每个 DBMS 都有一个包，例如 RPostgres 用于 PostgreSQL，RMariaDB 用于 MySQL。</p></li>
+</ul>
+<p>如果找不到你的 DBMS 的特定包，你通常可以使用 odbc 包来代替。它使用许多 DBMS 都支持的 ODBC 协议。odbc 需要多一点设置，因为你还需要安装一个 ODBC 驱动程序，并告诉 odbc 包在哪里找到它。</p>
+<p>具体来说，你使用 <code><a href="https://dbi.r-dbi.org/reference/dbConnect.html">DBI::dbConnect()</a></code> 创建一个数据库连接。第一个参数选择 DBMS<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，然后第二个及后续的参数描述如何连接到它（即它在哪里以及你访问它所需的凭据）。下面的代码展示了几个典型的例子：</p>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span></span>
+<span>  <span class="fu">RMariaDB</span><span class="fu">::</span><span class="fu"><a href="https://rmariadb.r-dbi.org/reference/dbConnect-MariaDBDriver-method.html">MariaDB</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>  username <span class="op">=</span> <span class="st">"foo"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span></span>
+<span>  <span class="fu">RPostgres</span><span class="fu">::</span><span class="fu">Postgres</span><span class="op">(</span><span class="op">)</span>, </span>
+<span>  hostname <span class="op">=</span> <span class="st">"databases.mycompany.com"</span>, </span>
+<span>  port <span class="op">=</span> <span class="fl">1234</span></span>
+<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>连接的具体细节因 DBMS 而异，所以很遗憾我们无法在这里涵盖所有细节。这意味着你需要自己做一些研究。通常你可以问你团队中的其他数据科学家或与你的 DBA（<strong>d</strong>ata<strong>b</strong>ase <strong>a</strong>dministrator，数据库管理员）交谈。初始设置通常需要一些小调整（可能还需要一些谷歌搜索）才能正确，但你通常只需要做一次。</p>
+<section id="本书中" class="level3" data-number="21.3.1"><h3 data-number="21.3.1" class="anchored" data-anchor-id="本书中">
+<span class="header-section-number">21.3.1</span> 本书中</h3>
+<p>为本书设置一个客户端-服务器或云 DBMS 会很麻烦，所以我们将使用一个完全存在于 R 包中的进程内 DBMS：duckdb。多亏了 DBI 的魔力，使用 duckdb 和任何其他 DBMS 之间的唯一区别就是你如何连接到数据库。这使得它非常适合教学，因为你可以轻松地运行这段代码，也可以轻松地将你学到的东西应用到其他地方。</p>
+<p>连接到 duckdb 特别简单，因为默认设置会创建一个临时数据库，当你退出 R 时它会被删除。这对于学习来说很棒，因为它保证了每次重启 R 时你都会从一个干净的状态开始：</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html">duckdb</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>duckdb 是一个高性能的数据库，它非常适合数据科学家的需求。我们在这里使用它是因为它非常容易上手，但它也能够以极快的速度处理千兆字节的数据。如果你想在一个真实的数据分析项目中使用 duckdb，你还需要提供 <code>dbdir</code> 参数来创建一个持久性数据库，并告诉 duckdb 在哪里保存它。假设你正在使用一个项目（<a href="workflow-scripts.html" class="quarto-xref"><span>Chapter 6</span></a>），把它存储在当前项目的 <code>duckdb</code> 目录中是合理的：</p>
+<div class="cell">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbConnect.html">dbConnect</a></span><span class="op">(</span><span class="fu">duckdb</span><span class="fu">::</span><span class="fu"><a href="https://r.duckdb.org/reference/duckdb.html">duckdb</a></span><span class="op">(</span><span class="op">)</span>, dbdir <span class="op">=</span> <span class="st">"duckdb"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="sec-load-data" class="level3" data-number="21.3.2"><h3 data-number="21.3.2" class="anchored" data-anchor-id="sec-load-data">
+<span class="header-section-number">21.3.2</span> 加载一些数据</h3>
+<p>由于这是一个新的数据库，我们需要先添加一些数据。这里我们将使用 <code><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html">DBI::dbWriteTable()</a></code> 添加 ggplot2 中的 <code>mpg</code> 和 <code>diamonds</code> 数据集。<code><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html">dbWriteTable()</a></code> 最简单的用法需要三个参数：一个数据库连接，要在数据库中创建的表的名称，以及一个数据的数据框。</p>
+<div class="cell">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"mpg"</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/mpg.html">mpg</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbWriteTable.html">dbWriteTable</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"diamonds"</span>, <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/diamonds.html">diamonds</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果你在一个真实的项目中使用 duckdb，我们强烈建议你学习 <code>duckdb_read_csv()</code> 和 <code>duckdb_register_arrow()</code>。它们为你提供了强大且高效的方式来快速将数据直接加载到 duckdb 中，而无需先将其加载到 R 中。我们还将在 <a href="iteration.html#sec-save-database" class="quarto-xref"><span>Section 26.4.1</span></a> 中展示一个将多个文件加载到数据库的有用技巧。</p>
+</section><section id="dbi-基础" class="level3" data-number="21.3.3"><h3 data-number="21.3.3" class="anchored" data-anchor-id="dbi-基础">
+<span class="header-section-number">21.3.3</span> DBI 基础</h3>
+<p>你可以通过使用其他几个 DBI 函数来检查数据是否已正确加载：<code><a href="https://dbi.r-dbi.org/reference/dbListTables.html">dbListTables()</a></code> 列出数据库中的所有表<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>，<code><a href="https://dbi.r-dbi.org/reference/dbReadTable.html">dbReadTable()</a></code> 检索一个表的内容。</p>
+<div class="cell">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbListTables.html">dbListTables</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "diamonds" "mpg"</span></span>
+<span></span>
+<span><span class="va">con</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbReadTable.html">dbReadTable</a></span><span class="op">(</span><span class="st">"diamonds"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 53,940 × 10</span></span>
+<span><span class="co">#&gt;   carat cut       color clarity depth table price     x     y     z</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43</span></span>
+<span><span class="co">#&gt; 2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31</span></span>
+<span><span class="co">#&gt; 3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31</span></span>
+<span><span class="co">#&gt; 4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63</span></span>
+<span><span class="co">#&gt; 5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75</span></span>
+<span><span class="co">#&gt; 6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48</span></span>
+<span><span class="co">#&gt; # ℹ 53,934 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code><a href="https://dbi.r-dbi.org/reference/dbReadTable.html">dbReadTable()</a></code> 返回一个 <code>data.frame</code>，所以我们使用 <code><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble()</a></code> 将其转换为一个 tibble，以便它能很好地打印出来。</p>
+<p>如果你已经了解 SQL，你可以使用 <code><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery()</a></code> 来获取在数据库上运行查询的结果：</p>
+<div class="cell">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">sql</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
+<span><span class="st">  SELECT carat, cut, clarity, color, price </span></span>
+<span><span class="st">  FROM diamonds </span></span>
+<span><span class="st">  WHERE price &gt; 15000</span></span>
+<span><span class="st">"</span></span>
+<span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="va">sql</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1,655 × 5</span></span>
+<span><span class="co">#&gt;   carat cut       clarity color price</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt;   &lt;fct&gt; &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1  1.54 Premium   VS2     E     15002</span></span>
+<span><span class="co">#&gt; 2  1.19 Ideal     VVS1    F     15005</span></span>
+<span><span class="co">#&gt; 3  2.1  Premium   SI1     I     15007</span></span>
+<span><span class="co">#&gt; 4  1.69 Ideal     SI1     D     15011</span></span>
+<span><span class="co">#&gt; 5  1.5  Very Good VVS2    G     15013</span></span>
+<span><span class="co">#&gt; 6  1.73 Very Good VS1     G     15014</span></span>
+<span><span class="co">#&gt; # ℹ 1,649 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果你以前从未见过 SQL，别担心！你很快就会学到更多关于它的知识。但如果你仔细阅读它，你可能会猜到它从 diamonds 数据集中选择了五个列，以及 <code>price</code> 大于 15,000 的所有行。</p>
+</section></section><section id="dbplyr-基础" class="level2" data-number="21.4"><h2 data-number="21.4" class="anchored" data-anchor-id="dbplyr-基础">
+<span class="header-section-number">21.4</span> dbplyr 基础</h2>
+<p>现在我们已经连接到数据库并加载了一些数据，我们可以开始学习 dbplyr 了。dbplyr 是一个 dplyr 的<strong>后端 (backend)</strong>，这意味着你继续写 dplyr 代码，但后端会以不同的方式执行它。在这里，dbplyr 将代码翻译成 SQL；其他后端包括将代码翻译成 <a href="https://r-datatable.com">data.table</a> 的 <a href="https://dtplyr.tidyverse.org">dtplyr</a>，以及在多个核心上执行你的代码的 <a href="https://multidplyr.tidyverse.org">multidplyr</a>。</p>
+<p>要使用 dbplyr，你必须首先使用 <code><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl()</a></code> 创建一个代表数据库表的对象：</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"diamonds"</span><span class="op">)</span></span>
+<span><span class="va">diamonds_db</span></span>
+<span><span class="co">#&gt; # Source:   table&lt;diamonds&gt; [?? x 10]</span></span>
+<span><span class="co">#&gt; # Database: DuckDB v1.3.1 [14913@Windows 10 x64:R 4.5.1/:memory:]</span></span>
+<span><span class="co">#&gt;   carat cut       color clarity depth table price     x     y     z</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43</span></span>
+<span><span class="co">#&gt; 2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31</span></span>
+<span><span class="co">#&gt; 3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31</span></span>
+<span><span class="co">#&gt; 4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63</span></span>
+<span><span class="co">#&gt; 5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75</span></span>
+<span><span class="co">#&gt; 6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48</span></span>
+<span><span class="co">#&gt; # ℹ more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>还有两种与其他数据库交互的常见方式。首先，许多企业数据库非常大，所以你需要一些层次结构来组织所有的表。在这种情况下，你可能需要提供一个模式 (schema)，或者一个目录 (catalog) 和一个模式，以便选择你感兴趣的表：</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="fu"><a href="https://dbplyr.tidyverse.org/reference/in_schema.html">in_schema</a></span><span class="op">(</span><span class="st">"sales"</span>, <span class="st">"diamonds"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">diamonds_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="fu"><a href="https://dbplyr.tidyverse.org/reference/in_schema.html">in_catalog</a></span><span class="op">(</span><span class="st">"north_america"</span>, <span class="st">"sales"</span>, <span class="st">"diamonds"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>其他时候，你可能想用你自己的 SQL 查询作为起点：</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds_db</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="fu"><a href="https://dbplyr.tidyverse.org/reference/sql.html">sql</a></span><span class="op">(</span><span class="st">"SELECT * FROM diamonds"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>这个对象是<strong>惰性 (lazy)</strong> 的；当你在它上面使用 dplyr 动词时，dplyr 不会做任何工作：它只是记录下你想要执行的操作序列，并且只在需要时才执行它们。例如，看下面的管道：</p>
+<div class="cell">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">big_diamonds_db</span> <span class="op">&lt;-</span> <span class="va">diamonds_db</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">price</span> <span class="op">&gt;</span> <span class="fl">15000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">carat</span><span class="op">:</span><span class="va">clarity</span>, <span class="va">price</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">big_diamonds_db</span></span>
+<span><span class="co">#&gt; # Source:   SQL [?? x 5]</span></span>
+<span><span class="co">#&gt; # Database: DuckDB v1.3.1 [14913@Windows 10 x64:R 4.5.1/:memory:]</span></span>
+<span><span class="co">#&gt;   carat cut       color clarity price</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1  1.54 Premium   E     VS2     15002</span></span>
+<span><span class="co">#&gt; 2  1.19 Ideal     F     VVS1    15005</span></span>
+<span><span class="co">#&gt; 3  2.1  Premium   I     SI1     15007</span></span>
+<span><span class="co">#&gt; 4  1.69 Ideal     D     SI1     15011</span></span>
+<span><span class="co">#&gt; 5  1.5  Very Good G     VVS2    15013</span></span>
+<span><span class="co">#&gt; 6  1.73 Very Good G     VS1     15014</span></span>
+<span><span class="co">#&gt; # ℹ more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>你可以看出这个对象代表一个数据库查询，因为它在顶部打印了 DBMS 的名称，并且虽然它告诉了你列的数量，但它通常不知道行的数量。这是因为找到总行数通常需要执行完整的查询，而这正是我们试图避免的。</p>
+<p>你可以看到由 dplyr 函数 <code><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query()</a></code> 生成的 SQL 代码。如果你了解 dplyr，这是学习 SQL 的一个好方法！写一些 dplyr 代码，让 dbplyr 将其翻译成 SQL，然后试着弄清楚这两种语言是如何对应的。</p>
+<div class="cell">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">big_diamonds_db</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT carat, cut, color, clarity, price</span></span>
+<span><span class="co">#&gt; FROM diamonds</span></span>
+<span><span class="co">#&gt; WHERE (price &gt; 15000.0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>要将所有数据取回 R 中，你可以调用 <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code>。在幕后，它会生成 SQL，调用 <code><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html">dbGetQuery()</a></code> 获取数据，然后将结果转换成一个 tibble：</p>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">big_diamonds</span> <span class="op">&lt;-</span> <span class="va">big_diamonds_db</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html">collect</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">big_diamonds</span></span>
+<span><span class="co">#&gt; # A tibble: 1,655 × 5</span></span>
+<span><span class="co">#&gt;   carat cut       color clarity price</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1  1.54 Premium   E     VS2     15002</span></span>
+<span><span class="co">#&gt; 2  1.19 Ideal     F     VVS1    15005</span></span>
+<span><span class="co">#&gt; 3  2.1  Premium   I     SI1     15007</span></span>
+<span><span class="co">#&gt; 4  1.69 Ideal     D     SI1     15011</span></span>
+<span><span class="co">#&gt; 5  1.5  Very Good G     VVS2    15013</span></span>
+<span><span class="co">#&gt; 6  1.73 Very Good G     VS1     15014</span></span>
+<span><span class="co">#&gt; # ℹ 1,649 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>通常，你会使用 dbplyr 从数据库中选择你想要的数据，使用下面描述的翻译进行基本的过滤和聚合。然后，一旦你准备好用 R 特有的函数分析数据，你就会 <code><a href="https://dplyr.tidyverse.org/reference/compute.html">collect()</a></code> 数据以获得一个内存中的 tibble，然后用纯 R 代码继续你的工作。</p>
+</section><section id="sql" class="level2" data-number="21.5"><h2 data-number="21.5" class="anchored" data-anchor-id="sql">
+<span class="header-section-number">21.5</span> SQL</h2>
+<p>本章的其余部分将通过 dbplyr 的视角教你一些 SQL。这是一个相当非传统的 SQL 入门，但我们希望它能让你快速掌握基础知识。幸运的是，如果你理解 dplyr，你就处在一个很好的位置，可以快速掌握 SQL，因为很多概念都是相同的。</p>
+<p>我们将使用 nycflights13 包中的两个老朋友来探讨 dplyr 和 SQL 之间的关系：<code>flights</code> 和 <code>planes</code>。这些数据集很容易进入我们的学习数据库，因为 dbplyr 自带一个函数，可以将 nycflights13 中的表复制到我们的数据库中：</p>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">dbplyr</span><span class="fu">::</span><span class="fu"><a href="https://dbplyr.tidyverse.org/reference/nycflights13.html">copy_nycflights13</a></span><span class="op">(</span><span class="va">con</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Creating table: airlines</span></span>
+<span><span class="co">#&gt; Creating table: airports</span></span>
+<span><span class="co">#&gt; Creating table: flights</span></span>
+<span><span class="co">#&gt; Creating table: planes</span></span>
+<span><span class="co">#&gt; Creating table: weather</span></span>
+<span><span class="va">flights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"flights"</span><span class="op">)</span></span>
+<span><span class="va">planes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/tbl.html">tbl</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"planes"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="sql-基础" class="level3" data-number="21.5.1"><h3 data-number="21.5.1" class="anchored" data-anchor-id="sql-基础">
+<span class="header-section-number">21.5.1</span> SQL 基础</h3>
+<p>SQL 的顶层组件被称为<strong>语句 (statements)</strong>。常见的语句包括用于定义新表的 <code>CREATE</code>，用于添加数据的 <code>INSERT</code>，以及用于检索数据的 <code>SELECT</code>。我们将专注于 <code>SELECT</code> 语句，也称为<strong>查询 (queries)</strong>，因为它们几乎是你作为数据科学家唯一会使用的。</p>
+<p>一个查询由<strong>子句 (clauses)</strong> 组成。有五个重要的子句：<code>SELECT</code>、<code>FROM</code>、<code>WHERE</code>、<code>ORDER BY</code> 和 <code>GROUP BY</code>。每个查询都必须有 <code>SELECT</code><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> 和 <code>FROM</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> 子句，最简单的查询是 <code>SELECT * FROM table</code>，它从指定的表中选择所有列。这是 dbplyr 为一个未经处理的表生成的代码：</p>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT *</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="va">planes</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT *</span></span>
+<span><span class="co">#&gt; FROM planes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>WHERE</code> 和 <code>ORDER BY</code> 控制包含哪些行以及它们如何排序：</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="st">"IAH"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT flights.*</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; WHERE (dest = 'IAH')</span></span>
+<span><span class="co">#&gt; ORDER BY dep_delay</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>GROUP BY</code> 将查询转换为一个摘要，导致聚合发生：</p>
+<div class="cell">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">dest</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>dep_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT dest, AVG(dep_delay) AS dep_delay</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; GROUP BY dest</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>dplyr 动词和 SELECT 子句之间有两个重要的区别：</p>
+<ul>
+<li>在 SQL 中，大小写不重要：你可以写 <code>select</code>、<code>SELECT</code>，甚至是 <code>SeLeCt</code>。在本书中，我们将坚持使用将 SQL 关键字大写的常见约定，以区别于表或变量名。</li>
+<li>在 SQL 中，顺序很重要：你必须总是按照 <code>SELECT</code>、<code>FROM</code>、<code>WHERE</code>、<code>GROUP BY</code>、<code>ORDER BY</code> 的顺序编写子句。令人困惑的是，这个顺序与子句实际求值的顺序不匹配，后者首先是 <code>FROM</code>，然后是 <code>WHERE</code>、<code>GROUP BY</code>、<code>SELECT</code> 和 <code>ORDER BY</code>。</li>
+</ul>
+<p>以下各节将更详细地探讨每个子句。</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>注意，虽然 SQL 是一个标准，但它极其复杂，没有一个数据库完全遵循它。虽然我们将在本书中重点关注的主要组件在不同 DBMS 之间非常相似，但存在许多细微的差异。幸运的是，dbplyr 旨在处理这个问题，并为不同的数据库生成不同的翻译。它并不完美，但它在不断改进，如果你遇到问题，可以在 <a href="https://github.com/tidyverse/dbplyr/issues/">GitHub</a> 上提交一个 issue 来帮助我们做得更好。</p>
+</div>
+</div>
+</div>
+</section><section id="select" class="level3" data-number="21.5.2"><h3 data-number="21.5.2" class="anchored" data-anchor-id="select">
+<span class="header-section-number">21.5.2</span> SELECT</h3>
+<p><code>SELECT</code> 子句是查询的主力，它执行与 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> 相同的工作，并且，正如你将在下一节中学到的，还有 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> 到 <code>SELECT</code> 的翻译非常直接，因为它们只影响列出现的位置（如果有的话）及其名称：</p>
+<div class="cell">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">planes</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">tailnum</span>, <span class="va">type</span>, <span class="va">manufacturer</span>, <span class="va">model</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT tailnum, "type", manufacturer, model, "year"</span></span>
+<span><span class="co">#&gt; FROM planes</span></span>
+<span></span>
+<span><span class="va">planes</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">tailnum</span>, <span class="va">type</span>, <span class="va">manufacturer</span>, <span class="va">model</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>year_built <span class="op">=</span> <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT tailnum, "type", manufacturer, model, "year" AS year_built</span></span>
+<span><span class="co">#&gt; FROM planes</span></span>
+<span></span>
+<span><span class="va">planes</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">tailnum</span>, <span class="va">type</span>, <span class="va">manufacturer</span>, <span class="va">model</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">manufacturer</span>, <span class="va">model</span>, .before <span class="op">=</span> <span class="va">type</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT tailnum, manufacturer, model, "type", "year"</span></span>
+<span><span class="co">#&gt; FROM planes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这个例子也向你展示了 SQL 是如何进行重命名的。在 SQL 术语中，重命名被称为<strong>别名 (aliasing)</strong>，并用 <code>AS</code> 完成。注意，与 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 不同，旧名称在左边，新名称在右边。</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>在上面的例子中，请注意 <code>"year"</code> 和 <code>"type"</code> 被双引号包裹。这是因为它们在 duckdb 中是<strong>保留字 (reserved words)</strong>，所以 dbplyr 将它们引用起来以避免列/表名和 SQL 运算符之间任何潜在的混淆。</p>
+<p>在与其他数据库工作时，你可能会看到每个变量名都被引用，因为只有少数客户端包（如 duckdb）知道所有的保留字是什么，所以它们为了安全起见会引用所有内容。</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="ot">"tailnum"</span>, <span class="ot">"type"</span>, <span class="ot">"manufacturer"</span>, <span class="ot">"model"</span>, <span class="ot">"year"</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> <span class="ot">"planes"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>一些其他数据库系统使用反引号而不是引号：</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> `tailnum`, `type`, `manufacturer`, `model`, `year`</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> `planes`</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+<p><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 的翻译同样直接：每个变量都成为 <code>SELECT</code> 中的一个新表达式：</p>
+<div class="cell">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    speed <span class="op">=</span> <span class="va">distance</span> <span class="op">/</span> <span class="op">(</span><span class="va">air_time</span> <span class="op">/</span> <span class="fl">60</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT flights.*, distance / (air_time / 60.0) AS speed</span></span>
+<span><span class="co">#&gt; FROM flights</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>我们将在 <a href="#sec-sql-expressions" class="quarto-xref"><span>Section 21.6</span></a> 中回到单个组件（如 <code>/</code>）的翻译。</p>
+</section><section id="from" class="level3" data-number="21.5.3"><h3 data-number="21.5.3" class="anchored" data-anchor-id="from">
+<span class="header-section-number">21.5.3</span> FROM</h3>
+<p><code>FROM</code> 子句定义了数据源。在一段时间内它会相当无趣，因为我们只使用单个表。一旦我们接触到连接函数，你就会看到更复杂的例子。</p>
+</section><section id="group-by" class="level3" data-number="21.5.4"><h3 data-number="21.5.4" class="anchored" data-anchor-id="group-by">
+<span class="header-section-number">21.5.4</span> GROUP BY</h3>
+<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 被翻译成 <code>GROUP BY</code><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> 子句，而 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 被翻译成 <code>SELECT</code> 子句：</p>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds_db</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cut</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
+<span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    avg_price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">price</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT cut, COUNT(*) AS n, AVG(price) AS avg_price</span></span>
+<span><span class="co">#&gt; FROM diamonds</span></span>
+<span><span class="co">#&gt; GROUP BY cut</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>我们将在 <a href="#sec-sql-expressions" class="quarto-xref"><span>Section 21.6</span></a> 中回到 <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code> 和 <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> 的翻译发生了什么。</p>
+</section><section id="where" class="level3" data-number="21.5.5"><h3 data-number="21.5.5" class="anchored" data-anchor-id="where">
+<span class="header-section-number">21.5.5</span> WHERE</h3>
+<p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 被翻译成 <code>WHERE</code> 子句：</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="st">"IAH"</span> <span class="op">|</span> <span class="va">dest</span> <span class="op">==</span> <span class="st">"HOU"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT flights.*</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; WHERE (dest = 'IAH' OR dest = 'HOU')</span></span>
+<span></span>
+<span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">arr_delay</span> <span class="op">&gt;</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">arr_delay</span> <span class="op">&lt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT flights.*</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; WHERE (arr_delay &gt; 0.0 AND arr_delay &lt; 20.0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这里有几个重要的细节需要注意：</p>
+<ul>
+<li>
+<code>|</code> 变成 <code>OR</code>，<code>&amp;</code> 变成 <code>AND</code>。</li>
+<li>SQL 使用 <code>=</code> 进行比较，而不是 <code>==</code>。SQL 没有赋值操作，所以那里没有潜在的混淆。</li>
+<li>SQL 只使用 <code>''</code> 来表示字符串，而不是 <code>""</code>。在 SQL 中，<code>""</code> 用于标识变量，就像 R 的 <code>``</code>。</li>
+</ul>
+<p>另一个有用的 SQL 运算符是 <code>IN</code>，它非常接近 R 的 <code>%in%</code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dest</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"IAH"</span>, <span class="st">"HOU"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT flights.*</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; WHERE (dest IN ('IAH', 'HOU'))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>SQL 使用 <code>NULL</code> 而不是 <code>NA</code>。<code>NULL</code> 的行为与 <code>NA</code> 类似。主要区别在于，虽然它们在比较和算术中是“传染性的”，但在汇总时它们会被悄悄地丢弃。dbplyr 在你第一次遇到这种情况时会提醒你：</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">dest</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Missing values are always removed in SQL aggregation functions.</span></span>
+<span><span class="co">#&gt; Use `na.rm = TRUE` to silence this warning</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; # Source:   SQL [?? x 2]</span></span>
+<span><span class="co">#&gt; # Database: DuckDB v1.3.1 [14913@Windows 10 x64:R 4.5.1/:memory:]</span></span>
+<span><span class="co">#&gt;   dest   delay</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 CLT    7.36 </span></span>
+<span><span class="co">#&gt; 2 MDW   12.4  </span></span>
+<span><span class="co">#&gt; 3 SDF   12.7  </span></span>
+<span><span class="co">#&gt; 4 LAS    0.258</span></span>
+<span><span class="co">#&gt; 5 IAH    4.24 </span></span>
+<span><span class="co">#&gt; 6 CAK   19.7  </span></span>
+<span><span class="co">#&gt; # ℹ more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果你想更多地了解 <code>NULL</code> 是如何工作的，你可能会喜欢 Markus Winand 的文章“<a href="https://modern-sql.com/concept/three-valued-logic">SQL 的三值逻辑</a>”。</p>
+<p>总的来说，你可以用你在 R 中用于 <code>NA</code> 的函数来处理 <code>NULL</code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT flights.*</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; WHERE (NOT((dep_delay IS NULL)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这个 SQL 查询说明了 dbplyr 的一个缺点：虽然 SQL 是正确的，但它并不像你手写的那样简单。在这种情况下，你可以去掉括号并使用一个更易读的特殊运算符：</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> <span class="ot">"dep_delay"</span> <span class="kw">IS</span> <span class="kw">NOT</span> <span class="kw">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>请注意，如果你 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 一个你刚刚用 <code>summarize</code> 创建的变量，dbplyr 会生成一个 <code>HAVING</code> 子句，而不是一个 <code>WHERE</code> 子句。这是 SQL 的一个特异之处：<code>WHERE</code> 在 <code>SELECT</code> 和 <code>GROUP BY</code> 之前被求值，所以 SQL 需要另一个在之后被求值的子句。</p>
+<div class="cell">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diamonds_db</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cut</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT cut, COUNT(*) AS n</span></span>
+<span><span class="co">#&gt; FROM diamonds</span></span>
+<span><span class="co">#&gt; GROUP BY cut</span></span>
+<span><span class="co">#&gt; HAVING (COUNT(*) &gt; 100.0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="order-by" class="level3" data-number="21.5.6"><h3 data-number="21.5.6" class="anchored" data-anchor-id="order-by">
+<span class="header-section-number">21.5.6</span> ORDER BY</h3>
+<p>对行进行排序涉及从 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 到 <code>ORDER BY</code> 子句的直接翻译：</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT flights.*</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; ORDER BY "year", "month", "day", dep_delay DESC</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>注意 <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code> 是如何被翻译成 <code>DESC</code> 的：这是众多直接受到 SQL 启发的 dplyr 函数之一。</p>
+</section><section id="子查询" class="level3" data-number="21.5.7"><h3 data-number="21.5.7" class="anchored" data-anchor-id="子查询">
+<span class="header-section-number">21.5.7</span> 子查询</h3>
+<p>有时，将一个 dplyr 管道翻译成一个单一的 <code>SELECT</code> 语句是不可能的，你需要使用一个子查询。<strong>子查询 (subquery)</strong> 只是一个在 <code>FROM</code> 子句中用作数据源的查询，而不是通常的表。</p>
+<p>dbplyr 通常使用子查询来绕过 SQL 的限制。例如，<code>SELECT</code> 子句中的表达式不能引用刚刚创建的列。这意味着以下（愚蠢的）dplyr 管道需要分两步进行：第一步（内部）查询计算 <code>year1</code>，然后第二步（外部）查询才能计算 <code>year2</code>。</p>
+<div class="cell">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    year1 <span class="op">=</span> <span class="va">year</span> <span class="op">+</span> <span class="fl">1</span>,</span>
+<span>    year2 <span class="op">=</span> <span class="va">year1</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT q01.*, year1 + 1.0 AS year2</span></span>
+<span><span class="co">#&gt; FROM (</span></span>
+<span><span class="co">#&gt;   SELECT flights.*, "year" + 1.0 AS year1</span></span>
+<span><span class="co">#&gt;   FROM flights</span></span>
+<span><span class="co">#&gt; ) q01</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果你试图 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 一个你刚刚创建的变量，你也会看到这种情况。记住，尽管 <code>WHERE</code> 写在 <code>SELECT</code> 之后，但它是在 <code>SELECT</code> 之前被求值的，所以在这个（愚蠢的）例子中我们需要一个子查询：</p>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>year1 <span class="op">=</span> <span class="va">year</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">year1</span> <span class="op">==</span> <span class="fl">2014</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT q01.*</span></span>
+<span><span class="co">#&gt; FROM (</span></span>
+<span><span class="co">#&gt;   SELECT flights.*, "year" + 1.0 AS year1</span></span>
+<span><span class="co">#&gt;   FROM flights</span></span>
+<span><span class="co">#&gt; ) q01</span></span>
+<span><span class="co">#&gt; WHERE (year1 = 2014.0)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>有时 dbplyr 会在不需要的地方创建一个子查询，因为它还不知道如何优化该翻译。随着 dbplyr 随时间的改进，这些情况会越来越少，但可能永远不会完全消失。</p>
+</section><section id="连接" class="level3" data-number="21.5.8"><h3 data-number="21.5.8" class="anchored" data-anchor-id="连接">
+<span class="header-section-number">21.5.8</span> 连接</h3>
+<p>如果你熟悉 dplyr 的连接，SQL 连接非常相似。这里有一个简单的例子：</p>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">planes</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>year_built <span class="op">=</span> <span class="va">year</span><span class="op">)</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">tailnum</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT</span></span>
+<span><span class="co">#&gt;   flights.*,</span></span>
+<span><span class="co">#&gt;   planes."year" AS year_built,</span></span>
+<span><span class="co">#&gt;   "type",</span></span>
+<span><span class="co">#&gt;   manufacturer,</span></span>
+<span><span class="co">#&gt;   model,</span></span>
+<span><span class="co">#&gt;   engines,</span></span>
+<span><span class="co">#&gt;   seats,</span></span>
+<span><span class="co">#&gt;   speed,</span></span>
+<span><span class="co">#&gt;   engine</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; LEFT JOIN planes</span></span>
+<span><span class="co">#&gt;   ON (flights.tailnum = planes.tailnum)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>这里主要要注意的是语法：SQL 连接使用 <code>FROM</code> 子句的子子句来引入额外的表，并使用 <code>ON</code> 来定义表之间的关系。</p>
+<p>dplyr 为这些函数起的名字与 SQL 的联系非常紧密，以至于你可以轻松猜出 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code> 的等效 SQL：</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> flights.<span class="op">*</span>, <span class="ot">"type"</span>, manufacturer, model, engines, seats, speed</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> flights</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="kw">INNER</span> <span class="kw">JOIN</span> planes <span class="kw">ON</span> (flights.tailnum <span class="op">=</span> planes.tailnum)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> flights.<span class="op">*</span>, <span class="ot">"type"</span>, manufacturer, model, engines, seats, speed</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> flights</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="kw">RIGHT</span> <span class="kw">JOIN</span> planes <span class="kw">ON</span> (flights.tailnum <span class="op">=</span> planes.tailnum)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> flights.<span class="op">*</span>, <span class="ot">"type"</span>, manufacturer, model, engines, seats, speed</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> flights</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="kw">FULL</span> <span class="kw">JOIN</span> planes <span class="kw">ON</span> (flights.tailnum <span class="op">=</span> planes.tailnum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>在处理来自数据库的数据时，你可能需要进行很多连接。这是因为数据库表通常以高度规范化的形式存储，其中每个“事实”都存储在一个单一的地方，为了保持一个完整的分析数据集，你需要浏览一个由主键和外键连接的复杂表网络。如果你遇到这种情况，由 Tobias Schieferdecker、Kirill Müller 和 Darko Bergant 开发的 <a href="https://cynkra.github.io/dm/">dm 包</a> 将是你的救星。它可以自动确定表之间的连接，使用 DBA 通常提供的约束，可视化连接以便你了解情况，并生成你需要用来连接一个表到另一个表的连接。</p>
+</section><section id="其他动词" class="level3" data-number="21.5.9"><h3 data-number="21.5.9" class="anchored" data-anchor-id="其他动词">
+<span class="header-section-number">21.5.9</span> 其他动词</h3>
+<p>dbplyr 还翻译其他动词，如 <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code>、<code>slice_*()</code> 和 <code><a href="https://generics.r-lib.org/reference/setops.html">intersect()</a></code>，以及越来越多的 tidyr 函数，如 <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> 和 <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider()</a></code>。查看当前可用功能的完整集合的最简单方法是访问 dbplyr 网站：<a href="https://dbplyr.tidyverse.org/reference/">https://dbplyr.tidyverse.org/reference/</a>。</p>
+</section><section id="练习" class="level3" data-number="21.5.10"><h3 data-number="21.5.10" class="anchored" data-anchor-id="练习">
+<span class="header-section-number">21.5.10</span> 练习</h3>
+<ol type="1">
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> 被翻译成什么？<code><a href="https://rdrr.io/r/utils/head.html">head()</a></code> 呢？</p></li>
+<li>
+<p>解释以下每个 SQL 查询的作用，并尝试使用 dbplyr 重新创建它们。</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> flights</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">WHERE</span> dep_delay <span class="op">&lt;</span> arr_delay</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span>, distance <span class="op">/</span> (air_time <span class="op">/</span> <span class="dv">60</span>) <span class="kw">AS</span> speed</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> flights</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</li>
+</ol></section></section><section id="sec-sql-expressions" class="level2" data-number="21.6"><h2 data-number="21.6" class="anchored" data-anchor-id="sec-sql-expressions">
+<span class="header-section-number">21.6</span> 函数翻译</h2>
+<p>到目前为止，我们一直关注 dplyr 动词如何被翻译成查询的子句这个大局。现在我们将稍微深入一点，讨论处理单个列的 R 函数的翻译，例如，当你在 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 中使用 <code>mean(x)</code> 时会发生什么？</p>
+<p>为了帮助看清发生了什么，我们将使用几个小的辅助函数，它们运行一个 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 或 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 并显示生成的 SQL。这将使我们更容易探索一些变化，并看到摘要和转换有何不同。</p>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">summarize_query</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="va">mutate_query</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">df</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">...</span>, .keep <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/explain.html">show_query</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>让我们从一些摘要开始吧！看下面的代码，你会注意到一些摘要函数，比如 <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>，有一个相对简单的翻译，而另一些，比如 <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>，则复杂得多。对于在统计学中常见但在数据库中不那么常见的操作，其复杂性通常更高。</p>
+<div class="cell">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu">summarize_query</span><span class="op">(</span></span>
+<span>    mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">arr_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">arr_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; `summarise()` has grouped output by "year" and "month". You can override</span></span>
+<span><span class="co">#&gt; using the `.groups` argument.</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT</span></span>
+<span><span class="co">#&gt;   "year",</span></span>
+<span><span class="co">#&gt;   "month",</span></span>
+<span><span class="co">#&gt;   "day",</span></span>
+<span><span class="co">#&gt;   AVG(arr_delay) AS mean,</span></span>
+<span><span class="co">#&gt;   MEDIAN(arr_delay) AS median</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; GROUP BY "year", "month", "day"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>当你在 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 中使用摘要函数时，它们的翻译会变得更加复杂，因为它们必须变成所谓的<strong>窗口 (window)</strong> 函数。在 SQL 中，你通过在普通聚合函数后添加 <code>OVER</code> 来将其变成窗口函数：</p>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu">mutate_query</span><span class="op">(</span></span>
+<span>    mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">arr_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT</span></span>
+<span><span class="co">#&gt;   "year",</span></span>
+<span><span class="co">#&gt;   "month",</span></span>
+<span><span class="co">#&gt;   "day",</span></span>
+<span><span class="co">#&gt;   AVG(arr_delay) OVER (PARTITION BY "year", "month", "day") AS mean</span></span>
+<span><span class="co">#&gt; FROM flights</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>在 SQL 中，<code>GROUP BY</code> 子句专门用于摘要，所以在这里你可以看到分组已经从 <code>GROUP BY</code> 子句移到了 <code>OVER</code>。</p>
+<p>窗口函数包括所有向前或向后看的函数，比如 <code><a href="https://dplyr.tidyverse.org/reference/lead-lag.html">lead()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/lead-lag.html">lag()</a></code>，它们分别查看“下一个”或“上一个”值：</p>
+<div class="cell">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">dest</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">time_hour</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">mutate_query</span><span class="op">(</span></span>
+<span>    lead <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/lead-lag.html">lead</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span>,</span>
+<span>    lag <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/lead-lag.html">lag</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT</span></span>
+<span><span class="co">#&gt;   dest,</span></span>
+<span><span class="co">#&gt;   LEAD(arr_delay, 1, NULL) OVER (PARTITION BY dest ORDER BY time_hour) AS lead,</span></span>
+<span><span class="co">#&gt;   LAG(arr_delay, 1, NULL) OVER (PARTITION BY dest ORDER BY time_hour) AS lag</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="co">#&gt; ORDER BY time_hour</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>在这里，<code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 数据很重要，因为 SQL 表没有内在的顺序。事实上，如果你不使用 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>，你每次可能会得到不同顺序的行！注意对于窗口函数，排序信息是重复的：主查询的 <code>ORDER BY</code> 子句不自动应用于窗口函数。</p>
+<p>另一个重要的 SQL 函数是 <code>CASE WHEN</code>。它被用作 <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> 的翻译，后者是直接受到它启发的 dplyr 函数。这里有几个简单的例子：</p>
+<div class="cell">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">mutate_query</span><span class="op">(</span></span>
+<span>    description <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">arr_delay</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="st">"delayed"</span>, <span class="st">"on-time"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT CASE WHEN (arr_delay &gt; 0.0) THEN 'delayed' WHEN NOT (arr_delay &gt; 0.0) THEN 'on-time' END AS description</span></span>
+<span><span class="co">#&gt; FROM flights</span></span>
+<span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">mutate_query</span><span class="op">(</span></span>
+<span>    description <span class="op">=</span> </span>
+<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span></span>
+<span>        <span class="va">arr_delay</span> <span class="op">&lt;</span> <span class="op">-</span><span class="fl">5</span> <span class="op">~</span> <span class="st">"early"</span>, </span>
+<span>        <span class="va">arr_delay</span> <span class="op">&lt;</span> <span class="fl">5</span> <span class="op">~</span> <span class="st">"on-time"</span>,</span>
+<span>        <span class="va">arr_delay</span> <span class="op">&gt;=</span> <span class="fl">5</span> <span class="op">~</span> <span class="st">"late"</span></span>
+<span>      <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT CASE</span></span>
+<span><span class="co">#&gt; WHEN (arr_delay &lt; -5.0) THEN 'early'</span></span>
+<span><span class="co">#&gt; WHEN (arr_delay &lt; 5.0) THEN 'on-time'</span></span>
+<span><span class="co">#&gt; WHEN (arr_delay &gt;= 5.0) THEN 'late'</span></span>
+<span><span class="co">#&gt; END AS description</span></span>
+<span><span class="co">#&gt; FROM flights</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>CASE WHEN</code> 也用于一些其他没有从 R 到 SQL 的直接翻译的函数。一个很好的例子是 <code><a href="https://rdrr.io/r/base/cut.html">cut()</a></code>：</p>
+<div class="cell">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">mutate_query</span><span class="op">(</span></span>
+<span>    description <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span></span>
+<span>      <span class="va">arr_delay</span>, </span>
+<span>      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span>, <span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span>, <span class="cn">Inf</span><span class="op">)</span>, </span>
+<span>      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"early"</span>, <span class="st">"on-time"</span>, <span class="st">"late"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; &lt;SQL&gt;</span></span>
+<span><span class="co">#&gt; SELECT CASE</span></span>
+<span><span class="co">#&gt; WHEN (arr_delay &lt;= -5.0) THEN 'early'</span></span>
+<span><span class="co">#&gt; WHEN (arr_delay &lt;= 5.0) THEN 'on-time'</span></span>
+<span><span class="co">#&gt; WHEN (arr_delay &gt; 5.0) THEN 'late'</span></span>
+<span><span class="co">#&gt; END AS description</span></span>
+<span><span class="co">#&gt; FROM flights</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>dbplyr 还翻译常见的字符串和日期时间操作函数，你可以在 <code><a href="https://dbplyr.tidyverse.org/articles/translation-function.html">vignette("translation-function", package = "dbplyr")</a></code> 中了解它们。dbplyr 的翻译肯定不完美，还有很多 R 函数尚未被翻译，但 dbplyr 在覆盖你大多数时候会使用的函数方面做得出奇地好。</p>
+</section><section id="总结" class="level2" data-number="21.7"><h2 data-number="21.7" class="anchored" data-anchor-id="总结">
+<span class="header-section-number">21.7</span> 总结</h2>
+<p>在本章中，你学习了如何从数据库访问数据。我们专注于 dbplyr，一个 dplyr 的“后端”，它允许你编写你熟悉的 dplyr 代码，并让它自动翻译成 SQL。我们利用这种翻译教了你一些 SQL；学习一些 SQL 很重要，因为它是<em>最</em>常用的数据处理语言，了解一些将使你更容易与其他不使用 R 的数据人员交流。</p>
+<p>如果你已经完成了本章，并想学习更多关于 SQL 的知识，我们有两个推荐：</p>
+<ul>
+<li>Renée M. P. Teate 的 <em>《面向数据科学家的 SQL》</em> (<em>SQL for Data Scientists</em>)，<a href="https://sqlfordatascientists.com">https://sqlfordatascientists.com</a>，是专为数据科学家的需求设计的 SQL 入门，并包含了你在真实组织中可能遇到的那种高度互联数据的例子。</li>
+<li>Anthony DeBarros 的 <em>《实用 SQL》</em> (<em>Practical SQL</em>)，<a href="https://www.practicalsql.com">https://www.practicalsql.com</a>，是从数据记者（专门讲述引人入胜故事的数据科学家）的角度写的，并更详细地介绍了如何将你的数据导入数据库和运行你自己的 DBMS。</li>
+</ul>
+<p>在下一章中，我们将学习另一个用于处理大数据的 dplyr 后端：arrow。Arrow 是为处理磁盘上的大文件而设计的，是数据库的天然补充。</p>
+
+
+</section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>SQL 的发音是“s”-“q”-“l”或“sequel”。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>通常，这是你将从客户端包中使用的唯一函数，所以我们建议使用 <code>::</code> 来提取那一个函数，而不是用 <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> 加载整个包。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>至少，是你被授权查看的所有表。<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>令人困惑的是，根据上下文，<code>SELECT</code> 可以是一个语句或一个子句。为了避免这种混淆，我们通常会用 <code>SELECT</code> 查询而不是 <code>SELECT</code> 语句。<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>好吧，从技术上讲，只需要 <code>SELECT</code>，因为你可以写像 <code>SELECT 1+1</code> 这样的查询来执行基本计算。但如果你想处理数据（你总是这样做的！），你还需要一个 <code>FROM</code> 子句。<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>这并非巧合：dplyr 函数的名称受到了 SQL 子句的启发。<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ggvispro\.github\.io\/r4ds-cn\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./spreadsheets.html" class="pagination-link" aria-label="电子表格">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">电子表格</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./arrow.html" class="pagination-link" aria-label="Arrow">
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Arrow</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/databases.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

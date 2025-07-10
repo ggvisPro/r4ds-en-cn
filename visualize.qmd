@@ -1,0 +1,38 @@
+# 可视化 {#sec-visualize .unnumbered}
+
+```{r}
+#| echo: false
+
+source("_common.R")
+showtext::showtext_auto()
+```
+
+读完本书的第一部分后，你已经（至少在表面上）了解了从事数据科学所需的最重要的工具。
+现在是时候开始深入细节了。
+在本书的这一部分，你将更深入地学习数据可视化。
+
+```{r}
+#| label: fig-ds-visualize
+#| echo: false
+#| fig-cap: |
+#|   数据可视化通常是数据探索的第一步。
+#| fig-alt: |
+#|   我们的数据科学模型，其中“可视化”部分以蓝色突出显示。
+#| out.width: NULL
+knitr::include_graphics("diagrams/data-science/visualize.png", dpi = 270)
+```
+
+每一章都将探讨创建数据可视化的一个或几个方面。
+
+  - 在 @sec-layers 中，你将学习图形的 layered grammar (分层语法)。
+
+  - 在 @sec-exploratory-data-analysis 中，你将把可视化与你的好奇心和怀疑精神结合起来，从而提出并回答有关数据的有趣问题。
+
+  - 最后，在 @sec-communication 中，你将学习如何将你的探索性图形进行升华，将其转化为解释性图形，这种图形可以帮助初次接触你分析的人尽可能快速、轻松地理解当前的情况。
+
+这三章将带你进入可视化世界的大门，但还有更多的知识有待学习。
+学习更多知识的最佳途径是阅读 ggplot2 专著：[*ggplot2: Elegant graphics for data analysis*](https://ggplot2-book.org/)。
+该书更深入地探讨了底层理论，并提供了更多关于如何组合各个部分来解决实际问题的示例。
+另一个很棒的资源是 ggplot2 扩展库 [https://exts.ggplot2.tidyverse.org/gallery/](https://exts.ggplot2.tidyverse.org/gallery/)。
+这个网站列出了许多用新的几何对象 (geom) 和标度 (scale) 来扩展 ggplot2 的包。
+如果你想用 ggplot2 做一些看起来很困难的事情，这里是一个很好的起点。
