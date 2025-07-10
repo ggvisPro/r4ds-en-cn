@@ -8,9 +8,10 @@ source("_common.R")
 
 Our goal in this part of the book is to give you a rapid overview of the main tools of data science: **importing**, **tidying**, **transforming**, and **visualizing data**, as shown in @fig-ds-whole-game.
 We want to show you the "whole game" of data science giving you just enough of all the major pieces so that you can tackle real, if simple, datasets.
-The later parts of the book will hit each of these topics in more depth, increasing the range of data science challenges that you can tackle.
-
-本书这部分的目标是快速概述数据科学的主要工具：**导入** (importing)、**整理** (tidying)、**转换** (transforming) 和**可视化数据** (visualizing data)，如 @fig-ds-whole-game 所示。我们希望向你展示数据科学的“全貌” (whole game)，为你提供所有主要部分的足够知识，以便你可以处理真实的（尽管是简单的）数据集。本书的后续部分将更深入地探讨这些主题，增加你可以应对的数据科学挑战的范围。
+The later parts of the book will hit each of these topics in more depth, increasing the range of data science challenges that you can tackle. <br>
+在本书这一部分，我们的目标是快速概览数据科学的主要工具：**导入 (importing)**、**整洁化 (tidying)**、**转换 (transforming)** 和 **可视化 (visualizing)**，如 @fig-ds-whole-game 所示。
+我们希望向你展示数据科学的 “完整全局 (whole game)”，让你对所有关键环节都有足够认识，以便能够处理真正但相对简单的数据集。
+后续章节将更深入地探讨这些主题，逐步提升你可应对的数据科学挑战的广度和深度。
 
 ```{r}
 #| label: fig-ds-whole-game 
@@ -27,32 +28,32 @@ The later parts of the book will hit each of these topics in more depth, increas
 knitr::include_graphics("diagrams/data-science/whole-game.png", dpi = 270)
 ```
 
-Four chapters focus on the tools of data science:
+Four chapters focus on the tools of data science: <br>
+以下四个章节集中介绍数据科学的核心工具：
 
-有四章内容重点介绍数据科学的工具：
+* Visualization is a great place to start with R programming, because the payoff is so clear: you get to make elegant and informative plots that help you understand data.
+  In @sec-data-visualization you'll dive into visualization, learning the basic structure of a ggplot2 plot, and powerful techniques for turning data into plots. <br>
+  以可视化入门 R 编程是绝佳选择，因为它的回报十分直观：你可以绘制优雅而信息丰富的图形来理解数据。
+  在 @sec-data-visualization 中，你将深入学习可视化，掌握 ggplot2 图形的基本结构，以及将数据转化为图形的强大技巧。
 
--   Visualization is a great place to start with R programming, because the payoff is so clear: you get to make elegant and informative plots that help you understand data.
-    In @sec-data-visualization you'll dive into visualization, learning the basic structure of a ggplot2 plot, and powerful techniques for turning data into plots.
+* Visualization alone is typically not enough, so in @sec-data-transform, you'll learn the key verbs that allow you to select important variables, filter out key observations, create new variables, and compute summaries. <br>
+  单靠可视化通常不足以完成分析任务，因此在 @sec-data-transform 中，你将学习一组关键 “动词 (verbs)”：选择重要变量、筛选关键观测、创建新变量并生成汇总结果。
 
-- 可视化是开始 R 编程的绝佳起点，因为回报非常明确：你可以制作出优雅且信息丰富的图表，帮助你理解数据。在 @sec-data-visualization 中，你将深入学习可视化，了解 ggplot2 图的基本结构以及将数据转化为图表的强大技术。
+* In @sec-data-tidy, you'll learn about tidy data, a consistent way of storing your data that makes transformation, visualization, and modelling easier.
+  You'll learn the underlying principles, and how to get your data into a tidy form. <br>
+  在 @sec-data-tidy 中，你将了解 “整洁数据 (tidy data)” 的概念，这是一种一致的存储方式，可让后续转换、可视化与建模工作更轻松。
+  你将学习其核心原则，以及如何将数据整理成整洁格式。
 
--   Visualization alone is typically not enough, so in @sec-data-transform, you'll learn the key verbs that allow you to select important variables, filter out key observations, create new variables, and compute summaries.
-
-- 通常仅有可视化是不够的，因此在 @sec-data-transform 中，你将学习一些关键的“动词” (verbs)，它们能让你选择重要的变量、筛选出关键的观测值、创建新变量以及计算摘要。
-
--   In @sec-data-tidy, you'll learn about tidy data, a consistent way of storing your data that makes transformation, visualization, and modelling easier.
-    You'll learn the underlying principles, and how to get your data into a tidy form.
-
-- 在 @sec-data-tidy 中，你将学习整洁数据 (tidy data)，这是一种一致的数据存储方式，可以使转换、可视化和建模变得更加容易。你将学习其基本原则，以及如何将你的数据整理成整洁的形式。
-
--   Before you can transform and visualize your data, you need to first get your data into R.
-    In @sec-data-import you'll learn the basics of getting `.csv` files into R.
-
-- 在转换和可视化数据之前，你首先需要将数据导入 R。在 @sec-data-import 中，你将学习将 `.csv` 文件导入 R 的基础知识。
+* Before you can transform and visualize your data, you need to first get your data into R.
+  In @sec-data-import you'll learn the basics of getting `.csv` files into R. <br>
+  在转换和可视化数据之前，你需要先将数据导入 R。
+  @sec-data-import 将教你把 `.csv` 文件读入 R 的基础方法。
 
 Nestled among these chapters are four other chapters that focus on your R workflow.
 In @sec-workflow-basics, @sec-workflow-style, and @sec-workflow-scripts-projects you'll learn good workflow practices for writing and organizing your R code.
 These will set you up for success in the long run, as they'll give you the tools to stay organized when you tackle real projects.
-Finally, @sec-workflow-getting-help will teach you how to get help and keep learning.
-
-在这些章节之间，还有另外四章专注于你的 R 工作流程 (workflow)。在 @sec-workflow-basics、@sec-workflow-style 和 @sec-workflow-scripts-projects 中，你将学习编写和组织 R 代码的良好工作流程实践。从长远来看，这些将为你奠定成功的基础，因为它们为你提供了在处理实际项目时保持条理的工具。最后，@sec-workflow-getting-help 将教你如何获取帮助并持续学习。
+Finally, @sec-workflow-getting-help will teach you how to get help and keep learning. <br>
+除了上述内容，本部分还穿插了四个专注于 R 工作流的章节。
+在 @sec-workflow-basics、@sec-workflow-style 以及 @sec-workflow-scripts-projects 中，你将学习撰写并组织 R 代码的良好工作流实践。
+这些技能将在长期项目中助你保持条理与高效。
+最后，@sec-workflow-getting-help 将指导你如何寻求帮助并持续学习。

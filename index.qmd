@@ -1,48 +1,28 @@
 # Welcome {.unnumbered}
 
+This is the website for the 2nd edition of **"R for Data Science"**. This book will teach you how to do data science with R: You'll learn how to get your data into R, get it into the most useful structure, transform it and visualize.  
+这是 **《R 数据科学》** 第二版的网站。本书将教你如何使用 R 进行数据科学：你将学习如何将数据导入 R、将其整理成最有用的结构，并对其进行转换与可视化。
 
-This is the website for the 2nd edition of **"R for Data Science"**.
-This book will teach you how to do data science with R: You'll learn how to get your data into R, get it into the most useful structure, transform it and visualize.
+In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you'll learn how to clean data and draw plots---and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You'll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You'll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualizing, and exploring data.  
+在本书中，你将获得一套系统的数据科学实战技能。就像化学家学习如何清洗试管和整理实验室一样，你将学习如何清洗数据、绘制图形，以及更多相关技能。这些技能让数据科学成为可能，而你将在此处学到使用 R 完成这些任务的最佳实践。你将学会使用图形语法（grammar of graphics）、释义式编程（literate programming）以及可重复性研究（reproducible research）来节省时间。你还将学习如何管理认知资源，以便在数据清洗、可视化和探索过程中促进发现。
 
-这里是第二版 **《R 数据科学》** 的网站。
-本书将教你如何用 R 来做数据科学：你将学习如何将数据导入 R，如何将其整理为最有用结构，以及如何转换和可视化数据。
+This website is and will always be free, licensed under the [CC BY-NC-ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/us/) License. If you'd like a physical copy of the book, you can order it on [Amazon](https://www.amazon.com/dp/1492097403?&tag=hadlwick-20). If you appreciate reading the book for free and would like to give back, please make a donation to [Kākāpō Recovery](https://www.doc.govt.nz/kakapo-donate): the [kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) (which appears on the cover of R4DS) is a critically endangered parrot native to New Zealand; there are only 244 left.  
+本网站现在并且永远向所有人免费开放，内容遵循 [CC BY‑NC‑ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/us/) 许可证。如果你希望拥有纸质版书籍，可以在 [Amazon](https://www.amazon.com/dp/1492097403?&tag=hadlwick-20) 订购。如果你喜欢免费阅读本书并希望回馈，请向 [Kākāpō Recovery](https://www.doc.govt.nz/kakapo-donate) 捐款：封面上的 [kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) 是新西兰特有的极危鹦鹉，现存仅 244 只。
 
-In this book, you will find a practicum of skills for data science.
-Just as a chemist learns how to clean test tubes and stock a lab, you'll learn how to clean data and draw plots---and many other things besides.
-These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R.
-You'll learn how to use the grammar of graphics, literate programming, and reproducible research to save time.
-You'll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualizing, and exploring data.
+If you speak another language, you might be interested in the freely available translations of the 1st edition:  
+如果你使用其他语言，也许会对第一版的免费翻译感兴趣：
 
-在本书中，你会发现一套数据科学的实践技能。
-就像化学家学习如何清洗试管和储备实验室一样，你将学习如何清理数据和绘制图表——以及许多其他事情。
-这些是让数据科学得以实现的技能，在这里你会找到用 R 来完成这些事情的最佳实践。
-你将学习如何使用图形语法 (grammar of graphics)、文学编程 (literate programming) 和可重复研究 (reproducible research) 来节省时间。
-你还将学习如何管理认知资源，以便在整理、可视化和探索数据时促进新发现。
+* [Spanish](http://es.r4ds.hadley.nz)
+  西班牙语译本：[http://es.r4ds.hadley.nz](http://es.r4ds.hadley.nz)
+* [Italian](https://it.r4ds.hadley.nz)
+  意大利语译本：[https://it.r4ds.hadley.nz](https://it.r4ds.hadley.nz)
+* [Turkish](https://tr.r4ds.hadley.nz)
+  土耳其语译本：[https://tr.r4ds.hadley.nz](https://tr.r4ds.hadley.nz)
+* [Portuguese](https://pt.r4ds.hadley.nz)
+  葡萄牙语译本：[https://pt.r4ds.hadley.nz](https://pt.r4ds.hadley.nz)
 
-This website is and will always be free, licensed under the [CC BY-NC-ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/us/) License.
-If you'd like a physical copy of the book, you can order it on [Amazon](https://www.amazon.com/dp/1492097403?&tag=hadlwick-20).
-If you appreciate reading the book for free and would like to give back, please make a donation to [Kākāpō Recovery](https://www.doc.govt.nz/kakapo-donate): the [kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) (which appears on the cover of R4DS) is a critically endangered parrot native to New Zealand; there are only 244 left.
+You can find suggested answers to exercises in the book at [https://mine-cetinkaya-rundel.github.io/r4ds-solutions](https://mine-cetinkaya-rundel.github.io/r4ds-solutions).  
+你可以在 [https://mine-cetinkaya-rundel.github.io/r4ds-solutions](https://mine-cetinkaya-rundel.github.io/r4ds-solutions) 找到本书练习题的参考答案。
 
-本网站是并且将永远是免费的，基于 [CC BY-NC-ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/us/) 许可协议。
-如果你想要实体书，可以在 [亚马逊](https://www.amazon.com/dp/1492097403?&tag=hadlwick-20) 上订购。
-如果你很感激能够免费阅读本书并希望回馈，请向 [Kākāpō Recovery](https://www.doc.govt.nz/kakapo-donate) 捐款：[kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) (R4DS 封面上的鸟) 是新西兰本土的一种极度濒危的鹦鹉；目前仅存 244 只。
-
-If you speak another language, you might be interested in the freely available translations of the 1st edition:
-
-如果你使用其他语言，你可能会对第一版的免费译本感兴趣：
-
--   [Spanish](http://es.r4ds.hadley.nz)
--   [Italian](https://it.r4ds.hadley.nz)
--   [Turkish](https://tr.r4ds.hadley.nz)
--   [Portuguese](https://pt.r4ds.hadley.nz)
-
-You can find suggested answers to exercises in the book at [https://mine-cetinkaya-rundel.github.io/r4ds-solutions](https://mine-cetinkaya-rundel.github.io/r4ds-solutions).
-
-你可以在 [https://mine-cetinkaya-rundel.github.io/r4ds-solutions](https://mine-cetinkaya-rundel.github.io/r4ds-solutions) 找到书中练习的建议答案。
-
-Please note that R4DS uses a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
-By contributing to this book, you agree to abide by its terms.
-
-请注意，R4DS 使用 [贡献者行为准则](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html)。
-为本书做贡献，即表示你同意遵守其条款。
-http://googleusercontent.com/youtube_content/0
+Please note that R4DS uses a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this book, you agree to abide by its terms.  
+请注意，R4DS 遵循 [贡献者行为准则](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html)。参与本书贡献即表示你同意遵守其条款。
