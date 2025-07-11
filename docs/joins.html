@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.7.32">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund">
-<title>19&nbsp; 连接 – R 数据科学 2e</title>
+<title>19&nbsp; Joins – R 数据科学 2e</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transform.html">Transform</a></li><li class="breadcrumb-item"><a href="./joins.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">连接</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transform.html">Transform</a></li><li class="breadcrumb-item"><a href="./joins.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Joins</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -274,31 +274,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./regexps.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正则表达式</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Regular expressions</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./factors.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">因子</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Factors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./datetimes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">日期和时间</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Dates and times</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./missing-values.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">缺失值</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Missing values</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./joins.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">连接</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Joins</span></span></a>
   </div>
 </li>
       </ul>
@@ -405,52 +405,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
 <li>
-<a href="#%E5%BC%95%E8%A8%80" id="toc-引言" class="nav-link active" data-scroll-target="#%E5%BC%95%E8%A8%80"><span class="header-section-number">19.1</span> 引言</a>
+<a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">19.1</span> Introduction</a>
   <ul class="collapse">
-<li><a href="#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6" id="toc-前提条件" class="nav-link" data-scroll-target="#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="header-section-number">19.1.1</span> 前提条件</a></li>
+<li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">19.1.1</span> Prerequisites</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E9%94%AE" id="toc-键" class="nav-link" data-scroll-target="#%E9%94%AE"><span class="header-section-number">19.2</span> 键</a>
+<a href="#keys" id="toc-keys" class="nav-link" data-scroll-target="#keys"><span class="header-section-number">19.2</span> Keys</a>
   <ul class="collapse">
-<li><a href="#%E4%B8%BB%E9%94%AE%E5%92%8C%E5%A4%96%E9%94%AE" id="toc-主键和外键" class="nav-link" data-scroll-target="#%E4%B8%BB%E9%94%AE%E5%92%8C%E5%A4%96%E9%94%AE"><span class="header-section-number">19.2.1</span> 主键和外键</a></li>
-  <li><a href="#%E6%A3%80%E6%9F%A5%E4%B8%BB%E9%94%AE" id="toc-检查主键" class="nav-link" data-scroll-target="#%E6%A3%80%E6%9F%A5%E4%B8%BB%E9%94%AE"><span class="header-section-number">19.2.2</span> 检查主键</a></li>
-  <li><a href="#%E4%BB%A3%E7%90%86%E9%94%AE" id="toc-代理键" class="nav-link" data-scroll-target="#%E4%BB%A3%E7%90%86%E9%94%AE"><span class="header-section-number">19.2.3</span> 代理键</a></li>
-  <li><a href="#%E7%BB%83%E4%B9%A0" id="toc-练习" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0"><span class="header-section-number">19.2.4</span> 练习</a></li>
+<li><a href="#primary-and-foreign-keys" id="toc-primary-and-foreign-keys" class="nav-link" data-scroll-target="#primary-and-foreign-keys"><span class="header-section-number">19.2.1</span> Primary and foreign keys</a></li>
+  <li><a href="#checking-primary-keys" id="toc-checking-primary-keys" class="nav-link" data-scroll-target="#checking-primary-keys"><span class="header-section-number">19.2.2</span> Checking primary keys</a></li>
+  <li><a href="#surrogate-keys" id="toc-surrogate-keys" class="nav-link" data-scroll-target="#surrogate-keys"><span class="header-section-number">19.2.3</span> Surrogate keys</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">19.2.4</span> Exercises</a></li>
   </ul>
 </li>
   <li>
-<a href="#sec-mutating-joins" id="toc-sec-mutating-joins" class="nav-link" data-scroll-target="#sec-mutating-joins"><span class="header-section-number">19.3</span> 基本连接</a>
+<a href="#sec-mutating-joins" id="toc-sec-mutating-joins" class="nav-link" data-scroll-target="#sec-mutating-joins"><span class="header-section-number">19.3</span> Basic joins</a>
   <ul class="collapse">
-<li><a href="#%E5%8F%98%E8%BF%9E%E6%8E%A5" id="toc-变连接" class="nav-link" data-scroll-target="#%E5%8F%98%E8%BF%9E%E6%8E%A5"><span class="header-section-number">19.3.1</span> 变连接</a></li>
-  <li><a href="#%E6%8C%87%E5%AE%9A%E8%BF%9E%E6%8E%A5%E9%94%AE" id="toc-指定连接键" class="nav-link" data-scroll-target="#%E6%8C%87%E5%AE%9A%E8%BF%9E%E6%8E%A5%E9%94%AE"><span class="header-section-number">19.3.2</span> 指定连接键</a></li>
-  <li><a href="#%E8%BF%87%E6%BB%A4%E8%BF%9E%E6%8E%A5" id="toc-过滤连接" class="nav-link" data-scroll-target="#%E8%BF%87%E6%BB%A4%E8%BF%9E%E6%8E%A5"><span class="header-section-number">19.3.3</span> 过滤连接</a></li>
-  <li><a href="#%E7%BB%83%E4%B9%A0-1" id="toc-练习-1" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-1"><span class="header-section-number">19.3.4</span> 练习</a></li>
+<li><a href="#mutating-joins" id="toc-mutating-joins" class="nav-link" data-scroll-target="#mutating-joins"><span class="header-section-number">19.3.1</span> Mutating joins</a></li>
+  <li><a href="#specifying-join-keys" id="toc-specifying-join-keys" class="nav-link" data-scroll-target="#specifying-join-keys"><span class="header-section-number">19.3.2</span> Specifying join keys</a></li>
+  <li><a href="#filtering-joins" id="toc-filtering-joins" class="nav-link" data-scroll-target="#filtering-joins"><span class="header-section-number">19.3.3</span> Filtering joins</a></li>
+  <li><a href="#exercises-1" id="toc-exercises-1" class="nav-link" data-scroll-target="#exercises-1"><span class="header-section-number">19.3.4</span> Exercises</a></li>
   </ul>
 </li>
   <li>
-<a href="#%E8%BF%9E%E6%8E%A5%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C" id="toc-连接如何工作" class="nav-link" data-scroll-target="#%E8%BF%9E%E6%8E%A5%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C"><span class="header-section-number">19.4</span> 连接如何工作？</a>
+<a href="#how-do-joins-work" id="toc-how-do-joins-work" class="nav-link" data-scroll-target="#how-do-joins-work"><span class="header-section-number">19.4</span> How do joins work?</a>
   <ul class="collapse">
-<li><a href="#%E8%A1%8C%E5%8C%B9%E9%85%8D" id="toc-行匹配" class="nav-link" data-scroll-target="#%E8%A1%8C%E5%8C%B9%E9%85%8D"><span class="header-section-number">19.4.1</span> 行匹配</a></li>
-  <li><a href="#%E8%BF%87%E6%BB%A4%E8%BF%9E%E6%8E%A5-1" id="toc-过滤连接-1" class="nav-link" data-scroll-target="#%E8%BF%87%E6%BB%A4%E8%BF%9E%E6%8E%A5-1"><span class="header-section-number">19.4.2</span> 过滤连接</a></li>
+<li><a href="#row-matching" id="toc-row-matching" class="nav-link" data-scroll-target="#row-matching"><span class="header-section-number">19.4.1</span> Row matching</a></li>
+  <li><a href="#filtering-joins-1" id="toc-filtering-joins-1" class="nav-link" data-scroll-target="#filtering-joins-1"><span class="header-section-number">19.4.2</span> Filtering joins</a></li>
   </ul>
 </li>
   <li>
-<a href="#sec-non-equi-joins" id="toc-sec-non-equi-joins" class="nav-link" data-scroll-target="#sec-non-equi-joins"><span class="header-section-number">19.5</span> 非等值连接</a>
+<a href="#sec-non-equi-joins" id="toc-sec-non-equi-joins" class="nav-link" data-scroll-target="#sec-non-equi-joins"><span class="header-section-number">19.5</span> Non-equi joins</a>
   <ul class="collapse">
-<li><a href="#%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5" id="toc-交叉连接" class="nav-link" data-scroll-target="#%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5"><span class="header-section-number">19.5.1</span> 交叉连接</a></li>
-  <li><a href="#%E4%B8%8D%E7%AD%89%E8%BF%9E%E6%8E%A5" id="toc-不等连接" class="nav-link" data-scroll-target="#%E4%B8%8D%E7%AD%89%E8%BF%9E%E6%8E%A5"><span class="header-section-number">19.5.2</span> 不等连接</a></li>
-  <li><a href="#%E6%BB%9A%E5%8A%A8%E8%BF%9E%E6%8E%A5" id="toc-滚动连接" class="nav-link" data-scroll-target="#%E6%BB%9A%E5%8A%A8%E8%BF%9E%E6%8E%A5"><span class="header-section-number">19.5.3</span> 滚动连接</a></li>
-  <li><a href="#%E9%87%8D%E5%8F%A0%E8%BF%9E%E6%8E%A5" id="toc-重叠连接" class="nav-link" data-scroll-target="#%E9%87%8D%E5%8F%A0%E8%BF%9E%E6%8E%A5"><span class="header-section-number">19.5.4</span> 重叠连接</a></li>
-  <li><a href="#%E7%BB%83%E4%B9%A0-2" id="toc-练习-2" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-2"><span class="header-section-number">19.5.5</span> 练习</a></li>
+<li><a href="#cross-joins" id="toc-cross-joins" class="nav-link" data-scroll-target="#cross-joins"><span class="header-section-number">19.5.1</span> Cross joins</a></li>
+  <li><a href="#inequality-joins" id="toc-inequality-joins" class="nav-link" data-scroll-target="#inequality-joins"><span class="header-section-number">19.5.2</span> Inequality joins</a></li>
+  <li><a href="#rolling-joins" id="toc-rolling-joins" class="nav-link" data-scroll-target="#rolling-joins"><span class="header-section-number">19.5.3</span> Rolling joins</a></li>
+  <li><a href="#overlap-joins" id="toc-overlap-joins" class="nav-link" data-scroll-target="#overlap-joins"><span class="header-section-number">19.5.4</span> Overlap joins</a></li>
+  <li><a href="#exercises-2" id="toc-exercises-2" class="nav-link" data-scroll-target="#exercises-2"><span class="header-section-number">19.5.5</span> Exercises</a></li>
   </ul>
 </li>
-  <li><a href="#%E6%80%BB%E7%BB%93" id="toc-总结" class="nav-link" data-scroll-target="#%E6%80%BB%E7%BB%93"><span class="header-section-number">19.6</span> 总结</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">19.6</span> Summary</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/joins.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transform.html">Transform</a></li><li class="breadcrumb-item"><a href="./joins.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">连接</span></a></li></ol></nav><div class="quarto-title">
-<h1 class="title"><span id="sec-joins" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">连接</span></span></h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transform.html">Transform</a></li><li class="breadcrumb-item"><a href="./joins.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Joins</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-joins" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Joins</span></span></h1>
 </div>
 
 
@@ -464,30 +464,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><section id="引言" class="level2" data-number="19.1"><h2 data-number="19.1" class="anchored" data-anchor-id="引言">
-<span class="header-section-number">19.1</span> 引言</h2>
-<p>数据分析很少只涉及单个数据框。通常你会有多个数据框，并且必须将它们<strong>连接 (join)</strong> 在一起以回答你感兴趣的问题。本章将向你介绍两种重要的连接类型：</p>
+</header><section id="introduction" class="level2" data-number="19.1"><h2 data-number="19.1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">19.1</span> Introduction</h2>
+<p>It’s rare that a data analysis involves only a single data frame.<br>
+数据分析很少只涉及单个数据框。</p>
+<p>Typically you have many data frames, and you must <strong>join</strong> them together to answer the questions that you’re interested in.<br>
+通常你会有很多数据框，你必须将它们 <strong>连接</strong> (join) 在一起才能回答你感兴趣的问题。</p>
+<p>This chapter will introduce you to two important types of joins:<br>
+本章将向你介绍两种重要的连接类型：</p>
 <ul>
-<li>变连接 (Mutating joins)，它将一个数据框中的匹配观测值的新变量添加到另一个数据框中。</li>
-<li>过滤连接 (Filtering joins)，它根据一个数据框中的观测值是否与另一个数据框中的观测值匹配来过滤该数据框中的观测值。</li>
+<li>Mutating joins, which add new variables to one data frame from matching observations in another.<br>
+修改连接 (Mutating joins)，它将一个数据框中的匹配观测值的新变量添加到另一个数据框中。</li>
+<li>Filtering joins, which filter observations from one data frame based on whether or not they match an observation in another.<br>
+过滤连接 (Filtering joins)，它根据一个数据框中的观测值是否与另一个数据框中的观测值匹配来过滤它们。</li>
 </ul>
-<p>我们将首先讨论键 (keys)，即用于在连接中连接一对数据框的变量。我们将通过检查 nycflights13 包中数据集的键来巩固理论，然后利用这些知识开始连接数据框。接下来，我们将讨论连接的工作原理，重点关注它们对行的操作。最后，我们将讨论非等值连接 (non-equi joins)，这是一类连接，它提供了一种比默认的相等关系更灵活的键匹配方式。</p>
-<section id="前提条件" class="level3" data-number="19.1.1"><h3 data-number="19.1.1" class="anchored" data-anchor-id="前提条件">
-<span class="header-section-number">19.1.1</span> 前提条件</h3>
-<p>在本章中，我们将使用 dplyr 中的连接函数来探索 nycflights13 中的五个相关数据集。</p>
+<p>We’ll begin by discussing keys, the variables used to connect a pair of data frames in a join.<br>
+我们将从讨论键 (keys) 开始，键是用于在连接中连接一对数据框的变量。</p>
+<p>We cement the theory with an examination of the keys in the datasets from the nycflights13 package, then use that knowledge to start joining data frames together.<br>
+我们将通过检查 nycflights13 包中数据集的键来巩固理论，然后利用这些知识开始将数据框连接在一起。</p>
+<p>Next we’ll discuss how joins work, focusing on their action on the rows.<br>
+接下来我们将讨论连接的工作原理，重点关注它们对行的操作。</p>
+<p>We’ll finish up with a discussion of non-equi joins, a family of joins that provide a more flexible way of matching keys than the default equality relationship.<br>
+最后，我们将讨论非等值连接 (non-equi joins)，这类连接提供了一种比默认的相等关系更灵活的键匹配方式。</p>
+<section id="prerequisites" class="level3" data-number="19.1.1"><h3 data-number="19.1.1" class="anchored" data-anchor-id="prerequisites">
+<span class="header-section-number">19.1.1</span> Prerequisites</h3>
+<p>In this chapter, we’ll explore the five related datasets from nycflights13 using the join functions from dplyr.<br>
+在本章中，我们将使用 dplyr 中的连接函数来探索 nycflights13 中的五个相关数据集。</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13">nycflights13</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section></section><section id="键" class="level2" data-number="19.2"><h2 data-number="19.2" class="anchored" data-anchor-id="键">
-<span class="header-section-number">19.2</span> 键</h2>
-<p>要理解连接，你首先需要了解两个表如何通过每个表内的一对键连接起来。在本节中，你将学习两种类型的键，并在 nycflights13 包的数据集中看到这两种键的示例。你还将学习如何检查你的键是否有效，以及当你的表缺少键时该怎么办。</p>
-<section id="主键和外键" class="level3" data-number="19.2.1"><h3 data-number="19.2.1" class="anchored" data-anchor-id="主键和外键">
-<span class="header-section-number">19.2.1</span> 主键和外键</h3>
-<p>每个连接都涉及一对键：一个主键和一个外键。 <strong>主键 (primary key)</strong> 是一个或一组唯一标识每个观测值的变量。当需要多个变量时，该键称为<strong>复合键 (compound key)</strong>。例如，在 nycflights13 中：</p>
+</section></section><section id="keys" class="level2" data-number="19.2"><h2 data-number="19.2" class="anchored" data-anchor-id="keys">
+<span class="header-section-number">19.2</span> Keys</h2>
+<p>To understand joins, you need to first understand how two tables can be connected through a pair of keys, within each table.<br>
+要理解连接，你首先需要理解两个表如何通过每个表内的一对键进行连接。</p>
+<p>In this section, you’ll learn about the two types of key and see examples of both in the datasets of the nycflights13 package.<br>
+在本节中，你将学习两种类型的键，并在 nycflights13 包的数据集中看到这两种键的示例。</p>
+<p>You’ll also learn how to check that your keys are valid, and what to do if your table lacks a key.<br>
+你还将学习如何检查你的键是否有效，以及当你的表缺少键时该怎么做。</p>
+<section id="primary-and-foreign-keys" class="level3" data-number="19.2.1"><h3 data-number="19.2.1" class="anchored" data-anchor-id="primary-and-foreign-keys">
+<span class="header-section-number">19.2.1</span> Primary and foreign keys</h3>
+<p>Every join involves a pair of keys: a primary key and a foreign key.<br>
+每个连接都涉及一对键：主键 (primary key) 和外键 (foreign key)。</p>
+<p>A <strong>primary key</strong> is a variable or set of variables that uniquely identifies each observation.<br><strong>主键</strong> (primary key) 是一个或一组唯一标识每个观测值的变量。</p>
+<p>When more than one variable is needed, the key is called a <strong>compound key.</strong> For example, in nycflights13:<br>
+当需要多个变量时，该键称为 <strong>复合键</strong> (compound key)。例如，在 nycflights13 中：</p>
 <ul>
 <li>
-<p><code>airlines</code> 记录了关于每家航空公司的两条数据：其航空公司代码和全名。你可以用它的两个字母的航空公司代码来识别一家航空公司，这使得 <code>carrier</code> 成为主键。</p>
+<p><code>airlines</code> records two pieces of data about each airline: its carrier code and its full name. You can identify an airline with its two letter carrier code, making <code>carrier</code> the primary key.<br><code>airlines</code> 记录了每家航空公司的两部分数据：其承运人代码 (carrier code) 和其全名。你可以用其两位字母的承运人代码来识别一家航空公司，因此 <code>carrier</code> 是主键。</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airlines</span></span>
 <span><span class="co">#&gt; # A tibble: 16 × 2</span></span>
@@ -503,7 +527,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </li>
 <li>
-<p><code>airports</code> 记录了关于每个机场的数据。你可以用它的三个字母的机场代码来识别每个机场，这使得 <code>faa</code> 成为主键。</p>
+<p><code>airports</code> records data about each airport. You can identify each airport by its three letter airport code, making <code>faa</code> the primary key.<br><code>airports</code> 记录了每个机场的数据。你可以用其三位字母的机场代码来识别每个机场，因此 <code>faa</code> 是主键。</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airports</span></span>
 <span><span class="co">#&gt; # A tibble: 1,458 × 8</span></span>
@@ -520,7 +544,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </li>
 <li>
-<p><code>planes</code> 记录了关于每架飞机的数据。你可以用它的尾号来识别一架飞机，这使得 <code>tailnum</code> 成为主键。</p>
+<p><code>planes</code> records data about each plane. You can identify a plane by its tail number, making <code>tailnum</code> the primary key.<br><code>planes</code> 记录了每架飞机的数据。你可以用其尾号 (tail number) 来识别一架飞机，因此 <code>tailnum</code> 是主键。</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">planes</span></span>
 <span><span class="co">#&gt; # A tibble: 3,322 × 9</span></span>
@@ -537,7 +561,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </li>
 <li>
-<p><code>weather</code> 记录了始发机场的天气数据。你可以通过位置和时间的组合来识别每个观测值，这使得 <code>origin</code> 和 <code>time_hour</code> 成为复合主键。</p>
+<p><code>weather</code> records data about the weather at the origin airports. You can identify each observation by the combination of location and time, making <code>origin</code> and <code>time_hour</code> the compound primary key.<br><code>weather</code> 记录了始发机场的天气数据。你可以通过位置和时间的组合来识别每个观测值，因此 <code>origin</code> 和 <code>time_hour</code> 是复合主键。</p>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">weather</span></span>
 <span><span class="co">#&gt; # A tibble: 26,115 × 15</span></span>
@@ -554,36 +578,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </li>
 </ul>
-<p><strong>外键 (foreign key)</strong> 是一个（或一组）与另一个表中的主键相对应的变量。例如：</p>
+<p>A <strong>foreign key</strong> is a variable (or set of variables) that corresponds to a primary key in another table.<br><strong>外键</strong> (foreign key) 是一个（或一组）与另一个表中的主键相对应的变量。</p>
+<p>For example:<br>
+例如：</p>
 <ul>
-<li>
-<code>flights$tailnum</code> 是一个外键，对应于主键 <code>planes$tailnum</code>。</li>
-<li>
-<code>flights$carrier</code> 是一个外键，对应于主键 <code>airlines$carrier</code>。</li>
-<li>
-<code>flights$origin</code> 是一个外键，对应于主键 <code>airports$faa</code>。</li>
-<li>
-<code>flights$dest</code> 是一个外键，对应于主键 <code>airports$faa</code>。</li>
-<li>
-<code>flights$origin</code>-<code>flights$time_hour</code> 是一个复合外键，对应于复合主键 <code>weather$origin</code>-<code>weather$time_hour</code>。</li>
+<li><p><code>flights$tailnum</code> is a foreign key that corresponds to the primary key <code>planes$tailnum</code>.<br><code>flights$tailnum</code> 是一个外键，它对应于主键 <code>planes$tailnum</code>。</p></li>
+<li><p><code>flights$carrier</code> is a foreign key that corresponds to the primary key <code>airlines$carrier</code>.<br><code>flights$carrier</code> 是一个外键，它对应于主键 <code>airlines$carrier</code>。</p></li>
+<li><p><code>flights$origin</code> is a foreign key that corresponds to the primary key <code>airports$faa</code>.<br><code>flights$origin</code> 是一个外键，它对应于主键 <code>airports$faa</code>。</p></li>
+<li><p><code>flights$dest</code> is a foreign key that corresponds to the primary key <code>airports$faa</code>.<br><code>flights$dest</code> 是一个外键，它对应于主键 <code>airports$faa</code>。</p></li>
+<li><p><code>flights$origin</code>-<code>flights$time_hour</code> is a compound foreign key that corresponds to the compound primary key <code>weather$origin</code>-<code>weather$time_hour</code>.<br><code>flights$origin</code>-<code>flights$time_hour</code> 是一个复合外键，它对应于复合主键 <code>weather$origin</code>-<code>weather$time_hour</code>。</p></li>
 </ul>
-<p>这些关系在 <a href="#fig-flights-relationships" class="quarto-xref">Figure&nbsp;<span>19.1</span></a> 中进行了可视化总结。</p>
+<p>These relationships are summarized visually in <a href="#fig-flights-relationships" class="quarto-xref">Figure&nbsp;<span>19.1</span></a>.<br>
+这些关系在 <a href="#fig-flights-relationships" class="quarto-xref">Figure&nbsp;<span>19.1</span></a> 中进行了可视化总结。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-flights-relationships" class="quarto-float quarto-figure quarto-figure-center anchored" alt="nycflights13 包中 airports、planes、flights、weather 和 airlines 数据集之间的关系。airports$faa 连接到 flights$origin 和 flights$dest。planes$tailnum 连接到 flights$tailnum。weather$time_hour 和 weather$origin 联合连接到 flights$time_hour 和 flights$origin。airlines$carrier 连接到 flights$carrier。airports、planes、airlines 和 weather 数据框之间没有直接连接。">
+<div id="fig-flights-relationships" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The relationships between airports, planes, flights, weather, and airlines datasets from the nycflights13 package. airports$faa connected to the flights$origin and flights$dest. planes$tailnum is connected to the flights$tailnum. weather$time_hour and weather$origin are jointly connected to flights$time_hour and  flights$origin. airlines$carrier is connected to flights$carrier. There are no direct connections between airports, planes, airlines,  and weather data frames.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-flights-relationships-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/relational.png" class="img-fluid figure-img" alt="nycflights13 包中 airports、planes、flights、weather 和 airlines 数据集之间的关系。airports$faa 连接到 flights$origin 和 flights$dest。planes$tailnum 连接到 flights$tailnum。weather$time_hour 和 weather$origin 联合连接到 flights$time_hour 和 flights$origin。airlines$carrier 连接到 flights$carrier。airports、planes、airlines 和 weather 数据框之间没有直接连接。" width="502">
+<img src="diagrams/relational.png" class="img-fluid figure-img" alt="The relationships between airports, planes, flights, weather, and airlines datasets from the nycflights13 package. airports$faa connected to the flights$origin and flights$dest. planes$tailnum is connected to the flights$tailnum. weather$time_hour and weather$origin are jointly connected to flights$time_hour and  flights$origin. airlines$carrier is connected to flights$carrier. There are no direct connections between airports, planes, airlines,  and weather data frames." width="502">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flights-relationships-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构成主键的变量用灰色着色，并通过箭头连接到它们对应的外键。
+Figure&nbsp;19.1: Connections between all five data frames in the nycflights13 package. Variables making up a primary key are colored grey, and are connected to their corresponding foreign keys with arrows.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>你会注意到这些键的设计中有一个很好的特性：主键和外键几乎总是有相同的名称，正如你稍后将看到的，这将使你的连接工作变得容易得多。同样值得注意的是相反的关系：几乎每个在多个表中使用的变量名在每个地方都有相同的含义。只有一个例外：在 <code>flights</code> 中 <code>year</code> 表示出发年份，在 <code>planes</code> 中表示制造年份。当我们开始实际连接表时，这将变得很重要。</p>
-</section><section id="检查主键" class="level3" data-number="19.2.2"><h3 data-number="19.2.2" class="anchored" data-anchor-id="检查主键">
-<span class="header-section-number">19.2.2</span> 检查主键</h3>
-<p>既然我们已经确定了每个表中的主键，一个好的做法是验证它们确实唯一地标识了每个观测值。一种方法是 <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> 主键，并查找 <code>n</code> 大于 1 的条目。这表明 <code>planes</code> 和 <code>weather</code> 都看起来不错：</p>
+<p>You’ll notice a nice feature in the design of these keys: the primary and foreign keys almost always have the same names, which, as you’ll see shortly, will make your joining life much easier.<br>
+你会注意到这些键的设计中有一个很好的特性：主键和外键几乎总是有相同的名称，正如你很快就会看到的，这将使你的连接工作变得容易得多。</p>
+<p>It’s also worth noting the opposite relationship: almost every variable name used in multiple tables has the same meaning in each place.<br>
+同样值得注意的是相反的关系：几乎每个在多个表中使用的变量名在每个地方都有相同的含义。</p>
+<p>There’s only one exception: <code>year</code> means year of departure in <code>flights</code> and year manufactured in <code>planes</code>.<br>
+只有一个例外：<code>year</code> 在 <code>flights</code> 中表示起飞年份，在 <code>planes</code> 中表示制造年份。</p>
+<p>This will become important when we start actually joining tables together.<br>
+当我们开始实际连接表时，这一点将变得很重要。</p>
+</section><section id="checking-primary-keys" class="level3" data-number="19.2.2"><h3 data-number="19.2.2" class="anchored" data-anchor-id="checking-primary-keys">
+<span class="header-section-number">19.2.2</span> Checking primary keys</h3>
+<p>Now that that we’ve identified the primary keys in each table, it’s good practice to verify that they do indeed uniquely identify each observation.<br>
+既然我们已经确定了每个表中的主键，那么验证它们确实唯一地标识了每个观测值是一个好习惯。</p>
+<p>One way to do that is to <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> the primary keys and look for entries where <code>n</code> is greater than one.<br>
+一种方法是使用 <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> 计算主键，并查找 <code>n</code> 大于 1 的条目。</p>
+<p>This reveals that <code>planes</code> and <code>weather</code> both look good:<br>
+这表明 <code>planes</code> 和 <code>weather</code> 都看起来不错：</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">planes</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">tailnum</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -597,7 +631,8 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; # A tibble: 0 × 3</span></span>
 <span><span class="co">#&gt; # ℹ 3 variables: time_hour &lt;dttm&gt;, origin &lt;chr&gt;, n &lt;int&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>你还应该检查主键中是否有缺失值——如果一个值是缺失的，那么它就不能标识一个观测值！</p>
+<p>You should also check for missing values in your primary keys — if a value is missing then it can’t identify an observation!<br>
+你还应该检查主键中的缺失值——如果一个值是缺失的，那么它就无法识别一个观测值！</p>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">planes</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">tailnum</span><span class="op">)</span><span class="op">)</span></span>
@@ -611,10 +646,14 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; # ℹ 15 variables: origin &lt;chr&gt;, year &lt;int&gt;, month &lt;int&gt;, day &lt;int&gt;,</span></span>
 <span><span class="co">#&gt; #   hour &lt;int&gt;, temp &lt;dbl&gt;, dewp &lt;dbl&gt;, humid &lt;dbl&gt;, wind_dir &lt;dbl&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="代理键" class="level3" data-number="19.2.3"><h3 data-number="19.2.3" class="anchored" data-anchor-id="代理键">
-<span class="header-section-number">19.2.3</span> 代理键</h3>
-<p>到目前为止，我们还没有讨论 <code>flights</code> 的主键。它在这里不是非常重要，因为没有数据框使用它作为外键，但考虑它仍然是有用的，因为如果我们有某种方式向他人描述观测值，那么处理观测值会更容易。</p>
-<p>经过一番思考和实验，我们确定有三个变量可以共同唯一地标识每个航班：</p>
+</section><section id="surrogate-keys" class="level3" data-number="19.2.3"><h3 data-number="19.2.3" class="anchored" data-anchor-id="surrogate-keys">
+<span class="header-section-number">19.2.3</span> Surrogate keys</h3>
+<p>So far we haven’t talked about the primary key for <code>flights</code>.<br>
+到目前为止，我们还没有讨论 <code>flights</code> 的主键。</p>
+<p>It’s not super important here, because there are no data frames that use it as a foreign key, but it’s still useful to consider because it’s easier to work with observations if we have some way to describe them to others.<br>
+在这里它不是特别重要，因为没有数据框使用它作为外键，但它仍然值得考虑，因为如果我们有某种方式向他人描述观测值，处理它们会更容易。</p>
+<p>After a little thinking and experimentation, we determined that there are three variables that together uniquely identify each flight:<br>
+经过一番思考和实验，我们确定有三个变量可以共同唯一地识别每个航班：</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">time_hour</span>, <span class="va">carrier</span>, <span class="va">flight</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -622,7 +661,12 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; # A tibble: 0 × 4</span></span>
 <span><span class="co">#&gt; # ℹ 4 variables: time_hour &lt;dttm&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, n &lt;int&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>没有重复值是否自动使 <code>time_hour</code>-<code>carrier</code>-<code>flight</code> 成为一个主键？这当然是一个好的开始，但并不能保证它。例如，海拔和纬度是 <code>airports</code> 的一个好的主键吗？</p>
+<p>Does the absence of duplicates automatically make <code>time_hour</code>-<code>carrier</code>-<code>flight</code> a primary key?<br>
+没有重复值是否会自动使 <code>time_hour</code>-<code>carrier</code>-<code>flight</code> 成为主键？</p>
+<p>It’s certainly a good start, but it doesn’t guarantee it.<br>
+这当然是一个好的开始，但并不能保证。</p>
+<p>For example, are altitude and latitude a good primary key for <code>airports</code>?<br>
+例如，高度和纬度是 <code>airports</code> 的好主键吗？</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airports</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">alt</span>, <span class="va">lat</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -632,8 +676,12 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;</span></span>
 <span><span class="co">#&gt; 1    13  40.6     2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>通过海拔和纬度来识别一个机场显然是一个坏主意，而且总的来说，仅从数据本身不可能知道一个变量组合是否构成一个好的主键。但对于航班来说，<code>time_hour</code>、<code>carrier</code> 和 <code>flight</code> 的组合似乎是合理的，因为如果同一时间同一家航空公司有多个相同航班号的航班在空中，那对航空公司及其客户来说会非常混乱。</p>
-<p>话虽如此，我们最好还是引入一个简单的数字代理键，使用行号：</p>
+<p>Identifying an airport by its altitude and latitude is clearly a bad idea, and in general it’s not possible to know from the data alone whether or not a combination of variables makes a good a primary key.<br>
+通过高度和纬度来识别一个机场显然是一个坏主意，而且通常来说，仅从数据本身无法判断一个变量组合是否能构成一个好的主键。</p>
+<p>But for flights, the combination of <code>time_hour</code>, <code>carrier</code>, and <code>flight</code> seems reasonable because it would be really confusing for an airline and its customers if there were multiple flights with the same flight number in the air at the same time.<br>
+但对于航班来说，<code>time_hour</code>、<code>carrier</code> 和 <code>flight</code> 的组合似乎是合理的，因为如果同一时间有多架相同航班号的飞机在空中，对航空公司及其乘客来说会非常混乱。</p>
+<p>That said, we might be better off introducing a simple numeric surrogate key using the row number:<br>
+话虽如此，我们最好还是使用行号引入一个简单的数字代理键 (surrogate key)：</p>
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html">row_number</a></span><span class="op">(</span><span class="op">)</span>, .before <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
@@ -650,22 +698,35 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>代理键在与他人交流时特别有用：告诉某人查看航班 2001 比告诉他们查看 2013 年 1 月 3 日上午 9 点出发的 UA430 要容易得多。</p>
-</section><section id="练习" class="level3" data-number="19.2.4"><h3 data-number="19.2.4" class="anchored" data-anchor-id="练习">
-<span class="header-section-number">19.2.4</span> 练习</h3>
+<p>Surrogate keys can be particularly useful when communicating to other humans: it’s much easier to tell someone to take a look at flight 2001 than to say look at UA430 which departed 9am 2013-01-03.<br>
+代理键在与人交流时特别有用：告诉别人查看 2001 号航班比说查看 2013 年 1 月 3 日上午 9 点起飞的 UA430 航班要容易得多。</p>
+</section><section id="exercises" class="level3" data-number="19.2.4"><h3 data-number="19.2.4" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">19.2.4</span> Exercises</h3>
 <ol type="1">
-<li><p>我们在 <a href="#fig-flights-relationships" class="quarto-xref">Figure&nbsp;<span>19.1</span></a> 中忘记绘制 <code>weather</code> 和 <code>airports</code> 之间的关系了。这个关系是什么？它应该如何在图中显示？</p></li>
-<li><p><code>weather</code> 只包含纽约市三个始发机场的信息。如果它包含了美国所有机场的天气记录，它会与 <code>flights</code> 建立什么额外的连接？</p></li>
-<li><p><code>year</code>、<code>month</code>、<code>day</code>、<code>hour</code> 和 <code>origin</code> 变量几乎构成了 <code>weather</code> 的一个复合键，但有一个小时有重复的观测值。你能找出那个小时有什么特别之处吗？</p></li>
-<li><p>我们知道一年中的某些日子是特殊的，飞行的人比平时少（例如，平安夜和圣诞节）。你如何将这些数据表示为一个数据框？主键会是什么？它将如何与现有的数据框连接？</p></li>
-<li><p>在 Lahman 包中，绘制一个图表来说明 <code>Batting</code>、<code>People</code> 和 <code>Salaries</code> 数据框之间的连接。再绘制一个图表来显示 <code>People</code>、<code>Managers</code> 和 <code>AwardsManagers</code> 之间的关系。你将如何描述 <code>Batting</code>、<code>Pitching</code> 和 <code>Fielding</code> 数据框之间的关系？</p></li>
+<li><p>We forgot to draw the relationship between <code>weather</code> and <code>airports</code> in <a href="#fig-flights-relationships" class="quarto-xref">Figure&nbsp;<span>19.1</span></a>. What is the relationship and how should it appear in the diagram?</p></li>
+<li><p><code>weather</code> only contains information for the three origin airports in NYC. If it contained weather records for all airports in the USA, what additional connection would it make to <code>flights</code>?</p></li>
+<li><p>The <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, and <code>origin</code> variables almost form a compound key for <code>weather</code>, but there’s one hour that has duplicate observations. Can you figure out what’s special about that hour?</p></li>
+<li><p>We know that some days of the year are special and fewer people than usual fly on them (e.g., Christmas eve and Christmas day). How might you represent that data as a data frame? What would be the primary key? How would it connect to the existing data frames?</p></li>
+<li><p>Draw a diagram illustrating the connections between the <code>Batting</code>, <code>People</code>, and <code>Salaries</code> data frames in the Lahman package. Draw another diagram that shows the relationship between <code>People</code>, <code>Managers</code>, <code>AwardsManagers</code>. How would you characterize the relationship between the <code>Batting</code>, <code>Pitching</code>, and <code>Fielding</code> data frames?</p></li>
 </ol></section></section><section id="sec-mutating-joins" class="level2" data-number="19.3"><h2 data-number="19.3" class="anchored" data-anchor-id="sec-mutating-joins">
-<span class="header-section-number">19.3</span> 基本连接</h2>
-<p>既然你已经了解了数据框如何通过键连接，我们就可以开始使用连接来更好地理解 <code>flights</code> 数据集了。dplyr 提供了六个连接函数：<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code>。它们都有相同的接口：它们接受一对数据框（<code>x</code> 和 <code>y</code>），并返回一个数据框。输出的行和列的顺序主要由 <code>x</code> 决定。</p>
-<p>在本节中，你将学习如何使用一个变连接 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 和两个过滤连接 <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code>。在下一节中，你将确切地学习这些函数如何工作，以及剩下的 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>。</p>
-<section id="变连接" class="level3" data-number="19.3.1"><h3 data-number="19.3.1" class="anchored" data-anchor-id="变连接">
-<span class="header-section-number">19.3.1</span> 变连接</h3>
-<p><strong>变连接 (mutating join)</strong> 允许你组合两个数据框中的变量：它首先通过它们的键来匹配观测值，然后将一个数据框中的变量复制到另一个数据框中。像 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 一样，连接函数在右侧添加变量，所以如果你的数据集有很多变量，你将看不到新的变量。对于这些例子，我们将通过创建一个只有六个变量的较窄的数据集来使其更容易看清发生了什么<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>：</p>
+<span class="header-section-number">19.3</span> Basic joins</h2>
+<p>Now that you understand how data frames are connected via keys, we can start using joins to better understand the <code>flights</code> dataset.<br>
+既然你已经了解了数据框是如何通过键连接的，我们就可以开始使用连接来更好地理解 <code>flights</code> 数据集了。</p>
+<p>dplyr provides six join functions: <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join()</a></code>, and <code>anti_join().</code> They all have the same interface: they take a pair of data frames (<code>x</code> and <code>y</code>) and return a data frame.<br>
+dplyr 提供了六个连接函数：<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code>。它们都具有相同的接口：接收一对数据框 (<code>x</code> 和 <code>y</code>) 并返回一个数据框。</p>
+<p>The order of the rows and columns in the output is primarily determined by <code>x</code>.<br>
+输出中行和列的顺序主要由 <code>x</code> 决定。</p>
+<p>In this section, you’ll learn how to use one mutating join, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>, and two filtering joins, <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code>.<br>
+在本节中，你将学习如何使用一个修改连接 (<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>) 和两个过滤连接 (<code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join()</a></code>)。</p>
+<p>In the next section, you’ll learn exactly how these functions work, and about the remaining <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>.<br>
+在下一节中，你将确切地学习这些函数的工作原理，以及剩下的 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code>。</p>
+<section id="mutating-joins" class="level3" data-number="19.3.1"><h3 data-number="19.3.1" class="anchored" data-anchor-id="mutating-joins">
+<span class="header-section-number">19.3.1</span> Mutating joins</h3>
+<p>A <strong>mutating join</strong> allows you to combine variables from two data frames: it first matches observations by their keys, then copies across variables from one data frame to the other.<br><strong>修改连接</strong> (mutating join) 允许你合并来自两个数据框的变量：它首先通过它们的键匹配观测值，然后将变量从一个数据框复制到另一个。</p>
+<p>Like <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, the join functions add variables to the right, so if your dataset has many variables, you won’t see the new ones.<br>
+与 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 类似，连接函数会将变量添加到右侧，所以如果你的数据集有很多变量，你将看不到新添加的变量。</p>
+<p>For these examples, we’ll make it easier to see what’s going on by creating a narrower dataset with just six variables<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:<br>
+对于这些例子，我们将创建一个只包含六个变量的更窄的数据集，以便更容易地看清楚发生了什么<sup>1</sup>：</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">time_hour</span>, <span class="va">origin</span>, <span class="va">dest</span>, <span class="va">tailnum</span>, <span class="va">carrier</span><span class="op">)</span></span>
@@ -681,7 +742,13 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA     </span></span>
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>有四种类型的变连接，但有一种你几乎总是会使用：<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>。它很特别，因为输出将始终与 <code>x</code>（你正在连接的数据框）具有相同的行<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 的主要用途是添加额外的元数据。例如，我们可以使用 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 将完整的航空公司名称添加到 <code>flights2</code> 数据中：</p>
+<p>There are four types of mutating join, but there’s one that you’ll use almost all of the time: <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>.<br>
+有四种类型的修改连接，但有一种你几乎会一直使用：<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>。</p>
+<p>It’s special because the output will always have the same rows as <code>x</code>, the data frame you’re joining to<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.<br>
+它之所以特殊，是因为输出将始终与你所连接的数据框 <code>x</code> 具有相同的行<sup>2</sup>。</p>
+<p>The primary use of <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> is to add in additional metadata.<br><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 的主要用途是添加额外的元数据 (metadata)。</p>
+<p>For example, we can use <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> to add the full airline name to the <code>flights2</code> data:<br>
+例如，我们可以使用 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 将完整的航空公司名称添加到 <code>flights2</code> 数据中：</p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">airlines</span><span class="op">)</span></span>
@@ -697,7 +764,8 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA      United Air Lines In…</span></span>
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>或者我们可以找出每架飞机起飞时的温度和风速：</p>
+<p>Or we could find out the temperature and wind speed when each plane departed:<br>
+或者我们可以找出每架飞机起飞时的温度和风速：</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">weather</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">origin</span>, <span class="va">time_hour</span>, <span class="va">temp</span>, <span class="va">wind_speed</span><span class="op">)</span><span class="op">)</span></span>
@@ -713,7 +781,8 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; 6  2013 2013-01-01 05:00:00 EWR    ORD   N39463  UA       39.0       12.7</span></span>
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>或者是什么尺寸的飞机在飞行：</p>
+<p>Or what size of plane was flying:<br>
+或者当时飞的是什么尺寸的飞机：</p>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">planes</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">tailnum</span>, <span class="va">type</span>, <span class="va">engines</span>, <span class="va">seats</span><span class="op">)</span><span class="op">)</span></span>
@@ -730,7 +799,10 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 2 more variables: engines &lt;int&gt;, seats &lt;int&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>当 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 未能为 <code>x</code> 中的某一行找到匹配项时，它会用缺失值填充新变量。例如，没有关于尾号为 <code>N3ALAA</code> 的飞机的信息，所以 <code>type</code>、<code>engines</code> 和 <code>seats</code> 将是缺失的：</p>
+<p>When <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> fails to find a match for a row in <code>x</code>, it fills in the new variables with missing values.<br>
+当 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 无法为 <code>x</code> 中的某一行找到匹配项时，它会用缺失值填充新变量。</p>
+<p>For example, there’s no information about the plane with tail number <code>N3ALAA</code> so the <code>type</code>, <code>engines</code>, and <code>seats</code> will be missing:<br>
+例如，没有关于尾号为 <code>N3ALAA</code> 的飞机的信息，所以 <code>type</code>、<code>engines</code> 和 <code>seats</code> 将会是缺失值：</p>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">tailnum</span> <span class="op">==</span> <span class="st">"N3ALAA"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -747,10 +819,16 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; 6  2013 2013-01-16 06:00:00 LGA    ORD   N3ALAA  AA      &lt;NA&gt;       NA    NA</span></span>
 <span><span class="co">#&gt; # ℹ 57 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>我们将在本章的其余部分几次回到这个问题。</p>
-</section><section id="指定连接键" class="level3" data-number="19.3.2"><h3 data-number="19.3.2" class="anchored" data-anchor-id="指定连接键">
-<span class="header-section-number">19.3.2</span> 指定连接键</h3>
-<p>默认情况下，<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 将使用同时出现在两个数据框中的所有变量作为连接键，这被称为<strong>自然 (natural)</strong> 连接。这是一个有用的启发式方法，但它并不总是有效。例如，如果我们尝试将 <code>flights2</code> 与完整的 <code>planes</code> 数据集连接会发生什么？</p>
+<p>We’ll come back to this problem a few times in the rest of the chapter.<br>
+我们将在本章的其余部分几次回到这个问题。</p>
+</section><section id="specifying-join-keys" class="level3" data-number="19.3.2"><h3 data-number="19.3.2" class="anchored" data-anchor-id="specifying-join-keys">
+<span class="header-section-number">19.3.2</span> Specifying join keys</h3>
+<p>By default, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> will use all variables that appear in both data frames as the join key, the so called <strong>natural</strong> join.<br>
+默认情况下，<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 会将两个数据框中都出现的所有变量用作连接键，这被称为 <strong>自然</strong> (natural) 连接。</p>
+<p>This is a useful heuristic, but it doesn’t always work.<br>
+这是一个有用的启发式方法，但并不总是有效。</p>
+<p>For example, what happens if we try to join <code>flights2</code> with the complete <code>planes</code> dataset?<br>
+例如，如果我们尝试将 <code>flights2</code> 与完整的 <code>planes</code> 数据集连接，会发生什么？</p>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">planes</span><span class="op">)</span></span>
@@ -767,7 +845,11 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 5 more variables: model &lt;chr&gt;, engines &lt;int&gt;, seats &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>我们得到了很多缺失的匹配，因为我们的连接正在尝试使用 <code>tailnum</code> 和 <code>year</code> 作为复合键。<code>flights</code> 和 <code>planes</code> 都有一个 <code>year</code> 列，但它们的含义不同：<code>flights$year</code> 是航班发生的年份，而 <code>planes$year</code> 是飞机制造的年份。我们只想在 <code>tailnum</code>上连接，所以我们需要使用 <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code> 提供一个明确的规范：</p>
+<p>We get a lot of missing matches because our join is trying to use <code>tailnum</code> and <code>year</code> as a compound key.<br>
+我们得到了很多缺失的匹配，因为我们的连接试图使用 <code>tailnum</code> 和 <code>year</code> 作为复合键。</p>
+<p>Both <code>flights</code> and <code>planes</code> have a <code>year</code> column but they mean different things: <code>flights$year</code> is the year the flight occurred and <code>planes$year</code> is the year the plane was built.<br><code>flights</code> 和 <code>planes</code> 都有一个 <code>year</code> 列，但它们的含义不同：<code>flights$year</code> 是航班发生的年份，而 <code>planes$year</code> 是飞机制造的年份。</p>
+<p>We only want to join on <code>tailnum</code> so we need to provide an explicit specification with <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code>:<br>
+我们只想在 <code>tailnum</code> 上进行连接，所以我们需要使用 <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code> 提供一个明确的规范：</p>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">planes</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">tailnum</span><span class="op">)</span><span class="op">)</span></span>
@@ -783,9 +865,23 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 7 more variables: type &lt;chr&gt;, manufacturer &lt;chr&gt;, model &lt;chr&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>请注意，<code>year</code> 变量在输出中通过后缀（<code>year.x</code> 和 <code>year.y</code>）进行了区分，这告诉你变量是来自 <code>x</code> 参数还是 <code>y</code> 参数。你可以使用 <code>suffix</code> 参数覆盖默认的后缀。</p>
-<p><code>join_by(tailnum)</code> 是 <code>join_by(tailnum == tailnum)</code> 的简写。了解这种更完整的形式很重要，原因有二。首先，它描述了两个表之间的关系：键必须相等。这就是为什么这种类型的连接通常被称为<strong>等值连接 (equi join)</strong>。你将在 <a href="#sec-non-equi-joins" class="quarto-xref"><span>Section 19.5</span></a> 中学习非等值连接。</p>
-<p>其次，这是你在每个表中指定不同连接键的方式。例如，有两种方法可以连接 <code>flight2</code> 和 <code>airports</code> 表：通过 <code>dest</code> 或 <code>origin</code>：</p>
+<p>Note that the <code>year</code> variables are disambiguated in the output with a suffix (<code>year.x</code> and <code>year.y</code>), which tells you whether the variable came from the <code>x</code> or <code>y</code> argument.<br>
+请注意，<code>year</code> 变量在输出中通过后缀（<code>year.x</code> 和 <code>year.y</code>）来消除歧义，这告诉您变量是来自 <code>x</code> 参数还是 <code>y</code> 参数。</p>
+<p>You can override the default suffixes with the <code>suffix</code> argument.<br>
+您可以使用 <code>suffix</code> 参数覆盖默认后缀。</p>
+<p><code>join_by(tailnum)</code> is short for <code>join_by(tailnum == tailnum)</code>.<br><code>join_by(tailnum)</code> 是 <code>join_by(tailnum == tailnum)</code> 的简写。</p>
+<p>It’s important to know about this fuller form for two reasons.<br>
+了解这种更完整的形式很重要，原因有二。</p>
+<p>Firstly, it describes the relationship between the two tables: the keys must be equal.<br>
+首先，它描述了两个表之间的关系：键必须相等。</p>
+<p>That’s why this type of join is often called an <strong>equi join</strong>.<br>
+这就是为什么这种类型的连接通常被称为 <strong>等值连接</strong> (equi join)。</p>
+<p>You’ll learn about non-equi joins in <a href="#sec-non-equi-joins" class="quarto-xref"><span>Section 19.5</span></a>.<br>
+你将在 <a href="#sec-non-equi-joins" class="quarto-xref"><span>Section 19.5</span></a> 中学习非等值连接。</p>
+<p>Secondly, it’s how you specify different join keys in each table.<br>
+其次，这是你在每个表中指定不同连接键的方式。</p>
+<p>For example, there are two ways to join the <code>flight2</code> and <code>airports</code> table: either by <code>dest</code> or <code>origin</code>:<br>
+例如，有两种方法可以连接 <code>flight2</code> 和 <code>airports</code> 表：通过 <code>dest</code> 或 <code>origin</code>：</p>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">airports</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="va">faa</span><span class="op">)</span><span class="op">)</span></span>
@@ -815,18 +911,28 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 6 more variables: lat &lt;dbl&gt;, lon &lt;dbl&gt;, alt &lt;dbl&gt;, tz &lt;dbl&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>在旧代码中，你可能会看到一种不同的指定连接键的方式，使用一个字符向量：</p>
+<p>In older code you might see a different way of specifying the join keys, using a character vector:<br>
+在旧的代码中，你可能会看到一种不同的指定连接键的方式，即使用字符向量：</p>
 <ul>
-<li>
-<code>by = "x"</code> 对应于 <code>join_by(x)</code>。</li>
-<li>
-<code>by = c("a" = "x")</code> 对应于 <code>join_by(a == x)</code>。</li>
+<li><p><code>by = "x"</code> corresponds to <code>join_by(x)</code>.<br><code>by = "x"</code> 对应于 <code>join_by(x)</code>。</p></li>
+<li><p><code>by = c("a" = "x")</code> corresponds to <code>join_by(a == x)</code>. <code>by = c(&amp;quot;a&amp;quot; = &amp;quot;x&amp;quot;)</code> 对应于 <code>join_by(a == x)</code>。</p></li>
 </ul>
-<p>既然 <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code> 已经存在，我们更喜欢使用它，因为它提供了更清晰和更灵活的规范。</p>
-<p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code> 的接口与 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 相同。区别在于它们保留哪些行：左连接保留 <code>x</code> 中的所有行，右连接保留 <code>y</code> 中的所有行，全连接保留 <code>x</code> 或 <code>y</code> 中的所有行，而内连接只保留同时出现在 <code>x</code> 和 <code>y</code> 中的行。我们稍后会更详细地回到这些。</p>
-</section><section id="过滤连接" class="level3" data-number="19.3.3"><h3 data-number="19.3.3" class="anchored" data-anchor-id="过滤连接">
-<span class="header-section-number">19.3.3</span> 过滤连接</h3>
-<p>你可能猜到，<strong>过滤连接 (filtering join)</strong> 的主要作用是过滤行。有两种类型：半连接 (semi-joins) 和反连接 (anti-joins)。 <strong>半连接</strong>保留 <code>x</code> 中所有在 <code>y</code> 中有匹配的行。例如，我们可以使用半连接来过滤 <code>airports</code> 数据集，只显示始发机场：</p>
+<p>Now that it exists, we prefer <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code> since it provides a clearer and more flexible specification.<br>
+既然它已经存在，我们更喜欢 <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code>，因为它提供了更清晰、更灵活的规范。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code> have the same interface as <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>.<br><code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join()</a></code> 与 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> 具有相同的接口。</p>
+<p>The difference is which rows they keep: left join keeps all the rows in <code>x</code>, the right join keeps all rows in <code>y</code>, the full join keeps all rows in either <code>x</code> or <code>y</code>, and the inner join only keeps rows that occur in both <code>x</code> and <code>y</code>.<br>
+区别在于它们保留哪些行：左连接保留 <code>x</code> 中的所有行，右连接保留 <code>y</code> 中的所有行，全连接保留 <code>x</code> 或 <code>y</code> 中的所有行，而内连接只保留同时出现在 <code>x</code> 和 <code>y</code> 中的行。</p>
+<p>We’ll come back to these in more detail later.<br>
+我们稍后会更详细地讨论这些。</p>
+</section><section id="filtering-joins" class="level3" data-number="19.3.3"><h3 data-number="19.3.3" class="anchored" data-anchor-id="filtering-joins">
+<span class="header-section-number">19.3.3</span> Filtering joins</h3>
+<p>As you might guess the primary action of a <strong>filtering join</strong> is to filter the rows.<br>
+你可能已经猜到，<strong>过滤连接</strong> (filtering join) 的主要作用是过滤行。</p>
+<p>There are two types: semi-joins and anti-joins.<br>
+有两种类型：半连接 (semi-joins) 和反连接 (anti-joins)。</p>
+<p><strong>Semi-joins</strong> keep all rows in <code>x</code> that have a match in <code>y</code>.<br><strong>半连接</strong> (Semi-joins) 保留 <code>x</code> 中所有在 <code>y</code> 中有匹配的行。</p>
+<p>For example, we could use a semi-join to filter the <code>airports</code> dataset to show just the origin airports:<br>
+例如，我们可以使用半连接来过滤 <code>airports</code> 数据集，只显示始发机场：</p>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airports</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="va">flights2</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">faa</span> <span class="op">==</span> <span class="va">origin</span><span class="op">)</span><span class="op">)</span></span>
@@ -837,7 +943,8 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; 2 JFK   John F Kennedy Intl  40.6 -73.8    13    -5 A     America/New_York</span></span>
 <span><span class="co">#&gt; 3 LGA   La Guardia           40.8 -73.9    22    -5 A     America/New_York</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>或者只显示目的地：</p>
+<p>Or just the destinations:<br>
+或者只显示目的地：</p>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airports</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="va">flights2</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">faa</span> <span class="op">==</span> <span class="va">dest</span><span class="op">)</span><span class="op">)</span></span>
@@ -852,7 +959,13 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; 6 AUS   Austin Bergstrom Intl   30.2  -97.7   542    -6 A     America/Chicago</span></span>
 <span><span class="co">#&gt; # ℹ 95 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>反连接</strong>则相反：它们返回 <code>x</code> 中所有在 <code>y</code> 中没有匹配的行。它们对于查找数据中<strong>隐式</strong>的缺失值很有用，这是 <a href="missing-values.html#sec-missing-implicit" class="quarto-xref"><span>Section 18.3</span></a> 的主题。隐式缺失值不会显示为 <code>NA</code>，而是仅仅以缺席的形式存在。例如，我们可以通过查找没有匹配目的地机场的航班来找到 <code>airports</code> 中缺失的行：</p>
+<p><strong>Anti-joins</strong> are the opposite: they return all rows in <code>x</code> that don’t have a match in <code>y</code>.<br><strong>反连接</strong> (Anti-joins) 则相反：它们返回 <code>x</code> 中所有在 <code>y</code> 中没有匹配的行。</p>
+<p>They’re useful for finding missing values that are <strong>implicit</strong> in the data, the topic of <a href="missing-values.html#sec-missing-implicit" class="quarto-xref"><span>Section 18.3</span></a>.<br>
+它们对于查找数据中 <strong>隐式</strong> (implicit) 的缺失值很有用，这是 <a href="missing-values.html#sec-missing-implicit" class="quarto-xref"><span>Section 18.3</span></a> 的主题。</p>
+<p>Implicitly missing values don’t show up as <code>NA</code>s but instead only exist as an absence.<br>
+隐式缺失值不会显示为 <code>NA</code>，而是仅作为一种缺席而存在。</p>
+<p>For example, we can find rows that are missing from <code>airports</code> by looking for flights that don’t have a matching destination airport:<br>
+例如，我们可以通过查找没有匹配目的地机场的航班来找到 <code>airports</code> 中缺失的行：</p>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">airports</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="va">faa</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -865,7 +978,8 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; 3 STT  </span></span>
 <span><span class="co">#&gt; 4 PSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>或者我们可以找出哪些 <code>tailnum</code> 在 <code>planes</code> 中是缺失的：</p>
+<p>Or we can find which <code>tailnum</code>s are missing from <code>planes</code>:<br>
+或者我们可以找出 <code>planes</code> 中缺少哪些 <code>tailnum</code>：</p>
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights2</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">planes</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">tailnum</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -881,25 +995,25 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span><span class="co">#&gt; 6 N532UA </span></span>
 <span><span class="co">#&gt; # ℹ 716 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="练习-1" class="level3" data-number="19.3.4"><h3 data-number="19.3.4" class="anchored" data-anchor-id="练习-1">
-<span class="header-section-number">19.3.4</span> 练习</h3>
+</section><section id="exercises-1" class="level3" data-number="19.3.4"><h3 data-number="19.3.4" class="anchored" data-anchor-id="exercises-1">
+<span class="header-section-number">19.3.4</span> Exercises</h3>
 <ol type="1">
-<li><p>找出（全年）延误最严重的 48 个小时。与 <code>weather</code> 数据进行交叉引用。你能看到任何模式吗？</p></li>
+<li><p>Find the 48 hours (over the course of the whole year) that have the worst delays. Cross-reference it with the <code>weather</code> data. Can you see any patterns?</p></li>
 <li>
-<p>想象你已经用这段代码找到了排名前 10 的最受欢迎的目的地：</p>
+<p>Imagine you’ve found the top 10 most popular destinations using this code:</p>
 <div class="cell">
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">top_dest</span> <span class="op">&lt;-</span> <span class="va">flights2</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">dest</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>你如何找到所有飞往这些目的地的航班？</p>
+<p>How can you find all flights to those destinations?</p>
 </li>
-<li><p>每个出发的航班都有对应那个小时的天气数据吗？</p></li>
-<li><p>那些在 <code>planes</code> 中没有匹配记录的尾号有什么共同点？（提示：一个变量解释了约 90% 的问题。）</p></li>
-<li><p>向 <code>planes</code> 添加一列，列出飞过那架飞机的每个 <code>carrier</code>。你可能期望飞机和航空公司之间存在一种隐式关系，因为每架飞机都由一家航空公司运营。使用你在前面章节中学到的工具来证实或否定这个假设。</p></li>
-<li><p>将始发地<em>和</em>目的地机场的纬度和经度添加到 <code>flights</code> 中。是在连接之前还是之后重命名列更容易？</p></li>
+<li><p>Does every departing flight have corresponding weather data for that hour?</p></li>
+<li><p>What do the tail numbers that don’t have a matching record in <code>planes</code> have in common? (Hint: one variable explains ~90% of the problems.)</p></li>
+<li><p>Add a column to <code>planes</code> that lists every <code>carrier</code> that has flown that plane. You might expect that there’s an implicit relationship between plane and airline, because each plane is flown by a single airline. Confirm or reject this hypothesis using the tools you’ve learned in previous chapters.</p></li>
+<li><p>Add the latitude and the longitude of the origin <em>and</em> destination airport to <code>flights</code>. Is it easier to rename the columns before or after the join?</p></li>
 <li>
-<p>按目的地计算平均延误，然后与 <code>airports</code> 数据框连接，这样你就可以显示延误的空间分布。这里有一个绘制美国地图的简单方法：</p>
+<p>Compute the average delay by destination, then join on the <code>airports</code> data frame so you can show the spatial distribution of delays. Here’s an easy way to draw a map of the United States:</p>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">airports</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="va">flights</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">faa</span> <span class="op">==</span> <span class="va">dest</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -908,12 +1022,17 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>你可能想用点的大小或颜色来显示每个机场的平均延误。</p>
+<p>You might want to use the <code>size</code> or <code>color</code> of the points to display the average delay for each airport.</p>
 </li>
-<li><p>2013 年 6 月 13 日发生了什么？绘制一张延误地图，然后用谷歌与天气进行交叉引用。</p></li>
-</ol></section></section><section id="连接如何工作" class="level2" data-number="19.4"><h2 data-number="19.4" class="anchored" data-anchor-id="连接如何工作">
-<span class="header-section-number">19.4</span> 连接如何工作？</h2>
-<p>既然你已经使用过几次连接了，是时候学习更多关于它们如何工作的知识了，重点是 <code>x</code> 中的每一行如何与 <code>y</code> 中的行匹配。我们将首先介绍一种连接的可视化表示法，使用下面定义的简单 tibble，并如 <a href="#fig-join-setup" class="quarto-xref">Figure&nbsp;<span>19.2</span></a> 所示。在这些例子中，我们将使用一个名为 <code>key</code> 的单个键和一个单个值列（<code>val_x</code> 和 <code>val_y</code>），但这些思想都适用于多个键和多个值。</p>
+<li><p>What happened on June 13 2013? Draw a map of the delays, and then use Google to cross-reference with the weather.</p></li>
+</ol></section></section><section id="how-do-joins-work" class="level2" data-number="19.4"><h2 data-number="19.4" class="anchored" data-anchor-id="how-do-joins-work">
+<span class="header-section-number">19.4</span> How do joins work?</h2>
+<p>Now that you’ve used joins a few times it’s time to learn more about how they work, focusing on how each row in <code>x</code> matches rows in <code>y</code>.<br>
+既然你已经多次使用连接，现在是时候更深入地了解它们的工作原理了，重点是 <code>x</code> 中的每一行如何与 <code>y</code> 中的行匹配。</p>
+<p>We’ll begin by introducing a visual representation of joins, using the simple tibbles defined below and shown in <a href="#fig-join-setup" class="quarto-xref">Figure&nbsp;<span>19.2</span></a>.<br>
+我们将从介绍连接的可视化表示开始，使用下面定义的简单 tibble，并在 <a href="#fig-join-setup" class="quarto-xref">Figure&nbsp;<span>19.2</span></a> 中展示。</p>
+<p>In these examples we’ll use a single key called <code>key</code> and a single value column (<code>val_x</code> and <code>val_y</code>), but the ideas all generalize to multiple keys and multiple values.<br>
+在这些例子中，我们将使用一个名为 <code>key</code> 的单个键和一个单个值列（<code>val_x</code> 和 <code>val_y</code>），但这些思想都可以推广到多个键和多个值。</p>
 <div class="cell">
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">key</span>, <span class="op">~</span><span class="va">val_x</span>,</span>
@@ -930,131 +1049,174 @@ Figure&nbsp;19.1: nycflights13 包中所有五个数据框之间的连接。构�
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-setup" class="quarto-float quarto-figure quarto-figure-center anchored" alt="x 和 y 是两个数据框，各有 2 列 3 行，内容如文中所述。键的值被着色：1 是绿色，2 是紫色，3 是橙色，4 是黄色。">
+<div id="fig-join-setup" class="quarto-float quarto-figure quarto-figure-center anchored" alt="x and y are two data frames with 2 columns and 3 rows, with contents as described in the text. The values of the keys are colored: 1 is green, 2 is purple, 3 is orange, and 4 is yellow.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/setup.png" class="img-fluid figure-img" alt="x 和 y 是两个数据框，各有 2 列 3 行，内容如文中所述。键的值被着色：1 是绿色，2 是紫色，3 是橙色，4 是黄色。" width="160">
+<img src="diagrams/join/setup.png" class="img-fluid figure-img" alt="x and y are two data frames with 2 columns and 3 rows, with contents as described in the text. The values of the keys are colored: 1 is green, 2 is purple, 3 is orange, and 4 is yellow." width="160">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-setup-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.2: 两个简单表格的图形表示。带颜色的 <code>key</code> 列将背景色映射到键值。灰色列代表被“携带”的值列。
+Figure&nbsp;19.2: Graphical representation of two simple tables. The colored <code>key</code> columns map background color to key value. The grey columns represent the “value” columns that are carried along for the ride.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-join-setup2" class="quarto-xref">Figure&nbsp;<span>19.3</span></a> 介绍了我们可视化表示法的基础。它将 <code>x</code> 和 <code>y</code> 之间的所有潜在匹配显示为从 <code>x</code> 的每一行和 <code>y</code> 的每一行画出的线的交点。输出中的行和列主要由 <code>x</code> 决定，所以 <code>x</code> 表是水平的，并与输出对齐。</p>
+<p><a href="#fig-join-setup2" class="quarto-xref">Figure&nbsp;<span>19.3</span></a> introduces the foundation for our visual representation.<br><a href="#fig-join-setup2" class="quarto-xref">Figure&nbsp;<span>19.3</span></a> 介绍了我们可视化表示的基础。</p>
+<p>It shows all potential matches between <code>x</code> and <code>y</code> as the intersection between lines drawn from each row of <code>x</code> and each row of <code>y</code>.<br>
+它将 <code>x</code> 和 <code>y</code> 之间的所有潜在匹配显示为从 <code>x</code> 的每一行和 <code>y</code> 的每一行画出的线的交点。</p>
+<p>The rows and columns in the output are primarily determined by <code>x</code>, so the <code>x</code> table is horizontal and lines up with the output.<br>
+输出中的行和列主要由 <code>x</code> 决定，所以 <code>x</code> 表是水平的，并与输出对齐。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-setup2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="x 和 y 被放置成直角，水平线从 x 延伸，垂直线从 y 延伸。x 中有 3 行，y 中有 3 行，这导致了九个交点，代表九个潜在的匹配。">
+<div id="fig-join-setup2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="x and y are placed at right-angles, with horizonal lines extending  from x and vertical lines extending from y. There are 3 rows in x and  3 rows in y, which leads to nine intersections representing nine potential matches.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-setup2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/setup2.png" class="img-fluid figure-img" alt="x 和 y 被放置成直角，水平线从 x 延伸，垂直线从 y 延伸。x 中有 3 行，y 中有 3 行，这导致了九个交点，代表九个潜在的匹配。" width="170">
+<img src="diagrams/join/setup2.png" class="img-fluid figure-img" alt="x and y are placed at right-angles, with horizonal lines extending  from x and vertical lines extending from y. There are 3 rows in x and  3 rows in y, which leads to nine intersections representing nine potential matches." width="170">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-setup2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.3: 要理解连接如何工作，将每种可能的匹配都考虑进去是很有用的。这里我们用一个连接线的网格来展示这一点。
+Figure&nbsp;19.3: To understand how joins work, it’s useful to think of every possible match. Here we show that with a grid of connecting lines.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>为了描述一种特定类型的连接，我们用点来表示匹配。匹配决定了输出中的行，这是一个新的数据框，包含键、x 值和 y 值。例如，<a href="#fig-join-inner" class="quarto-xref">Figure&nbsp;<span>19.4</span></a> 展示了一个内连接，当且仅当键相等时，行才被保留。</p>
+<p>To describe a specific type of join, we indicate matches with dots.<br>
+为了描述特定类型的连接，我们用点来表示匹配。</p>
+<p>The matches determine the rows in the output, a new data frame that contains the key, the x values, and the y values.<br>
+匹配项决定了输出中的行，这是一个包含键、x 值和 y 值的新数据框。</p>
+<p>For example, <a href="#fig-join-inner" class="quarto-xref">Figure&nbsp;<span>19.4</span></a> shows an inner join, where rows are retained if and only if the keys are equal.<br>
+例如，<a href="#fig-join-inner" class="quarto-xref">Figure&nbsp;<span>19.4</span></a> 展示了一个内连接，其中只有当键相等时，行才会被保留。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-inner" class="quarto-float quarto-figure quarto-figure-center anchored" alt="x 和 y 被放置成直角，线形成一个潜在匹配的网格。键 1 和 2 同时出现在 x 和 y 中，所以我们得到了匹配，用一个点表示。每个点对应输出中的一行，所以最终的连接数据框有两行。">
+<div id="fig-join-inner" class="quarto-float quarto-figure quarto-figure-center anchored" alt="x and y are placed at right-angles with lines forming a grid of potential matches. Keys 1 and 2 appear in both x and y, so we get a match, indicated by a dot. Each dot corresponds to a row in the output, so the resulting joined data frame has two rows.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-inner-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/inner.png" class="img-fluid figure-img" alt="x 和 y 被放置成直角，线形成一个潜在匹配的网格。键 1 和 2 同时出现在 x 和 y 中，所以我们得到了匹配，用一个点表示。每个点对应输出中的一行，所以最终的连接数据框有两行。" width="363">
+<img src="diagrams/join/inner.png" class="img-fluid figure-img" alt="x and y are placed at right-angles with lines forming a grid of potential matches. Keys 1 and 2 appear in both x and y, so we get a match, indicated by a dot. Each dot corresponds to a row in the output, so the resulting joined data frame has two rows." width="363">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-inner-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.4: 内连接将 <code>x</code> 中的每一行与 <code>y</code> 中具有相同 <code>key</code> 值的行进行匹配。每个匹配都成为输出中的一行。
+Figure&nbsp;19.4: An inner join matches each row in <code>x</code> to the row in <code>y</code> that has the same value of <code>key</code>. Each match becomes a row in the output.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>我们可以应用相同的原则来解释<strong>外连接 (outer joins)</strong>，它保留出现在至少一个数据框中的观测值。这些连接通过向每个数据框添加一个额外的“虚拟”观测值来工作。这个观测值有一个在没有其他键匹配时能够匹配的键，并且值用 <code>NA</code> 填充。有三种类型的外连接：</p>
+<p>We can apply the same principles to explain the <strong>outer joins</strong>, which keep observations that appear in at least one of the data frames.<br>
+我们可以应用相同的原则来解释 <strong>外连接</strong> (outer joins)，它保留出现在至少一个数据框中的观测值。</p>
+<p>These joins work by adding an additional “virtual” observation to each data frame.<br>
+这些连接通过向每个数据框添加一个额外的“虚拟”观测值来工作。</p>
+<p>This observation has a key that matches if no other key matches, and values filled with <code>NA</code>.<br>
+该观测值有一个在没有其他键匹配时能够匹配的键，以及填充了 <code>NA</code> 的值。</p>
+<p>There are three types of outer joins:<br>
+有三种类型的外连接：</p>
 <ul>
+<li><p>A <strong>left join</strong> keeps all observations in <code>x</code>, <a href="#fig-join-left" class="quarto-xref">Figure&nbsp;<span>19.5</span></a>. Every row of <code>x</code> is preserved in the output because it can fall back to matching a row of <code>NA</code>s in <code>y</code>.</p></li>
 <li>
-<p><strong>左连接 (left join)</strong> 保留 <code>x</code> 中的所有观测值，<a href="#fig-join-left" class="quarto-xref">Figure&nbsp;<span>19.5</span></a>。<code>x</code> 的每一行都在输出中被保留，因为它可以回退到匹配 <code>y</code> 中的一行 <code>NA</code>。</p>
+<p><strong>左连接</strong> (left join) 保留 <code>x</code> 中的所有观测值，见 <a href="#fig-join-left" class="quarto-xref">Figure&nbsp;<span>19.5</span></a>。 <code>x</code> 的每一行都在输出中被保留，因为它可以回退到匹配 <code>y</code> 中一行 <code>NA</code> 值。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-left" class="quarto-float quarto-figure quarto-figure-center anchored" alt="与之前显示内连接的图相比，y 表现在多了一个包含 NA 的虚拟行，它将匹配任何在 x 中没有其他匹配的行。这意味着输出现在有三行。对于 key = 3，它匹配这个虚拟行，val_y 的值为 NA。">
+<div id="fig-join-left" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Compared to the previous diagram showing an inner join, the y table gets a new virtual row containin NA that will match any row in x that didn't otherwise match. This means that the output now has three rows. For key = 3, which matches this virtual row, val_y takes value NA.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-left-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/left.png" class="img-fluid figure-img" alt="与之前显示内连接的图相比，y 表现在多了一个包含 NA 的虚拟行，它将匹配任何在 x 中没有其他匹配的行。这意味着输出现在有三行。对于 key = 3，它匹配这个虚拟行，val_y 的值为 NA。" width="385">
+<img src="diagrams/join/left.png" class="img-fluid figure-img" alt="Compared to the previous diagram showing an inner join, the y table gets a new virtual row containin NA that will match any row in x that didn't otherwise match. This means that the output now has three rows. For key = 3, which matches this virtual row, val_y takes value NA." width="385">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-left-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.5: 左连接的可视化表示，其中 <code>x</code> 中的每一行都出现在输出中。
+Figure&nbsp;19.5: A visual representation of the left join where every row in <code>x</code> appears in the output.
 </figcaption></figure>
 </div>
 </div>
 </div>
 </li>
+<li><p>A <strong>right join</strong> keeps all observations in <code>y</code>, <a href="#fig-join-right" class="quarto-xref">Figure&nbsp;<span>19.6</span></a>. Every row of <code>y</code> is preserved in the output because it can fall back to matching a row of <code>NA</code>s in <code>x</code>. The output still matches <code>x</code> as much as possible; any extra rows from <code>y</code> are added to the end.</p></li>
 <li>
-<p><strong>右连接 (right join)</strong> 保留 <code>y</code> 中的所有观测值，<a href="#fig-join-right" class="quarto-xref">Figure&nbsp;<span>19.6</span></a>。<code>y</code> 的每一行都在输出中被保留，因为它可以回退到匹配 <code>x</code> 中的一行 <code>NA</code>。输出仍然尽可能地与 <code>x</code> 匹配；来自 <code>y</code> 的任何多余的行都被添加到末尾。</p>
+<p><strong>右连接</strong> (right join) 保留 <code>y</code> 中的所有观测值，见 <a href="#fig-join-right" class="quarto-xref">Figure&nbsp;<span>19.6</span></a>。 <code>y</code> 的每一行都在输出中被保留，因为它可以回退到匹配 <code>x</code> 中一行 <code>NA</code> 值。输出仍然尽可能多地与 <code>x</code> 匹配；来自 <code>y</code> 的任何多余的行都被添加到末尾。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-right" class="quarto-float quarto-figure quarto-figure-center anchored" alt="与之前显示左连接的图相比，x 表现在增加了一个虚拟行，以便 y 中的每一行都能在 x 中找到匹配。对于 y 中没有匹配 x 的行，val_x 包含 NA。">
+<div id="fig-join-right" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Compared to the previous diagram showing an left join, the x table now gains a virtual row so that every row in y gets a match in x. val_x contains NA for the row in y that didn't match x.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-right-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/right.png" class="img-fluid figure-img" alt="与之前显示左连接的图相比，x 表现在增加了一个虚拟行，以便 y 中的每一行都能在 x 中找到匹配。对于 y 中没有匹配 x 的行，val_x 包含 NA。" width="380">
+<img src="diagrams/join/right.png" class="img-fluid figure-img" alt="Compared to the previous diagram showing an left join, the x table now gains a virtual row so that every row in y gets a match in x. val_x contains NA for the row in y that didn't match x." width="380">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-right-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.6: 右连接的可视化表示，其中 <code>y</code> 的每一行都出现在输出中。
+Figure&nbsp;19.6: A visual representation of the right join where every row of <code>y</code> appears in the output.
 </figcaption></figure>
 </div>
 </div>
 </div>
 </li>
+<li><p>A <strong>full join</strong> keeps all observations that appear in <code>x</code> or <code>y</code>, <a href="#fig-join-full" class="quarto-xref">Figure&nbsp;<span>19.7</span></a>. Every row of <code>x</code> and <code>y</code> is included in the output because both <code>x</code> and <code>y</code> have a fall back row of <code>NA</code>s. Again, the output starts with all rows from <code>x</code>, followed by the remaining unmatched <code>y</code> rows.</p></li>
 <li>
-<p><strong>全连接 (full join)</strong> 保留出现在 <code>x</code> 或 <code>y</code> 中的所有观测值，<a href="#fig-join-full" class="quarto-xref">Figure&nbsp;<span>19.7</span></a>。<code>x</code> 和 <code>y</code> 的每一行都包含在输出中，因为 <code>x</code> 和 <code>y</code> 都有一个回退的 <code>NA</code> 行。同样，输出以 <code>x</code> 的所有行开始，然后是剩余的未匹配的 <code>y</code> 行。</p>
+<p><strong>全连接</strong> (full join) 保留所有出现在 <code>x</code> 或 <code>y</code> 中的观测值，见 <a href="#fig-join-full" class="quarto-xref">Figure&nbsp;<span>19.7</span></a>。 <code>x</code> 和 <code>y</code> 的每一行都包含在输出中，因为 <code>x</code> 和 <code>y</code> 都有一个由 <code>NA</code> 值构成的备用行。同样，输出以 <code>x</code> 的所有行开始，然后是剩余的未匹配的 <code>y</code> 行。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-full" class="quarto-float quarto-figure quarto-figure-center anchored" alt="现在 x 和 y 都有一个总是匹配的虚拟行。结果有 4 行：键 1、2、3 和 4，以及来自 val_x 和 val_y 的所有值，然而键 2 的 val_y 和键 4 的 val_x 是 NA，因为这些键在其他数据框中没有匹配。">
+<div id="fig-join-full" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Now both x and y have a virtual row that always matches. The result has 4 rows: keys 1, 2, 3, and 4 with all values  from val_x and val_y, however key 2, val_y and key 4, val_x are NAs since those keys don't have a match in the other data frames.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-full-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/full.png" class="img-fluid figure-img" alt="现在 x 和 y 都有一个总是匹配的虚拟行。结果有 4 行：键 1、2、3 和 4，以及来自 val_x 和 val_y 的所有值，然而键 2 的 val_y 和键 4 的 val_x 是 NA，因为这些键在其他数据框中没有匹配。" width="388">
+<img src="diagrams/join/full.png" class="img-fluid figure-img" alt="Now both x and y have a virtual row that always matches. The result has 4 rows: keys 1, 2, 3, and 4 with all values  from val_x and val_y, however key 2, val_y and key 4, val_x are NAs since those keys don't have a match in the other data frames." width="388">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-full-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.7: 全连接的可视化表示，其中 <code>x</code> 和 <code>y</code> 中的每一行都出现在输出中。
+Figure&nbsp;19.7: A visual representation of the full join where every row in <code>x</code> and <code>y</code> appears in the output.
 </figcaption></figure>
 </div>
 </div>
 </div>
 </li>
 </ul>
-<p>另一种显示外连接类型差异的方法是使用维恩图，如 <a href="#fig-join-venn" class="quarto-xref">Figure&nbsp;<span>19.8</span></a> 所示。然而，这不是一个很好的表示方法，因为尽管它可能会让你记起哪些行被保留了，但它未能说明列发生了什么。</p>
+<p>Another way to show how the types of outer join differ is with a Venn diagram, as in <a href="#fig-join-venn" class="quarto-xref">Figure&nbsp;<span>19.8</span></a>.<br>
+另一种展示外连接类型差异的方法是使用韦恩图 (Venn diagram)，如 <a href="#fig-join-venn" class="quarto-xref">Figure&nbsp;<span>19.8</span></a> 所示。</p>
+<p>However, this is not a great representation because while it might jog your memory about which rows are preserved, it fails to illustrate what’s happening with the columns.<br>
+然而，这不是一个很好的表示方法，因为它虽然可能帮助你记起哪些行被保留了，但却无法说明列发生了什么。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-venn" class="quarto-float quarto-figure quarto-figure-center anchored" alt="内连接、全连接、左连接和右连接的维恩图。每个连接由两个相交的圆表示，代表数据框 x 和 y，x 在右边，y 在左边。阴影表示连接的结果。">
+<div id="fig-join-venn" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Venn diagrams for inner, full, left, and right joins. Each join represented with two intersecting circles representing data frames x and y, with x on the right and y on the left. Shading indicates the result of the join. ">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-venn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/venn.png" class="img-fluid figure-img" alt="内连接、全连接、左连接和右连接的维恩图。每个连接由两个相交的圆表示，代表数据框 x 和 y，x 在右边，y 在左边。阴影表示连接的结果。" width="385">
+<img src="diagrams/join/venn.png" class="img-fluid figure-img" alt="Venn diagrams for inner, full, left, and right joins. Each join represented with two intersecting circles representing data frames x and y, with x on the right and y on the left. Shading indicates the result of the join. " width="385">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-venn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.8: 维恩图显示内连接、左连接、右连接和全连接之间的差异。
+Figure&nbsp;19.8: Venn diagrams showing the difference between inner, left, right, and full joins.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>这里显示的连接是所谓的<strong>等值 (equi)</strong> 连接，其中如果键相等则行匹配。等值连接是最常见的连接类型，所以我们通常会省略等值前缀，只说“内连接”而不是“等值内连接”。我们将在 <a href="#sec-non-equi-joins" class="quarto-xref"><span>Section 19.5</span></a> 中回到非等值连接。</p>
-<section id="行匹配" class="level3" data-number="19.4.1"><h3 data-number="19.4.1" class="anchored" data-anchor-id="行匹配">
-<span class="header-section-number">19.4.1</span> 行匹配</h3>
-<p>到目前为止，我们已经探讨了如果 <code>x</code> 中的一行与 <code>y</code> 中的零行或一行匹配会发生什么。如果它匹配多于一行会发生什么？要理解发生了什么，让我们首先将焦点缩小到 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>，然后画一幅图，<a href="#fig-join-match-types" class="quarto-xref">Figure&nbsp;<span>19.9</span></a>。</p>
+<p>The joins shown here are the so-called <strong>equi</strong> <strong>joins</strong>, where rows match if the keys are equal.<br>
+这里展示的连接是所谓的 <strong>等值</strong> <strong>连接</strong> (equi joins)，其中如果键相等，则行匹配。</p>
+<p>Equi joins are the most common type of join, so we’ll typically omit the equi prefix, and just say “inner join” rather than “equi inner join”.<br>
+等值连接是最常见的连接类型，所以我们通常会省略“等值”这个前缀，只说“内连接”而不是“等值内连接”。</p>
+<p>We’ll come back to non-equi joins in <a href="#sec-non-equi-joins" class="quarto-xref"><span>Section 19.5</span></a>.<br>
+我们将在 <a href="#sec-non-equi-joins" class="quarto-xref"><span>Section 19.5</span></a> 回顾非等值连接。</p>
+<section id="row-matching" class="level3" data-number="19.4.1"><h3 data-number="19.4.1" class="anchored" data-anchor-id="row-matching">
+<span class="header-section-number">19.4.1</span> Row matching</h3>
+<p>So far we’ve explored what happens if a row in <code>x</code> matches zero or one row in <code>y</code>.<br>
+到目前为止，我们已经探讨了如果 <code>x</code> 中的一行与 <code>y</code> 中的零行或一行匹配时会发生什么。</p>
+<p>What happens if it matches more than one row?<br>
+如果它匹配多于一行会发生什么？</p>
+<p>To understand what’s going on let’s first narrow our focus to the <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> and then draw a picture, <a href="#fig-join-match-types" class="quarto-xref">Figure&nbsp;<span>19.9</span></a>.<br>
+为了理解发生了什么，让我们首先将注意力集中在 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> 上，然后画一幅图，即 <a href="#fig-join-match-types" class="quarto-xref">Figure&nbsp;<span>19.9</span></a>。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-match-types" class="quarto-float quarto-figure quarto-figure-center anchored" alt="一个连接图，其中 x 的键值为 1、2 和 3，y 的键值为 1、2、2。输出有三行，因为键 1 匹配一行，键 2 匹配两行，键 3 匹配零行。">
+<div id="fig-join-match-types" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A join diagram where x has key values 1, 2, and 3, and y has key values 1, 2, 2. The output has three rows because key 1 matches one row, key 2 matches two rows, and key 3 matches zero rows.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-match-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/match-types.png" class="img-fluid figure-img" alt="一个连接图，其中 x 的键值为 1、2 和 3，y 的键值为 1、2、2。输出有三行，因为键 1 匹配一行，键 2 匹配两行，键 3 匹配零行。" width="348">
+<img src="diagrams/join/match-types.png" class="img-fluid figure-img" alt="A join diagram where x has key values 1, 2, and 3, and y has key values 1, 2, 2. The output has three rows because key 1 matches one row, key 2 matches two rows, and key 3 matches zero rows." width="348">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-match-types-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.9: <code>x</code> 中的一行可以有三种匹配方式。<code>x1</code> 匹配 <code>y</code> 中的一行，<code>x2</code> 匹配 <code>y</code> 中的两行，<code>x3</code> 匹配 <code>y</code> 中的零行。注意，虽然 <code>x</code> 中有三行，输出中也有三行，但这些行之间没有直接的对应关系。
+Figure&nbsp;19.9: The three ways a row in <code>x</code> can match. <code>x1</code> matches one row in <code>y</code>, <code>x2</code> matches two rows in <code>y</code>, <code>x3</code> matches zero rows in y. Note that while there are three rows in <code>x</code> and three rows in the output, there isn’t a direct correspondence between the rows.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p><code>x</code> 中的一行有三种可能的结果：</p>
+<p>There are three possible outcomes for a row in <code>x</code>:<br><code>x</code> 中的一行有三种可能的结果：</p>
 <ul>
-<li>如果它不匹配任何东西，它就会被丢弃。</li>
-<li>如果它匹配 <code>y</code> 中的 1 行，它就会被保留。</li>
-<li>如果它匹配 <code>y</code> 中的多于 1 行，它会为每个匹配复制一次。</li>
+<li><p>If it doesn’t match anything, it’s dropped.<br>
+如果它不匹配任何东西，它就会被丢弃。</p></li>
+<li><p>If it matches 1 row in <code>y</code>, it’s preserved.<br>
+如果它与 <code>y</code> 中的 1 行匹配，它将被保留。</p></li>
+<li><p>If it matches more than 1 row in <code>y</code>, it’s duplicated once for each match.<br>
+如果它与 <code>y</code> 中的多于 1 行匹配，它将为每个匹配复制一次。</p></li>
 </ul>
-<p>原则上，这意味着输出中的行与 <code>x</code> 中的行之间没有保证的对应关系，但在实践中，这很少引起问题。然而，有一个特别危险的情况可能会导致行的组合爆炸。想象一下连接以下两个表：</p>
+<p>In principle, this means that there’s no guaranteed correspondence between the rows in the output and the rows in <code>x</code>, but in practice, this rarely causes problems.<br>
+原则上，这意味着输出中的行与 <code>x</code> 中的行之间没有保证的对应关系，但在实践中，这很少会引起问题。</p>
+<p>There is, however, one particularly dangerous case which can cause a combinatorial explosion of rows.<br>
+然而，有一种特别危险的情况，可能会导致行的组合爆炸。</p>
+<p>Imagine joining the following two tables:<br>
+想象一下连接以下两个表：</p>
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, val_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">df2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, val_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>虽然 <code>df1</code> 中的第一行只匹配 <code>df2</code> 中的一行，但第二行和第三行都匹配两行。这有时被称为<code>多对多 (many-to-many)</code>连接，并且会导致 dplyr 发出警告：</p>
+<p>While the first row in <code>df1</code> only matches one row in <code>df2</code>, the second and third rows both match two rows.<br>
+虽然 <code>df1</code> 中的第一行只匹配 <code>df2</code> 中的一行，但第二行和第三行都匹配两行。</p>
+<p>This is sometimes called a <code>many-to-many</code> join, and will cause dplyr to emit a warning:<br>
+这有时被称为<code>多对多</code>连接，并且会导致 dplyr 发出警告：</p>
 <div class="cell">
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df1</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">df2</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">key</span><span class="op">)</span><span class="op">)</span></span>
@@ -1072,38 +1234,56 @@ Figure&nbsp;19.9: <code>x</code> 中的一行可以有三种匹配方式。<code
 <span><span class="co">#&gt; 4     2 x3    y2   </span></span>
 <span><span class="co">#&gt; 5     2 x3    y3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>如果你是故意这样做的，你可以设置 <code>relationship = "many-to-many"</code>，正如警告所建议的那样。</p>
-</section><section id="过滤连接-1" class="level3" data-number="19.4.2"><h3 data-number="19.4.2" class="anchored" data-anchor-id="过滤连接-1">
-<span class="header-section-number">19.4.2</span> 过滤连接</h3>
-<p>匹配的数量也决定了过滤连接的行为。半连接保留 <code>x</code> 中在 <code>y</code> 中有一个或多个匹配的行，如 <a href="#fig-join-semi" class="quarto-xref">Figure&nbsp;<span>19.10</span></a> 所示。反连接保留 <code>x</code> 中匹配 <code>y</code> 中零行的行，如 <a href="#fig-join-anti" class="quarto-xref">Figure&nbsp;<span>19.11</span></a> 所示。在这两种情况下，只有匹配的存在是重要的；它匹配多少次并不重要。这意味着过滤连接从不像变连接那样复制行。</p>
+<p>If you are doing this deliberately, you can set <code>relationship = "many-to-many"</code>, as the warning suggests.<br>
+如果你是故意这样做的，可以像警告建议的那样设置 <code>relationship = "many-to-many"</code>。</p>
+</section><section id="filtering-joins-1" class="level3" data-number="19.4.2"><h3 data-number="19.4.2" class="anchored" data-anchor-id="filtering-joins-1">
+<span class="header-section-number">19.4.2</span> Filtering joins</h3>
+<p>The number of matches also determines the behavior of the filtering joins.<br>
+匹配的数量也决定了过滤连接的行为。</p>
+<p>The semi-join keeps rows in <code>x</code> that have one or more matches in <code>y</code>, as in <a href="#fig-join-semi" class="quarto-xref">Figure&nbsp;<span>19.10</span></a>.<br>
+半连接 (semi-join) 保留 <code>x</code> 中在 <code>y</code> 中有一个或多个匹配的行，如 <a href="#fig-join-semi" class="quarto-xref">Figure&nbsp;<span>19.10</span></a> 所示。</p>
+<p>The anti-join keeps rows in <code>x</code> that match zero rows in <code>y</code>, as in <a href="#fig-join-anti" class="quarto-xref">Figure&nbsp;<span>19.11</span></a>.<br>
+反连接 (anti-join) 保留 <code>x</code> 中与 <code>y</code> 中零行匹配的行，如 <a href="#fig-join-anti" class="quarto-xref">Figure&nbsp;<span>19.11</span></a> 所示。</p>
+<p>In both cases, only the existence of a match is important; it doesn’t matter how many times it matches.<br>
+在这两种情况下，只有匹配的存在才重要；它匹配多少次并不重要。</p>
+<p>This means that filtering joins never duplicate rows like mutating joins do.<br>
+这意味着过滤连接从不像修改连接那样复制行。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-semi" class="quarto-float quarto-figure quarto-figure-center anchored" alt="一个连接图，其中有老朋友 x 和 y。在半连接中，只有匹配的存在才重要，所以输出包含与 x 相同的列。">
+<div id="fig-join-semi" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A join diagram with old friends x and y. In a semi join, only the  presence of a match matters so the output contains the same columns as x.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-semi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/semi.png" class="img-fluid figure-img" alt="一个连接图，其中有老朋友 x 和 y。在半连接中，只有匹配的存在才重要，所以输出包含与 x 相同的列。" width="318">
+<img src="diagrams/join/semi.png" class="img-fluid figure-img" alt="A join diagram with old friends x and y. In a semi join, only the  presence of a match matters so the output contains the same columns as x." width="318">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-semi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.10: 在半连接中，重要的是存在匹配；否则 <code>y</code> 中的值不会影响输出。
+Figure&nbsp;19.10: In a semi-join it only matters that there is a match; otherwise values in <code>y</code> don’t affect the output.
 </figcaption></figure>
 </div>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-anti" class="quarto-float quarto-figure quarto-figure-center anchored" alt="反连接是半连接的逆操作，所以匹配用红线画出，表示它们将从输出中被删除。">
+<div id="fig-join-anti" class="quarto-float quarto-figure quarto-figure-center anchored" alt="An anti-join is the inverse of a semi-join so matches are drawn with red lines indicating that they will be dropped from the output.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-anti-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/anti.png" class="img-fluid figure-img" alt="反连接是半连接的逆操作，所以匹配用红线画出，表示它们将从输出中被删除。" width="317">
+<img src="diagrams/join/anti.png" class="img-fluid figure-img" alt="An anti-join is the inverse of a semi-join so matches are drawn with red lines indicating that they will be dropped from the output." width="317">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-anti-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.11: 反连接是半连接的逆操作，从 <code>x</code> 中删除在 <code>y</code> 中有匹配的行。
+Figure&nbsp;19.11: An anti-join is the inverse of a semi-join, dropping rows from <code>x</code> that have a match in <code>y</code>.
 </figcaption></figure>
 </div>
 </div>
 </div>
 </section></section><section id="sec-non-equi-joins" class="level2" data-number="19.5"><h2 data-number="19.5" class="anchored" data-anchor-id="sec-non-equi-joins">
-<span class="header-section-number">19.5</span> 非等值连接</h2>
-<p>到目前为止，你只看到了等值连接，即如果 <code>x</code> 键等于 <code>y</code> 键，行就匹配。现在我们将放宽这个限制，讨论确定一对行是否匹配的其他方法。</p>
-<p>但在此之前，我们需要重新审视我们上面做的一个简化。在等值连接中，<code>x</code> 键和 <code>y</code> 键总是相等的，所以我们只需要在输出中显示一个。我们可以通过 <code>keep = TRUE</code> 来请求 dplyr 保留两个键，这导致了下面的代码和 <a href="#fig-inner-both" class="quarto-xref">Figure&nbsp;<span>19.12</span></a> 中重新绘制的 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>。</p>
+<span class="header-section-number">19.5</span> Non-equi joins</h2>
+<p>So far you’ve only seen equi joins, joins where the rows match if the <code>x</code> key equals the <code>y</code> key.<br>
+到目前为止，你只看到了等值连接，即当 <code>x</code> 键等于 <code>y</code> 键时行匹配的连接。</p>
+<p>Now we’re going to relax that restriction and discuss other ways of determining if a pair of rows match.<br>
+现在我们将放宽这个限制，讨论其他确定一对行是否匹配的方法。</p>
+<p>But before we can do that, we need to revisit a simplification we made above.<br>
+但在我们这样做之前，我们需要重新审视我们上面做的一个简化。</p>
+<p>In equi joins the <code>x</code> keys and <code>y</code> are always equal, so we only need to show one in the output.<br>
+在等值连接中，<code>x</code> 键和 <code>y</code> 键总是相等的，所以我们只需要在输出中显示一个。</p>
+<p>We can request that dplyr keep both keys with <code>keep = TRUE</code>, leading to the code below and the re-drawn <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> in <a href="#fig-inner-both" class="quarto-xref">Figure&nbsp;<span>19.12</span></a>.<br>
+我们可以请求 dplyr 使用 <code>keep = TRUE</code> 来保留两个键，从而得到下面的代码和 <a href="#fig-inner-both" class="quarto-xref">Figure&nbsp;<span>19.12</span></a> 中重新绘制的 <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code>。</p>
 <div class="cell">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">key</span> <span class="op">==</span> <span class="va">key</span><span class="op">)</span>, keep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 × 4</span></span>
@@ -1114,57 +1294,70 @@ Figure&nbsp;19.11: 反连接是半连接的逆操作，从 <code>x</code> 中删
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-inner-both" class="quarto-float quarto-figure quarto-figure-center anchored" alt="一个显示 x 和 y 之间内连接的连接图。结果现在包括四列：key.x、val_x、key.y 和 val_y。key.x 和 key.y 的值是相同的，这就是为什么我们通常只显示一个。 ">
+<div id="fig-inner-both" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A join diagram showing an inner join betwen x and y. The result now includes four columns: key.x, val_x, key.y, and val_y. The values of key.x and key.y are identical, which is why we usually only show one. ">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-inner-both-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/inner-both.png" class="img-fluid figure-img" alt="一个显示 x 和 y 之间内连接的连接图。结果现在包括四列：key.x、val_x、key.y 和 val_y。key.x 和 key.y 的值是相同的，这就是为什么我们通常只显示一个。 " width="415">
+<img src="diagrams/join/inner-both.png" class="img-fluid figure-img" alt="A join diagram showing an inner join betwen x and y. The result now includes four columns: key.x, val_x, key.y, and val_y. The values of key.x and key.y are identical, which is why we usually only show one. " width="415">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-inner-both-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.12: 一个内连接，在输出中显示 <code>x</code> 和 <code>y</code> 的键。
+Figure&nbsp;19.12: An inner join showing both <code>x</code> and <code>y</code> keys in the output.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>当我们从等值连接转向其他类型时，我们将总是显示键，因为键值通常会不同。例如，我们可以不再仅仅在 <code>x$key</code> 和 <code>y$key</code> 相等时匹配，而是在 <code>x$key</code> 大于或等于 <code>y$key</code> 时匹配，这导致了 <a href="#fig-join-gte" class="quarto-xref">Figure&nbsp;<span>19.13</span></a>。dplyr 的连接函数理解等值连接和非等值连接之间的这种区别，所以当你执行非等值连接时，它总是会显示两个键。</p>
+<p>When we move away from equi joins we’ll always show the keys, because the key values will often be different.<br>
+当我们不再使用等值连接时，我们将始终显示键，因为键值通常会不同。</p>
+<p>For example, instead of matching only when the <code>x$key</code> and <code>y$key</code> are equal, we could match whenever the <code>x$key</code> is greater than or equal to the <code>y$key</code>, leading to <a href="#fig-join-gte" class="quarto-xref">Figure&nbsp;<span>19.13</span></a>.<br>
+例如，我们可以不只在 <code>x$key</code> 和 <code>y$key</code> 相等时进行匹配，而是在 <code>x$key</code> 大于或等于 <code>y$key</code> 时进行匹配，这导致了 <a href="#fig-join-gte" class="quarto-xref">Figure&nbsp;<span>19.13</span></a>。</p>
+<p>dplyr’s join functions understand this distinction equi and non-equi joins so will always show both keys when you perform a non-equi join.<br>
+dplyr 的连接函数理解等值连接和非等值连接之间的区别，因此当你执行非等值连接时，它总是会显示两个键。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-gte" class="quarto-float quarto-figure quarto-figure-center anchored" alt="一个说明 join_by(key >= key) 的连接图。x 的第一行匹配 y 的一行，第二行和第三行各匹配两行。这意味着输出有五行，包含以下每一对 (key.x, key.y)：(1, 1), (2, 1), (2, 2), (3, 1), (3, 2)。">
+<div id="fig-join-gte" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A join diagram illustrating join_by(key >= key). The first row of x matches one row of y and the second and thirds rows each match two rows. This means the output has five rows containing each of the  following (key.x, key.y) pairs: (1, 1), (2, 1), (2, 2), (3, 1), (3, 2).">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-gte-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/gte.png" class="img-fluid figure-img" alt="一个说明 join_by(key >= key) 的连接图。x 的第一行匹配 y 的一行，第二行和第三行各匹配两行。这意味着输出有五行，包含以下每一对 (key.x, key.y)：(1, 1), (2, 1), (2, 2), (3, 1), (3, 2)。" width="385">
+<img src="diagrams/join/gte.png" class="img-fluid figure-img" alt="A join diagram illustrating join_by(key >= key). The first row of x matches one row of y and the second and thirds rows each match two rows. This means the output has five rows containing each of the  following (key.x, key.y) pairs: (1, 1), (2, 1), (2, 2), (3, 1), (3, 2)." width="385">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-gte-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.13: 一个非等值连接，其中 <code>x</code> 键必须大于或等于 <code>y</code> 键。许多行会产生多个匹配。
+Figure&nbsp;19.13: A non-equi join where the <code>x</code> key must be greater than or equal to the <code>y</code> key. Many rows generate multiple matches.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>非等值连接不是一个特别有用的术语，因为它只告诉你连接不是什么，而不是它是什么。dplyr 通过识别四种特别有用的非等值连接类型来提供帮助：</p>
+<p>Non-equi join isn’t a particularly useful term because it only tells you what the join is not, not what it is. dplyr helps by identifying four particularly useful types of non-equi join:<br>
+非等值连接 (Non-equi join) 并不是一个特别有用的术语，因为它只告诉你连接不是什么，而不是它是什么。dplyr 通过识别四种特别有用的非等值连接类型来提供帮助：</p>
 <ul>
-<li>
-<strong>交叉连接 (Cross joins)</strong> 匹配每一对行。</li>
-<li>
-<strong>不等连接 (Inequality joins)</strong> 使用 <code>&lt;</code>、<code>&lt;=</code>、<code>&gt;</code> 和 <code>&gt;=</code> 而不是 <code>==</code>。</li>
-<li>
-<strong>滚动连接 (Rolling joins)</strong> 类似于不等连接，但只找到最接近的匹配。</li>
-<li>
-<strong>重叠连接 (Overlap joins)</strong> 是一种特殊类型的不等连接，旨在处理范围。</li>
+<li><p><strong>Cross joins</strong> match every pair of rows.<br><strong>交叉连接</strong> (Cross joins) 匹配每一对行。</p></li>
+<li><p><strong>Inequality joins</strong> use <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code>, and <code>&gt;=</code> instead of <code>==</code>.<br><strong>不等连接</strong> (Inequality joins) 使用 <code>&amp;lt;</code>、<code>&amp;lt;=</code>、<code>&amp;gt;</code> 和 <code>&amp;gt;=</code> 代替 <code>==</code>。</p></li>
+<li><p><strong>Rolling joins</strong> are similar to inequality joins but only find the closest match.<br><strong>滚动连接</strong> (Rolling joins) 类似于不等连接，但只查找最接近的匹配。</p></li>
+<li><p><strong>Overlap joins</strong> are a special type of inequality join designed to work with ranges.<br><strong>重叠连接</strong> (Overlap joins) 是一种特殊类型的不等连接，旨在处理范围。</p></li>
 </ul>
-<p>以下各节将更详细地描述这些类型中的每一种。</p>
-<section id="交叉连接" class="level3" data-number="19.5.1"><h3 data-number="19.5.1" class="anchored" data-anchor-id="交叉连接">
-<span class="header-section-number">19.5.1</span> 交叉连接</h3>
-<p>交叉连接匹配所有内容，如 <a href="#fig-join-cross" class="quarto-xref">Figure&nbsp;<span>19.14</span></a> 所示，生成行的笛卡尔积。这意味着输出将有 <code>nrow(x) * nrow(y)</code> 行。</p>
+<p>Each of these is described in more detail in the following sections.<br>
+以下各节将更详细地描述这些内容。</p>
+<section id="cross-joins" class="level3" data-number="19.5.1"><h3 data-number="19.5.1" class="anchored" data-anchor-id="cross-joins">
+<span class="header-section-number">19.5.1</span> Cross joins</h3>
+<p>A cross join matches everything, as in <a href="#fig-join-cross" class="quarto-xref">Figure&nbsp;<span>19.14</span></a>, generating the Cartesian product of rows.<br>
+交叉连接匹配所有内容，如 <a href="#fig-join-cross" class="quarto-xref">Figure&nbsp;<span>19.14</span></a> 所示，生成行的笛卡尔积 (Cartesian product)。</p>
+<p>This means the output will have <code>nrow(x) * nrow(y)</code> rows.<br>
+这意味着输出将有 <code>nrow(x) * nrow(y)</code> 行。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-cross" class="quarto-float quarto-figure quarto-figure-center anchored" alt="一个连接图，为 x 和 y 的每个组合都显示一个点。">
+<div id="fig-join-cross" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A join diagram showing a dot for every combination of x and y.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-cross-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/cross.png" class="img-fluid figure-img" alt="一个连接图，为 x 和 y 的每个组合都显示一个点。" width="155">
+<img src="diagrams/join/cross.png" class="img-fluid figure-img" alt="A join diagram showing a dot for every combination of x and y." width="155">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-cross-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.14: 交叉连接将 <code>x</code> 中的每一行与 <code>y</code> 中的每一行进行匹配。
+Figure&nbsp;19.14: A cross join matches each row in <code>x</code> with every row in <code>y</code>.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>交叉连接在生成排列时很有用。例如，下面的代码生成了所有可能的名字对。由于我们将 <code>df</code> 与自身连接，这有时被称为<strong>自连接 (self-join)</strong>。交叉连接使用一个不同的连接函数，因为当你匹配每一行时，内/左/右/全连接之间没有区别。</p>
+<p>Cross joins are useful when generating permutations.<br>
+交叉连接在生成排列时很有用。</p>
+<p>For example, the code below generates every possible pair of names.<br>
+例如，下面的代码生成了所有可能的姓名对。</p>
+<p>Since we’re joining <code>df</code> to itself, this is sometimes called a <strong>self-join</strong>.<br>
+由于我们将 <code>df</code> 与其自身连接，这有时被称为 <strong>自连接</strong> (self-join)。</p>
+<p>Cross joins use a different join function because there’s no distinction between inner/left/right/full when you’re matching every row.<br>
+交叉连接使用不同的连接函数，因为当你匹配每一行时，内/左/右/全连接之间没有区别。</p>
 <div class="cell">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"John"</span>, <span class="st">"Simon"</span>, <span class="st">"Tracy"</span>, <span class="st">"Max"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/cross_join.html">cross_join</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
@@ -1179,22 +1372,26 @@ Figure&nbsp;19.14: 交叉连接将 <code>x</code> 中的每一行与 <code>y</co
 <span><span class="co">#&gt; 6 Simon  Simon </span></span>
 <span><span class="co">#&gt; # ℹ 10 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="不等连接" class="level3" data-number="19.5.2"><h3 data-number="19.5.2" class="anchored" data-anchor-id="不等连接">
-<span class="header-section-number">19.5.2</span> 不等连接</h3>
-<p>不等连接使用 <code>&lt;</code>、<code>&lt;=</code>、<code>&gt;=</code> 或 <code>&gt;</code> 来限制可能的匹配集，如 <a href="#fig-join-gte" class="quarto-xref">Figure&nbsp;<span>19.13</span></a> 和 <a href="#fig-join-lt" class="quarto-xref">Figure&nbsp;<span>19.15</span></a> 所示。</p>
+</section><section id="inequality-joins" class="level3" data-number="19.5.2"><h3 data-number="19.5.2" class="anchored" data-anchor-id="inequality-joins">
+<span class="header-section-number">19.5.2</span> Inequality joins</h3>
+<p>Inequality joins use <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, or <code>&gt;</code> to restrict the set of possible matches, as in <a href="#fig-join-gte" class="quarto-xref">Figure&nbsp;<span>19.13</span></a> and <a href="#fig-join-lt" class="quarto-xref">Figure&nbsp;<span>19.15</span></a>.<br>
+不等连接使用 <code>&lt;</code>、<code>&lt;=</code>、<code>&gt;=</code> 或 <code>&gt;</code> 来限制可能的匹配集合，如 <a href="#fig-join-gte" class="quarto-xref">Figure&nbsp;<span>19.13</span></a> 和 <a href="#fig-join-lt" class="quarto-xref">Figure&nbsp;<span>19.15</span></a> 所示。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-lt" class="quarto-float quarto-figure quarto-figure-center anchored" alt="一个描述不等连接的图，其中数据框 x 通过数据框 y 连接，x 的键小于 y 的键，导致左上角形成一个三角形。">
+<div id="fig-join-lt" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A diagram depicting an inequality join where a data frame x is joined by  a data frame y where the key of x is less than the key of y, resulting  in a triangular shape in the top-left corner.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-lt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/lt.png" class="img-fluid figure-img" alt="一个描述不等连接的图，其中数据框 x 通过数据框 y 连接，x 的键小于 y 的键，导致左上角形成一个三角形。" width="185">
+<img src="diagrams/join/lt.png" class="img-fluid figure-img" alt="A diagram depicting an inequality join where a data frame x is joined by  a data frame y where the key of x is less than the key of y, resulting  in a triangular shape in the top-left corner." width="185">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-lt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.15: 一个不等连接，其中 <code>x</code> 与 <code>y</code> 在 <code>x</code> 的键小于 <code>y</code> 的键的行上连接。这在左上角形成了一个三角形。
+Figure&nbsp;19.15: An inequality join where <code>x</code> is joined to <code>y</code> on rows where the key of <code>x</code> is less than the key of <code>y</code>. This makes a triangular shape in the top-left corner.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>不等连接非常通用，以至于很难想出有意义的具体用例。一个有用的小技巧是使用它们来限制交叉连接，这样我们就可以生成所有组合而不是所有排列：</p>
+<p>Inequality joins are extremely general, so general that it’s hard to come up with meaningful specific use cases.<br>
+不等连接非常通用，以至于很难想出有意义的特定用例。</p>
+<p>One small useful technique is to use them to restrict the cross join so that instead of generating all permutations, we generate all combinations:<br>
+一个有用的小技巧是使用它们来限制交叉连接，这样我们就不是生成所有排列，而是生成所有组合：</p>
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"John"</span>, <span class="st">"Simon"</span>, <span class="st">"Tracy"</span>, <span class="st">"Max"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -1209,30 +1406,44 @@ Figure&nbsp;19.15: 一个不等连接，其中 <code>x</code> 与 <code>y</code>
 <span><span class="co">#&gt; 5     2 Simon      4 Max   </span></span>
 <span><span class="co">#&gt; 6     3 Tracy      4 Max</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="滚动连接" class="level3" data-number="19.5.3"><h3 data-number="19.5.3" class="anchored" data-anchor-id="滚动连接">
-<span class="header-section-number">19.5.3</span> 滚动连接</h3>
-<p>滚动连接是一种特殊类型的不等连接，在这种连接中，你得到的不是满足不等式的<em>每一</em>行，而只是最接近的那一行，如 <a href="#fig-join-closest" class="quarto-xref">Figure&nbsp;<span>19.16</span></a> 所示。你可以通过添加 <code>closest()</code> 将任何不等连接变成滚动连接。例如，<code>join_by(closest(x &lt;= y))</code> 匹配大于或等于 x 的最小的 <code>y</code>，而 <code>join_by(closest(x &gt; y))</code> 匹配小于 <code>x</code> 的最大的 <code>y</code>。</p>
+</section><section id="rolling-joins" class="level3" data-number="19.5.3"><h3 data-number="19.5.3" class="anchored" data-anchor-id="rolling-joins">
+<span class="header-section-number">19.5.3</span> Rolling joins</h3>
+<p>Rolling joins are a special type of inequality join where instead of getting <em>every</em> row that satisfies the inequality, you get just the closest row, as in <a href="#fig-join-closest" class="quarto-xref">Figure&nbsp;<span>19.16</span></a>.<br>
+滚动连接是一种特殊类型的不等连接，在这种连接中，你不是得到满足不等式的<em>每一</em>行，而只是得到最接近的那一行，如 <a href="#fig-join-closest" class="quarto-xref">Figure&nbsp;<span>19.16</span></a> 所示。</p>
+<p>You can turn any inequality join into a rolling join by adding <code>closest()</code>.<br>
+你可以通过添加 <code>closest()</code> 将任何不等连接转换为滚动连接。</p>
+<p>For example <code>join_by(closest(x &lt;= y))</code> matches the smallest <code>y</code> that’s greater than or equal to x, and <code>join_by(closest(x &gt; y))</code> matches the biggest <code>y</code> that’s less than <code>x</code>.<br>
+例如，<code>join_by(closest(x &lt;= y))</code> 匹配大于或等于 x 的最小 <code>y</code>，而 <code>join_by(closest(x &gt; y))</code> 匹配小于 <code>x</code> 的最大 <code>y</code>。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-join-closest" class="quarto-float quarto-figure quarto-figure-center anchored" alt="滚动连接是不等连接的一个子集，所以一些匹配被灰色显示，表示它们没有被使用，因为它们不是“最接近”的。">
+<div id="fig-join-closest" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A rolling join is a subset of an inequality join so some matches are grayed out indicating that they're not used because they're not the  &quot;closest&quot;.">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-join-closest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/join/closest.png" class="img-fluid figure-img" alt="滚动连接是不等连接的一个子集，所以一些匹配被灰色显示，表示它们没有被使用，因为它们不是“最接近”的。" width="262">
+<img src="diagrams/join/closest.png" class="img-fluid figure-img" alt="A rolling join is a subset of an inequality join so some matches are grayed out indicating that they're not used because they're not the  &quot;closest&quot;." width="262">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-join-closest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只匹配第一个值。
+Figure&nbsp;19.16: A rolling join is similar to a greater-than-or-equal inequality join but only matches the first value.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>当你有两个日期表不能完美对齐，并且你想找到（例如）表 1 中在表 2 中某个日期之前（或之后）的最接近的日期时，滚动连接特别有用。</p>
-<p>例如，假设你负责你办公室的派对策划委员会。你的公司相当吝啬，所以你们不是举办单独的派对，而是每个季度只举办一次派对。确定派对何时举行的规则有点复杂：派对总是在星期一，你跳过一月的第一周，因为很多人都在度假，而 2022 年第三季度的第一个星期一是 7 月 4 日，所以那必须推迟一周。这导致了以下的派对日期：</p>
+<p>Rolling joins are particularly useful when you have two tables of dates that don’t perfectly line up and you want to find (e.g.) the closest date in table 1 that comes before (or after) some date in table 2.<br>
+当你拥有两个日期不完全对齐的表格，并且想要查找（例如）表 1 中在表 2 中某个日期之前（或之后）的最接近日期时，滚动连接特别有用。</p>
+<p>For example, imagine that you’re in charge of the party planning commission for your office.<br>
+例如，假设你负责办公室的派对策划委员会。</p>
+<p>Your company is rather cheap so instead of having individual parties, you only have a party once each quarter.<br>
+你的公司相当小气，所以你们每个季度只举办一次派对，而不是举办个人派对。</p>
+<p>The rules for determining when a party will be held are a little complex: parties are always on a Monday, you skip the first week of January since a lot of people are on holiday, and the first Monday of Q3 2022 is July 4, so that has to be pushed back a week.<br>
+决定派对何时举行的规则有点复杂：派对总是在星期一，一月份的第一周会跳过，因为很多人都在度假，而 2022 年第三季度的第一个星期一是 7 月 4 日，所以必须推迟一周。</p>
+<p>That leads to the following party days:<br>
+这导致了以下派对日期：</p>
 <div class="cell">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">parties</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  q <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
 <span>  party <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2022-01-10"</span>, <span class="st">"2022-04-04"</span>, <span class="st">"2022-07-11"</span>, <span class="st">"2022-10-03"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>现在假设你有一张员工生日表：</p>
+<p>Now imagine that you have a table of employee birthdays:<br>
+现在想象一下，你有一张员工生日表：</p>
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">employees</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
@@ -1251,7 +1462,10 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
 <span><span class="co">#&gt; 6 Rayshaun 2022-01-11</span></span>
 <span><span class="co">#&gt; # ℹ 94 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>对于每个员工，我们想找到在他们生日前（或生日当天）的最后一个派对日期。我们可以用一个滚动连接来表示这一点：</p>
+<p>And for each employee we want to find the last party date that comes before (or on) their birthday.<br>
+对于每位员工，我们都想找到在他们生日之前（或当天）的最后一个派对日期。</p>
+<p>We can express that with a rolling join:<br>
+我们可以用滚动连接来表达：</p>
 <div class="cell">
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">employees</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">parties</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="fu">closest</span><span class="op">(</span><span class="va">birthday</span> <span class="op">&gt;=</span> <span class="va">party</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -1266,7 +1480,8 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
 <span><span class="co">#&gt; 6 Rayshaun 2022-01-11     1 2022-01-10</span></span>
 <span><span class="co">#&gt; # ℹ 94 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>然而，这种方法有一个问题：生日在 1 月 10 日之前的员工没有派对：</p>
+<p>There is, however, one problem with this approach: the folks with birthdays before January 10 don’t get a party:<br>
+然而，这种方法存在一个问题：1 月 10 日之前生日的人没有派对：</p>
 <div class="cell">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">employees</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">parties</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="fu">closest</span><span class="op">(</span><span class="va">birthday</span> <span class="op">&gt;=</span> <span class="va">party</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -1276,19 +1491,23 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
 <span><span class="co">#&gt; 1 Maks   2022-01-07</span></span>
 <span><span class="co">#&gt; 2 Nalani 2022-01-04</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>为了解决这个问题，我们需要用一种不同的方式来处理问题，即使用重叠连接。</p>
-</section><section id="重叠连接" class="level3" data-number="19.5.4"><h3 data-number="19.5.4" class="anchored" data-anchor-id="重叠连接">
-<span class="header-section-number">19.5.4</span> 重叠连接</h3>
-<p>重叠连接提供了三个使用不等连接来简化处理区间的辅助函数：</p>
+<p>To resolve that issue we’ll need to tackle the problem a different way, with overlap joins.<br>
+为了解决这个问题，我们需要用一种不同的方式来处理，即使用重叠连接。</p>
+</section><section id="overlap-joins" class="level3" data-number="19.5.4"><h3 data-number="19.5.4" class="anchored" data-anchor-id="overlap-joins">
+<span class="header-section-number">19.5.4</span> Overlap joins</h3>
+<p>Overlap joins provide three helpers that use inequality joins to make it easier to work with intervals:<br>
+重叠连接提供了三个使用不等连接的辅助函数，使处理区间变得更容易：</p>
 <ul>
-<li>
-<code>between(x, y_lower, y_upper)</code> 是 <code>x &gt;= y_lower, x &lt;= y_upper</code> 的简写。</li>
-<li>
-<code>within(x_lower, x_upper, y_lower, y_upper)</code> 是 <code>x_lower &gt;= y_lower, x_upper &lt;= y_upper</code> 的简写。</li>
-<li>
-<code>overlaps(x_lower, x_upper, y_lower, y_upper)</code> 是 <code>x_lower &lt;= y_upper, x_upper &gt;= y_lower</code> 的简写。</li>
+<li><p><code>between(x, y_lower, y_upper)</code> is short for <code>x &gt;= y_lower, x &lt;= y_upper</code>.<br><code>between(x, y_lower, y_upper)</code> 是 <code>x &gt;= y_lower, x &lt;= y_upper</code> 的简写。</p></li>
+<li><p><code>within(x_lower, x_upper, y_lower, y_upper)</code> is short for <code>x_lower &gt;= y_lower, x_upper &lt;= y_upper</code>.<br><code>within(x_lower, x_upper, y_lower, y_upper)</code> 是 <code>x_lower &amp;gt;= y_lower, x_upper &amp;lt;= y_upper</code> 的简写。</p></li>
+<li><p><code>overlaps(x_lower, x_upper, y_lower, y_upper)</code> is short for <code>x_lower &amp;lt;= y_upper, x_upper &amp;gt;= y_lower</code>.<br><code>overlaps(x_lower, x_upper, y_lower, y_upper)</code> 是 <code>x_lower &amp;lt;= y_upper, x_upper &amp;gt;= y_lower</code> 的简写。</p></li>
 </ul>
-<p>让我们继续生日的例子，看看你可能会如何使用它们。我们上面使用的策略有一个问题：在 1 月 1-9 日的生日前没有派对。所以，明确每个派对跨越的日期范围，并为那些早生的生日做一个特殊情况处理可能会更好：</p>
+<p>Let’s continue the birthday example to see how you might use them.<br>
+让我们继续看生日的例子，看看你可能会如何使用它们。</p>
+<p>There’s one problem with the strategy we used above: there’s no party preceding the birthdays Jan 1-9.<br>
+我们上面使用的策略有一个问题：1 月 1 日至 9 日生日之前没有派对。</p>
+<p>So it might be better to be explicit about the date ranges that each party spans, and make a special case for those early birthdays:<br>
+所以最好明确每个派对涵盖的日期范围，并为那些早早过生日的人做一个特例：</p>
 <div class="cell">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">parties</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  q <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
@@ -1305,7 +1524,10 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
 <span><span class="co">#&gt; 3     3 2022-07-11 2022-07-11 2022-10-02</span></span>
 <span><span class="co">#&gt; 4     4 2022-10-03 2022-10-03 2022-12-31</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Hadley 在数据录入方面非常糟糕，所以他还想检查派对期间是否有重叠。一种方法是使用自连接来检查是否有任何开始-结束区间与另一个重叠：</p>
+<p>Hadley is hopelessly bad at data entry so he also wanted to check that the party periods don’t overlap.<br>
+Hadley 在数据录入方面非常糟糕，所以他还想检查一下派对时段是否重叠。</p>
+<p>One way to do this is by using a self-join to check if any start-end interval overlap with another:<br>
+一种方法是使用自连接来检查是否有任何开始-结束区间与另一个区间重叠：</p>
 <div class="cell">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">parties</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">parties</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="fu">overlaps</span><span class="op">(</span><span class="va">start</span>, <span class="va">end</span>, <span class="va">start</span>, <span class="va">end</span><span class="op">)</span>, <span class="va">q</span> <span class="op">&lt;</span> <span class="va">q</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -1315,7 +1537,8 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
 <span><span class="co">#&gt;   &lt;date&gt;     &lt;date&gt;     &lt;date&gt;     &lt;date&gt;    </span></span>
 <span><span class="co">#&gt; 1 2022-04-04 2022-07-11 2022-07-11 2022-10-02</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>哎呀，有重叠，所以让我们解决这个问题然后继续：</p>
+<p>Ooops, there is an overlap, so let’s fix that problem and continue:<br>
+哎呀，有重叠，我们来解决这个问题然后继续：</p>
 <div class="cell">
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">parties</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  q <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>,</span>
@@ -1324,7 +1547,10 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
 <span>  end <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html">ymd</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2022-04-03"</span>, <span class="st">"2022-07-10"</span>, <span class="st">"2022-10-02"</span>, <span class="st">"2022-12-31"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>现在我们可以将每个员工与他们的派对匹配起来了。这是一个使用 <code>unmatched = "error"</code> 的好地方，因为我们想快速发现是否有任何员工没有被分配到派对。</p>
+<p>Now we can match each employee to their party.<br>
+现在我们可以将每位员工与他们的派对匹配起来。</p>
+<p>This is a good place to use <code>unmatched = "error"</code> because we want to quickly find out if any employees didn’t get assigned a party.<br>
+这里很适合使用 <code>unmatched = "error"</code>，因为我们想快速找出是否有任何员工没有被分配到派对。</p>
 <div class="cell">
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">employees</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">parties</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/between.html">between</a></span><span class="op">(</span><span class="va">birthday</span>, <span class="va">start</span>, <span class="va">end</span><span class="op">)</span><span class="op">)</span>, unmatched <span class="op">=</span> <span class="st">"error"</span><span class="op">)</span></span>
@@ -1339,11 +1565,11 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
 <span><span class="co">#&gt; 6 Rayshaun 2022-01-11     1 2022-01-10 2022-01-01 2022-04-03</span></span>
 <span><span class="co">#&gt; # ℹ 94 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="练习-2" class="level3" data-number="19.5.5"><h3 data-number="19.5.5" class="anchored" data-anchor-id="练习-2">
-<span class="header-section-number">19.5.5</span> 练习</h3>
+</section><section id="exercises-2" class="level3" data-number="19.5.5"><h3 data-number="19.5.5" class="anchored" data-anchor-id="exercises-2">
+<span class="header-section-number">19.5.5</span> Exercises</h3>
 <ol type="1">
 <li>
-<p>你能解释一下在这个等值连接中键发生了什么吗？为什么它们不同？</p>
+<p>Can you explain what’s happening with the keys in this equi join? Why are they different?</p>
 <div class="cell">
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">y</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">key</span> <span class="op">==</span> <span class="va">key</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 4 × 3</span></span>
@@ -1364,18 +1590,29 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
 <span><span class="co">#&gt; 4    NA &lt;NA&gt;      4 y3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </li>
-<li><p>在查找是否有任何派对期间与另一个派对期间重叠时，我们在 <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code> 中使用了 <code>q &lt; q</code>？为什么？如果移除这个不等式会发生什么？</p></li>
-</ol></section></section><section id="总结" class="level2" data-number="19.6"><h2 data-number="19.6" class="anchored" data-anchor-id="总结">
-<span class="header-section-number">19.6</span> 总结</h2>
-<p>在本章中，你学习了如何使用变连接和过滤连接来组合来自一对数据框的数据。在此过程中，你学习了如何识别键，以及主键和外键之间的区别。你也理解了连接如何工作以及如何计算输出将有多少行。最后，你对非等值连接的力量有了初步的了解，并看到了一些有趣的用例。</p>
-<p>本章结束了本书的“转换”部分，该部分的重点是你可以用于单个列和 tibble 的工具。你学习了用于处理逻辑向量、数字和完整表格的 dplyr 和基础函数，用于处理字符串的 stringr 函数，用于处理日期时间的 lubridate 函数，以及用于处理因子的 forcats 函数。</p>
-<p>在本书的下一部分，你将学习更多关于如何将各种类型的数据以整洁的形式导入 R 的知识。</p>
+<li><p>When finding if any party period overlapped with another party period we used <code>q &lt; q</code> in the <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code>? Why? What happens if you remove this inequality?</p></li>
+</ol></section></section><section id="summary" class="level2" data-number="19.6"><h2 data-number="19.6" class="anchored" data-anchor-id="summary">
+<span class="header-section-number">19.6</span> Summary</h2>
+<p>In this chapter, you’ve learned how to use mutating and filtering joins to combine data from a pair of data frames.<br>
+在本章中，你学习了如何使用修改连接和过滤连接来合并来自一对数据框的数据。</p>
+<p>Along the way you learned how to identify keys, and the difference between primary and foreign keys.<br>
+在此过程中，你学会了如何识别键，以及主键和外键之间的区别。</p>
+<p>You also understand how joins work and how to figure out how many rows the output will have.<br>
+你还了解了连接的工作原理以及如何确定输出将有多少行。</p>
+<p>Finally, you’ve gained a glimpse into the power of non-equi joins and seen a few interesting use cases.<br>
+最后，你对非等值连接的强大功能有了初步的了解，并看到了一些有趣的用例。</p>
+<p>This chapter concludes the “Transform” part of the book where the focus was on the tools you could use with individual columns and tibbles.<br>
+本章结束了本书的“转换”部分，该部分的重点是你可以用于单个列和 tibble 的工具。</p>
+<p>You learned about dplyr and base functions for working with logical vectors, numbers, and complete tables, stringr functions for working with strings, lubridate functions for working with date-times, and forcats functions for working with factors.<br>
+你学习了用于处理逻辑向量、数字和完整表格的 dplyr 和基础函数，用于处理字符串的 stringr 函数，用于处理日期时间的 lubridate 函数，以及用于处理因子的 forcats 函数。</p>
+<p>In the next part of the book, you’ll learn more about getting various types of data into R in a tidy form.<br>
+在本书的下一部分，你将学习更多关于如何将各种类型的数据以整洁的形式导入 R 的知识。</p>
 
 
 </section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
 <ol>
-<li id="fn1"><p>记住，在 RStudio 中你也可以使用 <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> 来避免这个问题。<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>这并非 100% 正确，但每当不是这样时你都会收到一个警告。<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Remember that in RStudio you can also use <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> to avoid this problem.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>That’s not 100% true, but you’ll get a warning whenever it isn’t.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -1775,8 +2012,8 @@ Figure&nbsp;19.16: 滚动连接类似于大于或等于的不等连接，但只�
     }
   });
   </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="./missing-values.html" class="pagination-link" aria-label="缺失值">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">缺失值</span></span>
+      <a href="./missing-values.html" class="pagination-link" aria-label="Missing values">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Missing values</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
