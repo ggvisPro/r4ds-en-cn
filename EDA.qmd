@@ -1,29 +1,54 @@
-# 探索性数据分析 {#sec-exploratory-data-analysis}
+# Exploratory data analysis {#sec-exploratory-data-analysis}
 
-## 引言
+```{r}
+#| echo: false
+source("_common.R")
+```
 
-本章将向你展示如何使用可视化和转换来系统地探索数据，统计学家称这项任务为**探索性数据分析** (exploratory data analysis)，简称 **EDA**。
-EDA 是一个迭代循环。
-你需要：
+## Introduction
 
-1.  生成关于数据的问题。
+This chapter will show you how to use visualization and transformation to explore your data in a systematic way, a task that statisticians call exploratory data analysis, or EDA for short.    
+本章将向你展示如何使用可视化和转换来系统地探索数据，统计学家称之为探索性数据分析（exploratory data analysis，简称 EDA）。
 
-2.  通过可视化、转换和建模来寻找答案。
+EDA is an iterative cycle. You:  
+EDA 是一个迭代的过程。你需要：
 
-3.  利用你学到的知识来完善你的问题和/或生成新的问题。
+1.  Generate questions about your data.    
+    生成关于数据的问题。
 
-EDA 不是一个有着严格规则的正式流程。
+2.  Search for answers by visualizing, transforming, and modelling your data.    
+    通过可视化、转换和建模来寻找答案。
+
+3.  Use what you learn to refine your questions and/or generate new questions.    
+    利用你所学到的知识来完善你的问题和/或生成新的问题。
+
+EDA is not a formal process with a strict set of rules.    
+EDA 并非一个有着严格规则的正式流程。
+
+More than anything, EDA is a state of mind.    
 更重要的是，EDA 是一种思维状态。
-在 EDA 的初始阶段，你应该自由地探索你脑海中出现的每一个想法。
-有些想法会成功，有些则会是死胡同。
-随着探索的深入，你将逐渐聚焦于一些特别富有成效的见解，并最终将它们整理成文，与他人交流。
 
-EDA 是任何数据分析的重要组成部分，即使主要的研究问题已经现成地交给你，因为你总是需要调查数据的质量。
-数据清理只是 EDA 的一个应用：你提出关于数据是否符合预期的问题。
-要进行数据清理，你需要运用所有 EDA 的工具：可视化、转换和建模。
+During the initial phases of EDA you should feel free to investigate every idea that occurs to you.    
+在 EDA 的初始阶段，你应该自由地去探究你脑海中出现的每一个想法。
 
-### 先决条件
+Some of these ideas will pan out, and some will be dead ends.    
+其中一些想法会成功，而另一些则会是死胡同。
 
+As your exploration continues, you will home in on a few particularly productive insights that you'll eventually write up and communicate to others.    
+随着你探索的深入，你会逐渐聚焦于一些特别富有成效的见解，并最终将它们整理成文，与他人交流。
+
+EDA is an important part of any data analysis, even if the primary research questions are handed to you on a platter, because you always need to investigate the quality of your data.    
+EDA 是任何数据分析中都至关重要的一环，即使主要的研究问题已经现成地摆在你面前，因为你总是需要考察数据的质量。
+
+Data cleaning is just one application of EDA: you ask questions about whether your data meets your expectations or not.    
+数据清洗只是 EDA 的一种应用：你需要提出问题，判断你的数据是否符合预期。
+
+To do data cleaning, you'll need to deploy all the tools of EDA: visualization, transformation, and modelling.    
+要进行数据清洗，你需要运用 EDA 的所有工具：可视化、转换和建模。
+
+### Prerequisites
+
+In this chapter we'll combine what you've learned about dplyr and ggplot2 to interactively ask questions, answer them with data, and then ask new questions.    
 在本章中，我们将结合你所学的 dplyr 和 ggplot2 知识，以交互方式提出问题，用数据回答问题，然后再提出新的问题。
 
 ```{r}
@@ -32,65 +57,148 @@ EDA 是任何数据分析的重要组成部分，即使主要的研究问题已�
 library(tidyverse)
 ```
 
------
+## Questions
 
-## 问题
+> "There are no routine statistical questions, only questionable statistical routines." --- Sir David Cox
+    
+\> “没有常规的统计问题，只有值得怀疑的统计套路。” --- David Cox 爵士
 
-> “没有常规的统计问题，只有值得怀疑的统计程序。(The greatest value of a picture is when it forces us to notice what we never expected to see.)” \
-> --- David Cox
+> "Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise." --- John Tukey
+    
+\> “对正确问题（通常是模糊的）的近似回答，远胜于对错误问题（总能精确化）的精确回答。” --- John Tukey
 
-> “对正确问题的近似答案，远胜于对错误问题的精确答案；前者通常是模糊的，而后者总是可以做得很精确。(Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.)” \
-> --- John Tukey
+Your goal during EDA is to develop an understanding of your data.    
+你在 EDA 期间的目标是建立对数据的理解。
 
-你在 EDA 过程中的目标是建立对数据的理解。最简单的方法是使用问题作为工具来引导你的探索。当你提出一个问题时，这个问题会将你的注意力集中到数据集的特定部分，并帮助你决定制作哪种图表、模型或进行何种转换。
+The easiest way to do this is to use questions as tools to guide your investigation.    
+最简单的方法是使用问题作为工具来引导你的调查。
 
-EDA 本质上是一个创造性的过程。和大多数创造性过程一样，提出*高质量*问题的关键在于生成*大量*的问题。在分析之初很难提出有启发性的问题，因为你不知道可以从数据集中获得哪些见解。另一方面，你每提出一个新问题，都会让你接触到数据的一个新方面，增加你做出发现的机会。如果你在每个问题之后，都根据你的发现提出一个新问题，你就能迅速深入到数据最有趣的部分，并形成一系列引人深思的问题。
+When you ask a question, the question focuses your attention on a specific part of your dataset and helps you decide which graphs, models, or transformations to make.    
+当你提出一个问题时，这个问题会将你的注意力集中到数据集的特定部分，并帮助你决定制作哪些图表、模型或进行哪些转换。
 
-关于应该提出什么问题来指导研究，没有固定的规则。然而，有两类问题对于在数据中做出发现总是很有用的。你可以将这些问题粗略地表述为：
+EDA is fundamentally a creative process.    
+EDA 本质上是一个创造性的过程。
 
-1.  我的变量内部存在什么样的变异？
+And like most creative processes, the key to asking *quality* questions is to generate a large *quantity* of questions.    
+和大多数创造性过程一样，提出 *高质量* 问题的关键在于生成 *大量* 的问题。
 
-2.  我的变量之间存在什么样的协变？
+It is difficult to ask revealing questions at the start of your analysis because you do not know what insights can be gleaned from your dataset.    
+在分析之初很难提出有启发性的问题，因为你不知道可以从数据集中获得哪些见解。
 
-本章的其余部分将探讨这两个问题。我们将解释什么是变异和协变，并向你展示几种回答每个问题的方法。
+On the other hand, each new question that you ask will expose you to a new aspect of your data and increase your chance of making a discovery.    
+另一方面，你每提出一个新问题，都会让你接触到数据的一个新方面，并增加你做出发现的机会。
 
------
+You can quickly drill down into the most interesting parts of your data---and develop a set of thought-provoking questions---if you follow up each question with a new question based on what you find.    
+如果你在每个问题之后都根据你的发现提出一个新问题，你就可以迅速深入到数据最有趣的部分，并形成一系列发人深省的问题。
 
-## 变异
+There is no rule about which questions you should ask to guide your research.    
+关于应该提出哪些问题来指导你的研究，并没有固定的规则。
 
-**变异 (Variation)** 是指一个变量的值在不同测量中变化的趋势。你在现实生活中可以轻易看到变异；如果你对任何连续变量进行两次测量，你会得到两个不同的结果。即使你测量的是恒定的量，比如光速，也是如此。你的每一次测量都会包含少量的误差，这个误差在每次测量中都会有所不同。如果你在不同的主体（例如，不同人的眼睛颜色）或不同的时间（例如，一个电子在不同时刻的能量水平）进行测量，变量也会发生变化。每个变量都有其自身的变异模式，这可以揭示关于它在同一次观测的不同测量之间以及跨观测之间如何变化的有趣信息。理解这种模式的最佳方法是可视化变量值的分布，这在 @sec-data-visualization 中你已经学过了。
+However, two types of questions will always be useful for making discoveries within your data.    
+然而，有两类问题对于在数据中进行发现总是很有用的。
 
-我们将通过可视化 `diamonds` 数据集中约 54,000 颗钻石的重量（`carat`）分布来开始我们的探索。由于 `carat` 是一个数值变量，我们可以使用直方图：
+You can loosely word these questions as:    
+你可以将这些问题大致表述为：
+
+1.  What type of variation occurs within my variables?    
+    我的变量内部存在哪种类型的变异？
+
+2.  What type of covariation occurs between my variables?    
+    我的变量之间存在哪种类型的协变？
+
+The rest of this chapter will look at these two questions.    
+本章的其余部分将探讨这两个问题。
+
+We'll explain what variation and covariation are, and we'll show you several ways to answer each question.    
+我们将解释什么是变异和协变，并向你展示几种回答每个问题的方法。
+
+## Variation
+
+**Variation** is the tendency of the values of a variable to change from measurement to measurement.    
+\*\*变异（Variation）\*\*是指一个变量的值在每次测量之间发生变化的趋势。
+
+You can see variation easily in real life; if you measure any continuous variable twice, you will get two different results.    
+你在现实生活中很容易看到变异；如果你对任何连续变量进行两次测量，你会得到两个不同的结果。
+
+This is true even if you measure quantities that are constant, like the speed of light.    
+即使你测量的是像光速这样的恒定量，情况也是如此。
+
+Each of your measurements will include a small amount of error that varies from measurement to measurement.    
+你的每次测量都会包含少量的误差，这个误差在每次测量之间都会有所不同。
+
+Variables can also vary if you measure across different subjects (e.g., the eye colors of different people) or at different times (e.g., the energy levels of an electron at different moments).    
+如果你测量不同的主体（例如，不同人的眼睛颜色）或在不同的时间（例如，一个电子在不同时刻的能级），变量也会发生变化。
+
+Every variable has its own pattern of variation, which can reveal interesting information about how it varies between measurements on the same observation as well as across observations.    
+每个变量都有其自身的变异模式，这可以揭示关于它在同一次观测的测量之间以及不同观测之间如何变化的有趣信息。
+
+The best way to understand that pattern is to visualize the distribution of the variable's values, which you've learned about in @sec-data-visualization.    
+理解这种模式的最佳方法是可视化变量值的分布，你已经在 @sec-data-visualization 中学习过相关内容。
+
+We'll start our exploration by visualizing the distribution of weights (`carat`) of \~54,000 diamonds from the `diamonds` dataset.    
+我们将通过可视化 `diamonds` 数据集中约 54,000 颗钻石的重量（`carat`）分布来开始我们的探索。
+
+Since `carat` is a numerical variable, we can use a histogram:    
+由于 `carat` 是一个数值变量，我们可以使用直方图：
 
 ```{r}
 #| fig-alt: |
-#|   钻石克拉数的直方图，x 轴范围从 0 到 4.5，y 轴范围从 0 到 30000。
-#|   分布是右偏的，中心在 0 的条柱中钻石很少，中心在 0.5 的条柱中钻石接近 30000 颗，
-#|   中心在 1 的条柱中大约有 15000 颗钻石，而在中心在 1.5 的条柱中则少得多，大约 5000 颗。
-#|   在此之后，有一个拖尾。
+#|   A histogram of carats of diamonds, with the x-axis ranging from 0 to 4.5 
+#|   and the y-axis ranging from 0 to 30000. The distribution is right skewed 
+#|   with very few diamonds in the bin centered at 0, almost 30000 diamonds in 
+#|   the bin centered at 0.5, approximately 15000 diamonds in the bin centered 
+#|   at 1, and much fewer, approximately 5000 diamonds in the bin centered at 
+#|   1.5. Beyond this, there's a trailing tail.
 ggplot(diamonds, aes(x = carat)) +
   geom_histogram(binwidth = 0.5)
 ```
 
-现在你已经可以可视化变异了，那么你应该在图表中寻找什么呢？你应该提出什么样的后续问题呢？我们整理了一份清单，列出了你在图中最可能找到的有用信息类型，以及针对每种信息的一些后续问题。提出好的后续问题的关键在于依赖你的好奇心（你想更多地了解什么？）以及你的怀疑精神（这可能是如何误导人的？）。
+Now that you can visualize variation, what should you look for in your plots?    
+既然你能够可视化变异，那么你应该在图表中寻找什么呢？
 
-### 典型值
+And what type of follow-up questions should you ask?    
+你应该提出什么样的后续问题呢？
 
-在条形图和直方图中，高条显示了变量的常见值，而短条显示了不那么常见的值。没有条形图的地方揭示了你的数据中未曾出现的值。要将这些信息转化为有用的问题，请寻找任何意料之外的情况：
+We've put together a list below of the most useful types of information that you will find in your graphs, along with some follow-up questions for each type of information.    
+我们在下面整理了一个列表，列出了你可以在图表中找到的最有用的信息类型，以及针对每种信息类型的一些后续问题。
 
-  - 哪些值是最常见的？为什么？
+The key to asking good follow-up questions will be to rely on your curiosity (What do you want to learn more about?) as well as your skepticism (How could this be misleading?).    
+提出好的后续问题的关键在于依赖你的好奇心（你想了解更多关于什么？）和你的怀疑精神（这怎么可能会误导人？）。
 
-  - 哪些值是罕见的？为什么？这是否符合你的预期？
+### Typical values
 
-  - 你能看到任何不寻常的模式吗？可能是什么解释了它们？
+In both bar charts and histograms, tall bars show the common values of a variable, and shorter bars show less-common values.    
+在条形图和直方图中，高条显示变量的常见值，短条显示不那么常见的值。
 
-让我们看一下较小钻石的 `carat` 分布。
+Places that do not have bars reveal values that were not seen in your data.    
+没有条形的地方揭示了你的数据中未曾出现的值。
+
+To turn this information into useful questions, look for anything unexpected:    
+要将这些信息转化为有用的问题，请寻找任何意想不到的地方：
+
+-   Which values are the most common?
+    Why?    
+    哪些值最常见？为什么？
+
+-   Which values are rare?
+    Why?
+    Does that match your expectations?    
+    哪些值很罕见？为什么？这符合你的预期吗？
+
+-   Can you see any unusual patterns?
+    What might explain them?    
+    你能看到任何不寻常的模式吗？可能的原因是什么？
+
+Let's take a look at the distribution of `carat` for smaller diamonds.    
+让我们来看一下较小钻石的 `carat` 分布。
 
 ```{r}
 #| fig-alt: |
-#|   钻石克拉数的直方图，x 轴范围从 0 到 3，y 轴范围从 0 到大约 2500。
-#|   组距很窄 (0.01)，导致了大量细长的条柱。分布是右偏的，有许多峰值，
-#|   随后是高度递减的条柱，直到下一个峰值处急剧增加。
+#|   A histogram of carats of diamonds, with the x-axis ranging from 0 to 3 and 
+#|   the y-axis ranging from 0 to roughly 2500. The binwidth is quite narrow 
+#|   (0.01), resulting in a very large number of skinny bars. The distribution 
+#|   is right skewed, with many peaks followed by bars in decreasing heights, 
+#|   until a sharp increase at the next peak.
 smaller <- diamonds |> 
   filter(carat < 3)
 
@@ -98,52 +206,97 @@ ggplot(smaller, aes(x = carat)) +
   geom_histogram(binwidth = 0.01)
 ```
 
-这个直方图引出了一些有趣的问题：
+This histogram suggests several interesting questions:    
+这个直方图引出了几个有趣的问题：
 
-  - 为什么在整数克拉和常见的克拉分数处有更多的钻石？
+-   Why are there more diamonds at whole carats and common fractions of carats?    
+    为什么在整数克拉和常见的克拉分数处有更多的钻石？
 
-  - 为什么在每个峰值右侧的钻石比左侧的要多？
+-   Why are there more diamonds slightly to the right of each peak than there are slightly to the left of each peak?    
+    为什么每个峰值右侧的钻石数量比左侧的要多？
 
-可视化还可以揭示聚类，这表明你的数据中存在子群。要理解这些子群，请问：
+Visualizations can also reveal clusters, which suggest that subgroups exist in your data.    
+可视化还可以揭示聚类，这表明你的数据中存在子群。
 
-  - 每个子群内的观测值彼此之间有何相似之处？
+To understand the subgroups, ask:    
+要理解这些子群，可以问：
 
-  - 不同聚类中的观测值彼此之间有何不同？
+-   How are the observations within each subgroup similar to each other?    
+    每个子群内的观测值彼此之间有何相似之处？
 
-  - 你如何解释或描述这些聚类？
+-   How are the observations in separate clusters different from each other?    
+    不同聚类中的观测值彼此之间有何不同之处？
 
-  - 为什么聚类的出现可能是误导性的？
+-   How can you explain or describe the clusters?    
+    你如何解释或描述这些聚类？
 
-这些问题中，有些可以用数据回答，有些则需要关于数据的领域专业知识。其中许多问题会促使你探索变量*之间*的关系，例如，看看一个变量的值是否能解释另一个变量的行为。我们很快就会谈到这一点。
+-   Why might the appearance of clusters be misleading?    
+    为什么聚类的出现可能会产生误导？
 
-### 异常值
+Some of these questions can be answered with the data while some will require domain expertise about the data.    
+其中一些问题可以用数据来回答，而另一些则需要关于该数据的领域专业知识。
 
-**离群点 (Outliers)** 是不寻常的观测值；即那些似乎不符合模式的数据点。有时离群点是数据录入错误，有时它们仅仅是在这次数据收集中碰巧观察到的极端值，而其他时候它们则预示着重要的新发现。当数据量很大时，离群点有时在直方图中很难看到。例如，看看 diamonds 数据集中 `y` 变量的分布。离群点的唯一证据是 x 轴上异常宽的范围。
+Many of them will prompt you to explore a relationship *between* variables, for example, to see if the values of one variable can explain the behavior of another variable.    
+其中许多问题会促使你探索变量*之间*的关系，例如，看看一个变量的值是否能解释另一个变量的行为。
+
+We'll get to that shortly.    
+我们很快就会谈到这一点。
+
+### Unusual values
+
+Outliers are observations that are unusual; data points that don't seem to fit the pattern.    
+离群值是异常的观测值；即那些似乎不符合模式的数据点。
+
+Sometimes outliers are data entry errors, sometimes they are simply values at the extremes that happened to be observed in this data collection, and other times they suggest important new discoveries.    
+有时离群值是数据录入错误，有时它们仅仅是在这次数据收集中碰巧观测到的极端值，而其他时候它们则可能预示着重要的新发现。
+
+When you have a lot of data, outliers are sometimes difficult to see in a histogram.    
+当你有大量数据时，离群值有时在直方图中很难看出来。
+
+For example, take the distribution of the `y` variable from the diamonds dataset.    
+例如，以钻石数据集中的 `y` 变量分布为例。
+
+The only evidence of outliers is the unusually wide limits on the x-axis.    
+离群值的唯一证据是 x 轴上异常宽的范围。
 
 ```{r}
 #| fig-alt: |
-#|   钻石长度的直方图。x 轴范围从 0 到 60，y 轴范围从 0 到 12000。
-#|   在 5 附近有一个峰值，数据似乎完全聚集在峰值周围。
+#|   A histogram of lengths of diamonds. The x-axis ranges from 0 to 60 and 
+#|   the y-axis ranges from 0 to 12000. There is a peak around 5, and the 
+#|   data appear to be completely clustered around the peak.
 ggplot(diamonds, aes(x = y)) + 
   geom_histogram(binwidth = 0.5)
 ```
 
-在常见的组（bin）中有太多的观测值，以至于罕见的组非常短，使得它们很难被看到（尽管如果你仔细盯着 0 的位置，也许会发现些什么）。为了更容易地看到异常值，我们需要使用 `coord_cartesian()` 来放大 y 轴的较小数值范围：
+There are so many observations in the common bins that the rare bins are very short, making it very difficult to see them (although maybe if you stare intently at 0 you'll spot something).    
+在常见的箱（bin）中有如此多的观测值，以至于罕见的箱非常短，使得它们很难被看到（尽管如果你仔细盯着 0 的位置，或许能发现点什么）。
+
+To make it easy to see the unusual values, we need to zoom to small values of the y-axis with `coord_cartesian()`:    
+为了更容易地看到异常值，我们需要使用 `coord_cartesian()` 来放大 y 轴的较小值部分：
 
 ```{r}
 #| fig-alt: |
-#|   钻石长度的直方图。x 轴范围从 0 到 60，y 轴范围从 0 到 50。
-#|   在 5 附近有一个峰值，数据似乎完全聚集在峰值周围。
-#|   除了这些数据，在 0 处有一个高度约为 8 的条柱，在略高于 30 的地方有一个高度为 1 的条柱，
-#|   在略低于 60 的地方有另一个高度为 1 的条柱。
+#|   A histogram of lengths of diamonds. The x-axis ranges from 0 to 60 and the 
+#|   y-axis ranges from 0 to 50. There is a peak around 5, and the data 
+#|   appear to be completely clustered around the peak. Other than those data, 
+#|   there is one bin at 0 with a height of about 8, one a little over 30 with 
+#|   a height of 1 and another one a little below 60 with a height of 1.
 ggplot(diamonds, aes(x = y)) + 
   geom_histogram(binwidth = 0.5) +
   coord_cartesian(ylim = c(0, 50))
 ```
 
-当你需要放大 x 轴时，`coord_cartesian()` 也有一个 `xlim()` 参数。ggplot2 还有 `xlim()` 和 `ylim()` 函数，它们的工作方式略有不同：它们会丢弃限制范围之外的数据。
+`coord_cartesian()` also has an `xlim()` argument for when you need to zoom into the x-axis.    
+`coord_cartesian()` 也有一个 `xlim()` 参数，用于当你需要放大 x 轴时。
 
-这让我们能看到有三个异常值：0、约 30 和约 60。我们用 dplyr 将它们提取出来：
+ggplot2 also has `xlim()` and `ylim()` functions that work slightly differently: they throw away the data outside the limits.    
+ggplot2 也有 `xlim()` 和 `ylim()` 函数，它们的工作方式略有不同：它们会丢弃超出范围的数据。
+
+This allows us to see that there are three unusual values: 0, \~30, and \~60.    
+这让我们能看到有三个异常值：0、约 30 和约 60。
+
+We pluck them out with dplyr:    
+我们用 dplyr 把它们挑选出来：
 
 ```{r}
 #| include: false
@@ -163,27 +316,58 @@ unusual
 options(old)
 ```
 
-`y` 变量测量的是这些钻石的三个维度之一，单位是毫米 (mm)。我们知道钻石的宽度不可能是 0mm，所以这些值肯定是错误的。通过进行 EDA，我们发现了被编码为 0 的缺失数据，而仅仅通过搜索 `NA` 是永远找不到的。接下来，我们可能会选择将这些值重新编码为 `NA`，以防止误导性的计算。我们可能还会怀疑 32mm 和 59mm 的测量值是不可信的：那些钻石超过一英寸长，但价格却没有数十万美元！
+The `y` variable measures one of the three dimensions of these diamonds, in mm.    
+`y` 变量以毫米（mm）为单位，测量了这些钻石的三个维度之一。
 
-一个好的做法是，在包含和不包含离群点的情况下重复你的分析。如果它们对结果的影响微乎其微，并且你无法弄清楚它们为什么存在，那么省略它们并继续分析是合理的。然而，如果它们对你的结果有重大影响，你就不应该在没有正当理由的情况下丢弃它们。你需要弄清楚是什么导致了它们（例如，数据录入错误），并在你的报告中披露你移除了它们。
+We know that diamonds can't have a width of 0mm, so these values must be incorrect.    
+我们知道钻石的宽度不可能是 0 毫米，所以这些值肯定是错误的。
 
-### 练习
+By doing EDA, we have discovered missing data that was coded as 0, which we never would have found by simply searching for `NA`s.    
+通过进行 EDA，我们发现了被编码为 0 的缺失数据，这是我们仅通过搜索 `NA` 永远无法发现的。
 
-1.  探索 `diamonds` 数据集中 `x`、`y` 和 `z` 每个变量的分布。你学到了什么？思考一下一颗钻石，你可能会如何决定哪个维度是长度、宽度和深度。
+Going forward we might choose to re-code these values as `NA`s in order to prevent misleading calculations.    
+接下来，我们可能会选择将这些值重新编码为 `NA`，以防止产生误导性的计算结果。
 
-2.  探索 `price` 的分布。你发现了什么不寻常或令人惊讶的事情吗？（提示：仔细考虑 `binwidth` 并确保你尝试了各种不同的值。）
+We might also suspect that measurements of 32mm and 59mm are implausible: those diamonds are over an inch long, but don't cost hundreds of thousands of dollars!    
+我们可能还会怀疑 32 毫米和 59 毫米的测量值是不可信的：那些钻石超过一英寸长，但价格却没有达到数十万美元！
 
-3.  有多少颗钻石是 0.99 克拉？有多少是 1 克拉？你认为造成这种差异的原因是什么？
+It's good practice to repeat your analysis with and without the outliers.    
+一个好的做法是，在包含和不包含离群值的情况下重复你的分析。
 
-4.  在放大直方图时，比较并对比 `coord_cartesian()` 与 `xlim()` 或 `ylim()`。如果你不设置 `binwidth` 会发生什么？如果你尝试放大到只显示半个条形会发生什么？
+If they have minimal effect on the results, and you can't figure out why they're there, it's reasonable to omit them, and move on.    
+如果它们对结果的影响微乎其微，而且你无法找出它们存在的原因，那么省略它们并继续分析是合理的。
 
------
+However, if they have a substantial effect on your results, you shouldn't drop them without justification.    
+然而，如果它们对你的结果有重大影响，你就不应该在没有正当理由的情况下丢弃它们。
 
-## 异常值 {#sec-unusual-values-eda}
+You'll need to figure out what caused them (e.g., a data entry error) and disclose that you removed them in your write-up.    
+你需要弄清楚是什么导致了它们（例如，数据录入错误），并在你的报告中披露你移除了它们。
 
+### Exercises
+
+1.  Explore the distribution of each of the `x`, `y`, and `z` variables in `diamonds`.
+    What do you learn?
+    Think about a diamond and how you might decide which dimension is the length, width, and depth.
+
+2.  Explore the distribution of `price`.
+    Do you discover anything unusual or surprising?
+    (Hint: Carefully think about the `binwidth` and make sure you try a wide range of values.)
+
+3.  How many diamonds are 0.99 carat?
+    How many are 1 carat?
+    What do you think is the cause of the difference?
+
+4.  Compare and contrast `coord_cartesian()` vs. `xlim()` or `ylim()` when zooming in on a histogram.
+    What happens if you leave `binwidth` unset?
+    What happens if you try and zoom so only half a bar shows?
+
+## Unusual values {#sec-unusual-values-eda}
+
+If you've encountered unusual values in your dataset, and simply want to move on to the rest of your analysis, you have two options.    
 如果你在数据集中遇到了异常值，并且只想继续进行其余的分析，你有两个选择。
 
-1.  删除包含异常值的整行：
+1.  Drop the entire row with the strange values:    
+    删除包含异常值的整行：
 
     ```{r}
     #| eval: false
@@ -191,27 +375,42 @@ options(old)
       filter(between(y, 3, 20))
     ```
 
-    我们不推荐这个选项，因为一个无效值并不意味着该观测的所有其他值也无效。此外，如果你的数据质量较差，当你对每个变量都应用这种方法后，你可能会发现你已经没有任何数据了！
+    We don't recommend this option because one invalid value doesn't imply that all the other values for that observation are also invalid.    
+我们不推荐这个选项，因为一个无效值并不意味着该观测的所有其他值也都无效。
 
-2.  相反，我们建议用缺失值替换异常值。最简单的方法是使用 `mutate()` 将变量替换为一个修改后的副本。你可以使用 `if_else()` 函数将异常值替换为 `NA`：
+    Additionally, if you have low quality data, by the time that you've applied this approach to every variable you might find that you don't have any data left!    
+此外，如果你的数据质量很低，当你对每个变量都采用这种方法后，你可能会发现你已经没有任何数据了！
+
+2.  Instead, we recommend replacing the unusual values with missing values.    
+    相反，我们建议用缺失值替换异常值。
+
+    The easiest way to do this is to use `mutate()` to replace the variable with a modified copy.    
+最简单的方法是使用 `mutate()` 将变量替换为其修改后的副本。
+
+    You can use the `if_else()` function to replace unusual values with `NA`:    
+你可以使用 `if_else()` 函数将异常值替换为 `NA`：
+
 
     ```{r}
     diamonds2 <- diamonds |> 
       mutate(y = if_else(y < 3 | y > 20, NA, y))
     ```
 
-ggplot2 不确定应该在哪里绘制缺失值，所以它不会在图表中包含它们，但它会警告说它们已被移除：
+It's not obvious where you should plot missing values, so ggplot2 doesn't include them in the plot, but it does warn that they've been removed:    
+由于不清楚应该在哪里绘制缺失值，ggplot2 在绘图时不会包含它们，但会发出警告，提示它们已被移除：
 
 ```{r}
 #| dev: "png"
 #| fig-alt: |
-#|   钻石宽度与长度的散点图。两个变量之间存在强烈的线性关系。
-#|   除了一颗钻石外，所有钻石的长度都大于 3。那个离群点的长度为 0，
-#|   宽度约为 6.5。
+#|   A scatterplot of widths vs. lengths of diamonds. There is a strong, 
+#|   linear association between the two variables. All but one of the diamonds 
+#|   has length greater than 3. The one outlier has a length of 0 and a width 
+#|   of about 6.5. 
 ggplot(diamonds2, aes(x = x, y = y)) + 
   geom_point()
 ```
 
+To suppress that warning, set `na.rm = TRUE`:    
 要抑制该警告，请设置 `na.rm = TRUE`：
 
 ```{r}
@@ -220,13 +419,25 @@ ggplot(diamonds2, aes(x = x, y = y)) +
   geom_point(na.rm = TRUE)
 ```
 
-其他时候，你想要理解为什么有缺失值的观测值与有记录值的观测值不同。例如，在 `nycflights13::flights`[^1] 中，`dep_time` 变量中的缺失值表示航班被取消了。所以你可能想比较已取消和未取消航班的计划起飞时间。你可以通过创建一个新变量，使用 `is.na()` 来检查 `dep_time` 是否缺失来做到这一点。
+Other times you want to understand what makes observations with missing values different to observations with recorded values.    
+其他时候，你想要理解具有缺失值的观测值与具有记录值的观测值有何不同。
+
+For example, in `nycflights13::flights`[^1], missing values in the `dep_time` variable indicate that the flight was cancelled.    
+例如，在 `nycflights13::flights`<sup>1<sup> 中，`dep_time` 变量中的缺失值表示航班被取消了。
+
+So you might want to compare the scheduled departure times for cancelled and non-cancelled times.    
+因此，你可能想比较已取消航班和未取消航班的计划起飞时间。
+
+You can do this by making a new variable, using `is.na()` to check if `dep_time` is missing.    
+你可以通过创建一个新变量来实现这一点，使用 `is.na()` 来检查 `dep_time` 是否缺失。
+    
 
 ```{r}
 #| fig-alt: |
-#|   航班计划起飞时间的频率多边形图。两条线分别代表被取消和未被取消的航班。
-#|   x 轴范围从 0 到 25 分钟，y 轴范围从 0 到 10000。
-#|   未被取消的航班数量远高于被取消的航班。
+#|   A frequency polygon of scheduled departure times of flights. Two lines 
+#|   represent flights that are cancelled and not cancelled. The x-axis ranges 
+#|   from 0 to 25 minutes and the y-axis ranges from 0 to 10000. The number of 
+#|   flights not cancelled are much higher than those cancelled.
 nycflights13::flights |> 
   mutate(
     cancelled = is.na(dep_time),
@@ -238,130 +449,217 @@ nycflights13::flights |>
   geom_freqpoly(aes(color = cancelled), binwidth = 1/4)
 ```
 
-然而，这张图并不理想，因为未取消的航班数量远多于取消的航班。在下一节中，我们将探讨一些改善这种比较的技巧。
+However this plot isn't great because there are many more non-cancelled flights than cancelled flights.    
+然而，这张图并不理想，因为未取消的航班数量远远多于已取消的航班。
 
-### 练习
+In the next section we'll explore some techniques for improving this comparison.    
+在下一节中，我们将探讨一些改进这种比较的技巧。
 
-1.  在直方图中，缺失值会怎么样？在条形图中，缺失值会怎么样？为什么在直方图和条形图中处理缺失值的方式有差异？
+### Exercises
 
-2.  `na.rm = TRUE` 在 `mean()` 和 `sum()` 中有什么作用？
+1.  What happens to missing values in a histogram?
+    What happens to missing values in a bar chart?
+    Why is there a difference in how missing values are handled in histograms and bar charts?
 
-3.  重新创建按航班是否取消着色的 `scheduled_dep_time` 频率图。同时，按 `cancelled` 变量进行分面。尝试在分面函数中使用不同的 `scales` 变量值，以减轻未取消航班数量多于取消航班数量的影响。
+2.  What does `na.rm = TRUE` do in `mean()` and `sum()`?
 
------
+3.  Recreate the frequency plot of `scheduled_dep_time` colored by whether the flight was cancelled or not.
+    Also facet by the `cancelled` variable.
+    Experiment with different values of the `scales` variable in the faceting function to mitigate the effect of more non-cancelled flights than cancelled flights.
 
-## 协变
+## Covariation
 
-如果说变异描述的是*单个*变量内部的行为，那么协变描述的就是变量*之间*的行为。**协变 (Covariation)** 是指两个或多个变量的值以一种相关联的方式共同变化的趋势。发现协变的最佳方法是可视化两个或多个变量之间的关系。
+If variation describes the behavior *within* a variable, covariation describes the behavior *between* variables.    
+如果说变异描述的是单个变量*内部*的行为，那么协变则描述的是变量*之间*的行为。
 
-### 一个分类变量和一个数值变量 {#sec-cat-num}
+**Covariation** is the tendency for the values of two or more variables to vary together in a related way.    
+\*\*协变（Covariation）\*\*是两个或多个变量的值以相关的方式一同变化的趋势。
 
-例如，让我们使用 `geom_freqpoly()` 来探索钻石价格如何随其质量（以 `cut` 衡量）而变化：
+The best way to spot covariation is to visualize the relationship between two or more variables.    
+发现协变的最好方法是可视化两个或多个变量之间的关系。
+
+### A categorical and a numerical variable {#sec-cat-num}
+
+For example, let's explore how the price of a diamond varies with its quality (measured by `cut`) using `geom_freqpoly()`:    
+例如，让我们使用 `geom_freqpoly()` 来探究钻石价格如何随其质量（以 `cut` 衡量）而变化：
 
 ```{r}
 #| fig-alt: |
-#|   钻石价格的频率多边形图，其中每种切工等级（Fair, Good, Very Good, 
-#|   Premium, 和 Ideal）都用不同颜色的线表示。x 轴范围从 0 到 30000，
-#|   y 轴范围从 0 到 5000。这些线大量重叠，表明钻石价格的频率分布相似。
-#|   一个显著的特点是，Ideal 级钻石在 1500 附近有最高的峰值。
+#|   A frequency polygon of prices of diamonds where each cut of carat (Fair, 
+#|   Good, Very Good, Premium, and Ideal) is represented with a different color 
+#|   line. The x-axis ranges from 0 to 30000 and the y-axis ranges from 0 to 
+#|   5000. The lines overlap a great deal, suggesting similar frequency 
+#|   distributions of prices of diamonds. One notable feature is that 
+#|   Ideal diamonds have the highest peak around 1500.
 ggplot(diamonds, aes(x = price)) + 
   geom_freqpoly(aes(color = cut), binwidth = 500, linewidth = 0.75)
 ```
 
-请注意，ggplot2 为 `cut` 使用了有序颜色标度，因为它在数据中被定义为一个有序因子变量。你将在 @sec-ordered-factors 中学习更多关于这些的内容。
+Note that ggplot2 uses an ordered color scale for `cut` because it's defined as an ordered factor variable in the data.    
+请注意，ggplot2 对 `cut` 使用了有序颜色标度，因为它在数据中被定义为一个有序因子变量。
 
-`geom_freqpoly()` 的默认外观在这里不是很有用，因为高度（由总计数决定）在不同的 `cut` 之间差异很大，这使得很难看出它们分布形状的差异。
+You'll learn more about these in @sec-ordered-factors.    
+你将在 @sec-ordered-factors 章节中学到更多关于这些的内容。
 
-为了使比较更容易，我们需要更换 y 轴上显示的内容。我们将不再显示计数，而是显示**密度 (density)**，即计数经过标准化，使得每个频率多边形下的面积为一。
+The default appearance of `geom_freqpoly()` is not that useful here because the height, determined by the overall count, differs so much across `cut`s, making it hard to see the differences in the shapes of their distributions.    
+在这里，`geom_freqpoly()` 的默认外观并不十分有用，因为由总计数决定的高度在不同的 `cut`（切工）之间差异巨大，这使得我们很难看出它们分布形状的差异。
+
+To make the comparison easier we need to swap what is displayed on the y-axis.    
+为了让比较更容易，我们需要更换 Y 轴上显示的内容。
+
+Instead of displaying count, we'll display the **density**, which is the count standardized so that the area under each frequency polygon is one.    
+我们将不再显示计数，而是显示**密度**，密度是经过标准化的计数，使得每个频率多边形下的面积为一。
 
 ```{r}
 #| fig-alt: |
-#|   钻石价格密度的频率多边形图，其中每种切工等级（Fair, Good, Very Good,
-#|   Premium, 和 Ideal）都用不同颜色的线表示。x 轴范围从 0 到 20000。
-#|   这些线大量重叠，表明钻石价格的密度分布相似。一个显著的特点是，
-#|   除了 Fair 级钻石外，所有钻石在价格 1500 附近都有高峰，
-#|   而 Fair 级钻石的均值高于其他等级。
+#|   A frequency polygon of densities of prices of diamonds where each cut of 
+#|   carat (Fair, Good, Very Good, Premium, and Ideal) is represented with a 
+#|   different color line. The x-axis ranges from 0 to 20000. The lines overlap 
+#|   a great deal, suggesting similar density distributions of prices of 
+#|   diamonds. One notable feature is that all but Fair diamonds have high peaks 
+#|   around a price of 1500 and Fair diamonds have a higher mean than others.
 ggplot(diamonds, aes(x = price, y = after_stat(density))) + 
   geom_freqpoly(aes(color = cut), binwidth = 500, linewidth = 0.75)
 ```
 
-注意，我们将密度映射到 `y`，但由于 `density` 不是 `diamonds` 数据集中的变量，我们需要先计算它。我们使用 `after_stat()` 函数来完成这个计算。
+Note that we're mapping the density to `y`, but since `density` is not a variable in the `diamonds` dataset, we need to first calculate it.    
+请注意，我们将密度映射到 `y`，但由于 `density` 不是 `diamonds` 数据集中的变量，我们需要先计算它。
 
-这张图中有一些相当令人惊讶的事情 —— 似乎 Fair 级钻石（质量最低）的平均价格最高！但这也许是因为频率多边形有点难以解读 —— 这张图中信息量太大了。
+We use the `after_stat()` function to do so.    
+我们使用 `after_stat()` 函数来完成这个计算。
 
-用于探索这种关系的一种视觉上更简单的图是并排的箱线图。
+There's something rather surprising about this plot - it appears that fair diamonds (the lowest quality) have the highest average price!    
+这张图有些出人意料——似乎 "Fair"（最差质量）等级的钻石平均价格最高！
+
+But maybe that's because frequency polygons are a little hard to interpret - there's a lot going on in this plot.    
+但这也许是因为频率多边形有点难以解读——这张图中信息量太大了。
+
+A visually simpler plot for exploring this relationship is using side-by-side boxplots.    
+一个在视觉上更简洁、用于探索这种关系的图是并排箱线图。
 
 ```{r}
 #| fig-alt: |
-#|   按切工等级排列的钻石价格的并排箱线图。每种切工等级（Fair, Good,
-#|   Very Good, Premium, 和 Ideal）的价格分布都是右偏的。中位数彼此接近，
-#|   Ideal 级钻石的中位数最低，而 Fair 级最高。
+#|   Side-by-side boxplots of prices of diamonds by cut. The distribution of 
+#|   prices is right skewed for each cut (Fair, Good, Very Good, Premium, and 
+#|   Ideal). The medians are close to each other, with the median for Ideal 
+#|   diamonds lowest and that for Fair highest.
 ggplot(diamonds, aes(x = cut, y = price)) +
   geom_boxplot()
 ```
 
-我们看到的关于分布的信息少了很多，但是箱线图更加紧凑，所以我们可以更容易地比较它们（并且可以在一张图上容纳更多）。它支持了那个与直觉相反的发现：质量更好的钻石通常更便宜！在练习中，你将面临挑战，去找出原因。
+We see much less information about the distribution, but the boxplots are much more compact so we can more easily compare them (and fit more on one plot).    
+我们看到的关于分布的信息少了很多，但箱线图更加紧凑，因此我们可以更容易地比较它们（并且可以在一张图上容纳更多内容）。
 
-`cut` 是一个有序因子：fair 比 good 差，good 又比 very good 差，依此类推。许多分类变量没有这种内在的顺序，所以你可能想重新排序它们以获得信息更丰富的展示。一种方法是使用 `fct_reorder()`。你将在 @sec-modifying-factor-order 中学习更多关于这个函数的内容，但我们想在这里给你一个快速预览，因为它非常有用。例如，看看 `mpg` 数据集中的 `class` 变量。你可能想知道高速公路里程是如何因车型而异的：
+It supports the counter-intuitive finding that better quality diamonds are typically cheaper!    
+它支持了一个与直觉相悖的发现：质量更好的钻石通常更便宜！
+
+In the exercises, you'll be challenged to figure out why.    
+在练习中，你将需要挑战去弄清楚为什么会这样。
+
+`cut` is an ordered factor: fair is worse than good, which is worse than very good and so on.    
+`cut` 是一个有序因子：fair 比 good 差，good 又比 very good 差，以此类推。
+
+Many categorical variables don't have such an intrinsic order, so you might want to reorder them to make a more informative display.    
+许多分类变量没有这种内在的顺序，所以你可能想要重新排序它们以获得信息更丰富的展示。
+
+One way to do that is with `fct_reorder()`.    
+一种方法是使用 `fct_reorder()`。
+
+You'll learn more about that function in @sec-modifying-factor-order, but we want to give you a quick preview here because it's so useful.    
+你将在 @sec-modifying-factor-order 中学到更多关于该函数的内容，但我们想在这里给你一个快速预览，因为它非常有用。
+
+For example, take the `class` variable in the `mpg` dataset.    
+例如，以 `mpg` 数据集中的 `class` 变量为例。
+
+You might be interested to know how highway mileage varies across classes:    
+你可能想知道不同车辆类别的高速公路里程数有何不同：
 
 ```{r}
 #| fig-alt: |
-#|   按车型类别显示的汽车高速公路里程的并排箱线图。类别在 x 轴上
-#|   （2seaters, compact, midsize, minivan, pickup, subcompact, and suv）。
+#|   Side-by-side boxplots of highway mileages of cars by class. Classes are 
+#|   on the x-axis (2seaters, compact, midsize, minivan, pickup, subcompact, 
+#|   and suv).
 ggplot(mpg, aes(x = class, y = hwy)) +
   geom_boxplot()
 ```
 
-为了让趋势更容易看清，我们可以根据 `hwy` 的中位数重新排序 `class`：
+To make the trend easier to see, we can reorder `class` based on the median value of `hwy`:    
+为了使趋势更易于观察，我们可以根据 `hwy` 的中位数对 `class` 进行重新排序：
 
 ```{r}
 #| fig-alt: |
-#|   按车型类别显示的汽车高速公路里程的并排箱线图。类别在 x 轴上，
-#|   并按高速公路里程中位数的升序排列（pickup, suv, minivan, 2seater, 
-#|   subcompact, compact, and midsize）。
+#|   Side-by-side boxplots of highway mileages of cars by class. Classes are 
+#|   on the x-axis and ordered by increasing median highway mileage (pickup, 
+#|   suv, minivan, 2seater, subcompact, compact, and midsize).
 ggplot(mpg, aes(x = fct_reorder(class, hwy, median), y = hwy)) +
   geom_boxplot()
 ```
 
-如果你的变量名很长，`geom_boxplot()` 将其翻转 90° 会效果更好。你可以通过交换 x 和 y 的美学映射来实现。
+If you have long variable names, `geom_boxplot()` will work better if you flip it 90°.    
+如果你的变量名很长，将 `geom_boxplot()` 翻转 90° 会有更好的效果。
+
+You can do that by exchanging the x and y aesthetic mappings.    
+你可以通过交换 x 和 y 的美学映射来实现这一点。
 
 ```{r}
 #| fig-alt: |
-#|   按车型类别显示的汽车高速公路里程的并排箱线图。类别在 y 轴上，
-#|   并按高速公路里程中位数的升序排列。
+#|   Side-by-side boxplots of highway mileages of cars by class. Classes are 
+#|   on the y-axis and ordered by increasing median highway mileage.
 ggplot(mpg, aes(x = hwy, y = fct_reorder(class, hwy, median))) +
   geom_boxplot()
 ```
 
-#### 练习
+#### Exercises
 
-1.  利用你所学到的知识，改进已取消航班与未取消航班出发时间的可视化。
+1.  Use what you've learned to improve the visualization of the departure times of cancelled vs. non-cancelled flights.
 
-2.  根据 EDA，`diamonds` 数据集中的哪个变量似乎对预测钻石价格最重要？该变量与切工 `cut` 有何关联？为什么这两个关系的组合会导致质量较低的钻石反而更昂贵？
+2.  Based on EDA, what variable in the diamonds dataset appears to be most important for predicting the price of a diamond?
+    How is that variable correlated with cut?
+    Why does the combination of those two relationships lead to lower quality diamonds being more expensive?
 
-3.  不要交换 x 和 y 变量，而是在垂直箱线图中添加 `coord_flip()` 作为一个新图层来创建水平箱线图。这与交换变量相比如何？
+3.  Instead of exchanging the x and y variables, add `coord_flip()` as a new layer to the vertical boxplot to create a horizontal one.
+    How does this compare to exchanging the variables?
 
-4.  箱线图的一个问题是，它们是在数据集小得多的时代发展起来的，并且倾向于显示过多的“离群值”。解决这个问题的一种方法是字母值图 (letter value plot)。安装 `lvplot` 包，并尝试使用 `geom_lv()` 来显示价格与切工的分布。你学到了什么？你如何解释这些图？
+4.  One problem with boxplots is that they were developed in an era of much smaller datasets and tend to display a prohibitively large number of "outlying values".
+    One approach to remedy this problem is the letter value plot.
+    Install the lvplot package, and try using `geom_lv()` to display the distribution of price vs. cut.
+    What do you learn?
+    How do you interpret the plots?
 
-5.  使用 `geom_violin()`、分面的 `geom_histogram()`、彩色的 `geom_freqpoly()` 和彩色的 `geom_density()`，分别创建一个钻石价格与 `diamonds` 数据集中某个分类变量的可视化。比较和对比这四种图。基于一个分类变量的水平来可视化一个数值变量的分布，每种方法的优缺点是什么？
+5.  Create a visualization of diamond prices vs. a categorical variable from the `diamonds` dataset using `geom_violin()`, then a faceted `geom_histogram()`, then a colored `geom_freqpoly()`, and then a colored `geom_density()`.
+    Compare and contrast the four plots.
+    What are the pros and cons of each method of visualizing the distribution of a numerical variable based on the levels of a categorical variable?
 
-6.  如果你的数据集很小，有时使用 `geom_jitter()` 来避免过度绘制，从而更容易地看到连续变量和分类变量之间的关系是很有用的。`ggbeeswarm` 包提供了许多类似于 `geom_jitter()` 的方法。列出它们并简要描述每种方法的作用。
+6.  If you have a small dataset, it's sometimes useful to use `geom_jitter()` to avoid overplotting to more easily see the relationship between a continuous and categorical variable.
+    The ggbeeswarm package provides a number of methods similar to `geom_jitter()`.
+    List them and briefly describe what each one does.
 
-### 两个分类变量
+### Two categorical variables
 
-要可视化分类变量之间的协变，你需要计算这些分类变量每个水平组合的观测数量。一种方法是依赖内置的 `geom_count()`：
+To visualize the covariation between categorical variables, you'll need to count the number of observations for each combination of levels of these categorical variables.    
+要可视化分类变量之间的协变，你需要计算这些分类变量各水平组合的观测数量。
+
+One way to do that is to rely on the built-in `geom_count()`:    
+一种方法是依赖于内置的 `geom_count()` 函数：
 
 ```{r}
 #| fig-alt: |
-#|   钻石颜色与切工的散点图。对于切工（Fair, Good, Very Good, Premium, 和
-#|   Ideal）和颜色（D, E, F, G, H, I, 和 J）的每个组合都有一个点。
-#|   点的大小代表该组合的观测数量。图例显示这些大小在 1000 到 4000 之间。
+#|   A scatterplot of color vs. cut of diamonds. There is one point for each
+#|   combination of levels of cut (Fair, Good, Very Good, Premium, and Ideal) 
+#|   and color (D, E, F, G, G, I, and J). The sizes of the points represent 
+#|   the number of observations for that combination. The legend indicates 
+#|   that these sizes range between 1000 and 4000.
 ggplot(diamonds, aes(x = cut, y = color)) +
   geom_count()
 ```
 
-图中每个圆圈的大小显示了在每个值组合处有多少观测值。协变将表现为特定 x 值和特定 y 值之间的强相关性。
+The size of each circle in the plot displays how many observations occurred at each combination of values.    
+图中每个圆圈的大小显示了在每个值组合处发生的观测次数。
 
+Covariation will appear as a strong correlation between specific x values and specific y values.    
+协变将表现为特定 x 值和特定 y 值之间的强相关性。
+
+Another approach for exploring the relationship between these variables is computing the counts with dplyr:    
 探索这些变量之间关系的另一种方法是使用 dplyr 计算计数：
 
 ```{r}
@@ -369,66 +667,113 @@ diamonds |>
   count(color, cut)
 ```
 
-然后使用 `geom_tile()` 和 `fill` 美学进行可视化：
+Then visualize with `geom_tile()` and the fill aesthetic:    
+然后使用 `geom_tile()` 和填充美学进行可视化：
 
 ```{r}
 #| fig-alt: |
-#|   钻石切工与颜色的瓦片图。每个瓦片代表一个切工/颜色组合，
-#|   瓦片根据每个瓦片中的观测数量着色。Ideal 切工的钻石比其他切工多，
-#|   其中数量最多的是颜色为 G 的 Ideal 钻石。Fair 切工和颜色为 I 的钻石
-#|   频率最低。
+#|   A tile plot of cut vs. color of diamonds. Each tile represents a 
+#|   cut/color combination and tiles are colored according to the number of 
+#|   observations in each tile. There are more Ideal diamonds than other cuts, 
+#|   with the highest number being Ideal diamonds with color G. Fair diamonds 
+#|   and diamonds with color I are the lowest in frequency.
 diamonds |> 
   count(color, cut) |>  
   ggplot(aes(x = color, y = cut)) +
   geom_tile(aes(fill = n))
 ```
 
-如果分类变量是无序的，你可能想使用 `seriation` 包来同时重新排列行和列，以便更清晰地揭示有趣的模式。对于更大的图，你可能想尝试 `heatmaply` 包，它可以创建交互式图。
+If the categorical variables are unordered, you might want to use the seriation package to simultaneously reorder the rows and columns in order to more clearly reveal interesting patterns.    
+如果分类变量是无序的，你可能需要使用 seriation 包来同时对行和列进行重新排序，以便更清晰地揭示有趣的模式。
 
-#### 练习
+For larger plots, you might want to try the heatmaply package, which creates interactive plots.    
+对于较大的图表，你可能想尝试 heatmaply 包，它可以创建交互式图表。
 
-1.  你如何重新缩放上面的计数数据集，以更清晰地显示颜色内的切工分布，或切工内的颜色分布？
+#### Exercises
 
-2.  如果将颜色映射到 `x` 美学，将 `cut` 映射到 `fill` 美学，使用分段条形图你会得到什么不同的数据见解？计算落入每个分段的计数。
+1.  How could you rescale the count dataset above to more clearly show the distribution of cut within color, or color within cut?
 
-3.  使用 `geom_tile()` 和 dplyr 来探索平均航班起飞延迟如何随目的地和年份中的月份而变化。是什么使得图表难以阅读？你如何改进它？
+2.  What different data insights do you get with a segmented bar chart if color is mapped to the `x` aesthetic and `cut` is mapped to the `fill` aesthetic?
+    Calculate the counts that fall into each of the segments.
 
-### 两个数值变量
+3.  Use `geom_tile()` together with dplyr to explore how average flight departure delays vary by destination and month of year.
+    What makes the plot difficult to read?
+    How could you improve it?
 
-你已经见过一种可视化两个数值变量之间协变的绝佳方法：用 `geom_point()` 绘制散点图。你可以将协变看作是点的模式。例如，你可以看到钻石的克拉大小和价格之间存在正相关关系：克拉数越大的钻石价格越高。这种关系是指数级的。
+### Two numerical variables
+
+You've already seen one great way to visualize the covariation between two numerical variables: draw a scatterplot with `geom_point()`.    
+你已经见过一种可视化两个数值变量协变的好方法：用 `geom_point()` 绘制散点图。
+
+You can see covariation as a pattern in the points.    
+你可以将协变看作是数据点中的一种模式。
+
+For example, you can see a positive relationship between the carat size and price of a diamond: diamonds with more carats have a higher price.    
+例如，你可以看到钻石的克拉大小和价格之间存在正相关关系：克拉数越大的钻石价格越高。
+
+The relationship is exponential.    
+这种关系是指数级的。
 
 ```{r}
 #| dev: "png"
 #| fig-alt: |
-#|   价格与克拉的散点图。关系是正向的、有些强、并且是指数型的。
+#|   A scatterplot of price vs. carat. The relationship is positive, somewhat 
+#|   strong, and exponential.
 ggplot(smaller, aes(x = carat, y = price)) +
   geom_point()
 ```
 
+(In this section we'll use the `smaller` dataset to stay focused on the bulk of the diamonds that are smaller than 3 carats)    
 （在本节中，我们将使用 `smaller` 数据集，以专注于小于 3 克拉的大部分钻石）
 
-随着数据集规模的增长，散点图的用处会减小，因为点开始重叠（overplot），堆积成均匀的黑色区域，使得难以判断数据在二维空间中密度的差异，也难以发现趋势。你已经见过一种解决这个问题的方法：使用 `alpha` 美学来增加透明度。
+Scatterplots become less useful as the size of your dataset grows, because points begin to overplot, and pile up into areas of uniform black, making it hard to judge differences in the density of the data across the 2-dimensional space as well as making it hard to spot the trend.    
+随着数据集规模的增长，散点图的用处会减小，因为数据点开始重叠绘图（overplot），堆积成一片纯黑的区域，这使得判断数据在二维空间中的密度差异以及发现趋势都变得困难。
+
+You've already seen one way to fix the problem: using the `alpha` aesthetic to add transparency.    
+你已经看到一种解决这个问题的方法：使用 `alpha` 美学来增加透明度。
 
 ```{r}
 #| dev: "png"
 #| fig-alt: |
-#|   价格与克拉的散点图。关系是正向的、有些强、并且是指数型的。
-#|   点是透明的，显示出点数高于其他区域的聚类。最明显的聚类是
-#|   1 克拉、1.5 克拉和 2 克拉的钻石。
+#|   A scatterplot of price vs. carat. The relationship is positive, somewhat 
+#|   strong, and exponential. The points are transparent, showing clusters where 
+#|   the number of points is higher than other areas, The most obvious clusters 
+#|   are for diamonds with 1, 1.5, and 2 carats.
 ggplot(smaller, aes(x = carat, y = price)) + 
   geom_point(alpha = 1 / 100)
 ```
 
-但是对于非常大的数据集，使用透明度可能具有挑战性。另一个解决方案是使用分箱 (bin)。之前你使用 `geom_histogram()` 和 `geom_freqpoly()` 在一维空间中进行分箱。现在你将学习如何使用 `geom_bin2d()` 和 `geom_hex()` 在二维空间中进行分箱。
+But using transparency can be challenging for very large datasets.    
+但是对于非常大的数据集，使用透明度可能具有挑战性。
 
-`geom_bin2d()` 和 `geom_hex()` 将坐标平面划分为二维的箱子，然后使用填充颜色来显示有多少个点落入每个箱子。`geom_bin2d()` 创建矩形箱子。`geom_hex()` 创建六边形箱子。你需要安装 `hexbin` 包才能使用 `geom_hex()`。
+Another solution is to use bin.    
+另一个解决方案是使用分箱（bin）。
+
+Previously you used `geom_histogram()` and `geom_freqpoly()` to bin in one dimension.    
+之前你使用 `geom_histogram()` 和 `geom_freqpoly()` 在一维空间中进行分箱。
+
+Now you'll learn how to use `geom_bin2d()` and `geom_hex()` to bin in two dimensions.    
+现在你将学习如何使用 `geom_bin2d()` 和 `geom_hex()` 在二维空间中进行分箱。
+
+`geom_bin2d()` and `geom_hex()` divide the coordinate plane into 2d bins and then use a fill color to display how many points fall into each bin.    
+`geom_bin2d()` 和 `geom_hex()` 将坐标平面划分为二维的箱子，然后使用填充颜色来显示每个箱子中有多少个数据点。
+
+`geom_bin2d()` creates rectangular bins.    
+`geom_bin2d()` 创建矩形箱。
+
+`geom_hex()` creates hexagonal bins.    
+`geom_hex()` 创建六边形箱。
+
+You will need to install the hexbin package to use `geom_hex()`.    
+你需要安装 hexbin 包才能使用 `geom_hex()`。
 
 ```{r}
 #| layout-ncol: 2
 #| fig-width: 3
 #| fig-alt: |
-#|   图1：价格与克拉的分箱密度图。图2：价格与克拉的六边形分箱图。
-#|   两张图都显示，密度最高的钻石具有低克拉数和低价格。
+#|   Plot 1: A binned density plot of price vs. carat. Plot 2: A hexagonal bin 
+#|   plot of price vs. carat. Both plots show that the highest density of 
+#|   diamonds have low carats and low prices.
 ggplot(smaller, aes(x = carat, y = price)) +
   geom_bin2d()
 
@@ -437,32 +782,53 @@ ggplot(smaller, aes(x = carat, y = price)) +
   geom_hex()
 ```
 
-另一个选择是将一个连续变量分箱，使其像一个分类变量一样。然后你可以使用你学过的可视化分类变量和连续变量组合的技巧之一。例如，你可以将 `carat` 分箱，然后为每个组显示一个箱线图：
+Another option is to bin one continuous variable so it acts like a categorical variable.    
+另一种选择是对一个连续变量进行分箱，使其表现得像一个分类变量。
+
+Then you can use one of the techniques for visualizing the combination of a categorical and a continuous variable that you learned about.    
+然后，你可以使用你学过的可视化分类变量和连续变量组合的技巧之一。
+
+For example, you could bin `carat` and then for each group, display a boxplot:    
+例如，你可以对 `carat` 进行分箱，然后为每个组显示一个箱线图：
 
 ```{r}
 #| fig-alt: |
-#|   按克拉分组的价格的并排箱线图。每个箱线图代表重量相差 0.1 克拉的钻石。
-#|   箱线图显示，随着克拉数的增加，价格中位数也在增加。此外，
-#|   1.5 克拉或更低的钻石价格分布呈右偏，1.5 到 2 克拉的价格分布大致对称，
-#|   而更重的钻石价格分布呈左偏。更便宜、更小的钻石有高端的离群值，
-#|   更昂贵、更大的钻石有低端的离群值。
+#|   Side-by-side box plots of price by carat. Each box plot represents diamonds 
+#|   that are 0.1 carats apart in weight. The box plots show that as carat 
+#|   increases the median price increases as well. Additionally, diamonds with 
+#|   1.5 carats or lower have right skewed price distributions, 1.5 to 2 have 
+#|   roughly symmetric price distributions, and diamonds that weigh more have 
+#|   left skewed distributions. Cheaper, smaller diamonds have outliers on the 
+#|   higher end, more expensive, bigger diamonds have outliers on the lower end.
 ggplot(smaller, aes(x = carat, y = price)) + 
   geom_boxplot(aes(group = cut_width(carat, 0.1)))
 ```
 
-`cut_width(x, width)`，如上所述，将 `x` 分成宽度为 `width` 的箱。默认情况下，无论有多少观测值，箱线图看起来都大致相同（除了离群点的数量），所以很难看出每个箱线图总结了不同数量的点。一种显示这一点的方法是让箱线图的宽度与点的数量成正比，使用 `varwidth = TRUE`。
+`cut_width(x, width)`, as used above, divides `x` into bins of width `width`.    
+如上所示，`cut_width(x, width)` 将 `x` 分割成宽度为 `width` 的区间。
 
-#### 练习
+By default, boxplots look roughly the same (apart from number of outliers) regardless of how many observations there are, so it's difficult to tell that each boxplot summarizes a different number of points.    
+默认情况下，无论观测数量多少，箱线图看起来都大致相同（除了离群点的数量），因此很难判断每个箱线图所概括的数据点数量是不同的。
 
-1.  除了用箱线图总结条件分布，你还可以使用频率多边形。在使用 `cut_width()` 与 `cut_number()` 时，你需要考虑什么？这对 `carat` 和 `price` 的二维分布的可视化有何影响？
+One way to show that is to make the width of the boxplot proportional to the number of points with `varwidth = TRUE`.    
+一种显示这一点的方法是，通过设置 `varwidth = TRUE`，使箱线图的宽度与数据点的数量成正比。
 
-2.  可视化按 `price` 划分的 `carat` 的分布。
+#### Exercises
 
-3.  非常大的钻石与小钻石的价格分布相比如何？是如你所料，还是让你感到惊讶？
+1.  Instead of summarizing the conditional distribution with a boxplot, you could use a frequency polygon.
+    What do you need to consider when using `cut_width()` vs. `cut_number()`?
+    How does that impact a visualization of the 2d distribution of `carat` and `price`?
 
-4.  结合你学到的两种技巧，来可视化 `cut`、`carat` 和 `price` 的组合分布。
+2.  Visualize the distribution of `carat`, partitioned by `price`.
 
-5.  二维图揭示了在一维图中不可见的离群点。例如，下图中有些点的 `x` 和 `y` 值组合不寻常，这使得这些点成为离群点，即使它们的 `x` 和 `y` 值在单独检查时看起来正常。为什么在这种情况下，散点图比分箱图更适合显示？
+3.  How does the price distribution of very large diamonds compare to small diamonds?
+    Is it as you expect, or does it surprise you?
+
+4.  Combine two of the techniques you've learned to visualize the combined distribution of cut, carat, and price.
+
+5.  Two dimensional plots reveal outliers that are not visible in one dimensional plots.
+    For example, some points in the following plot have an unusual combination of `x` and `y` values, which makes the points outliers even though their `x` and `y` values appear normal when examined separately.
+    Why is a scatterplot a better display than a binned plot for this case?
 
     ```{r}
     #| eval: false
@@ -473,41 +839,83 @@ ggplot(smaller, aes(x = carat, y = price)) +
       coord_cartesian(xlim = c(4, 11), ylim = c(4, 11))
     ```
 
-6.  除了用 `cut_width()` 创建等宽的箱子，我们还可以用 `cut_number()` 创建包含大致相等数量的点的箱子。这种方法的优缺点是什么？
+6.  Instead of creating boxes of equal width with `cut_width()`, we could create boxes that contain roughly equal number of points with `cut_number()`.
+    What are the advantages and disadvantages of this approach?
 
     ```{r}
     #| eval: false
     ggplot(smaller, aes(x = carat, y = price)) + 
       geom_boxplot(aes(group = cut_number(carat, 20)))
     ```
+  
 
------
+## Patterns and models
 
-## 模式和模型
+If a systematic relationship exists between two variables it will appear as a pattern in the data.    
+如果两个变量之间存在系统性关系，它将以模式的形式出现在数据中。
 
-如果两个变量之间存在系统性关系，它将以数据中的模式出现。如果你发现一个模式，问问自己：
+If you spot a pattern, ask yourself:    
+如果你发现一个模式，问问自己：
 
-  - 这个模式可能是由于巧合（即随机机会）吗？
+-   Could this pattern be due to coincidence (i.e. random chance)?    
+    这个模式可能是由于巧合（即随机机会）吗？
 
-  - 你如何描述该模式所暗示的关系？
+-   How can you describe the relationship implied by the pattern?    
+    你如何描述这个模式所暗示的关系？
 
-  - 该模式所暗示的关系有多强？
+-   How strong is the relationship implied by the pattern?    
+    这个模式所暗示的关系有多强？
 
-  - 还有哪些其他变量可能会影响这种关系？
+-   What other variables might affect the relationship?    
+    还有哪些其他变量可能会影响这种关系？
 
-  - 如果你观察数据的各个子群，这种关系会改变吗？
+-   Does the relationship change if you look at individual subgroups of the data?    
+    如果观察数据的单个子群，这种关系会改变吗？
 
-数据中的模式提供了关于关系的线索，即它们揭示了协变。如果你把变异看作是一种产生不确定性的现象，那么协变就是一种减少不确定性的现象。如果两个变量协变，你可以利用一个变量的值来更好地预测另一个变量的值。如果协变是由于因果关系（一种特殊情况），那么你可以利用一个变量的值来控制另一个变量的值。
+Patterns in your data provide clues about relationships, i.e., they reveal covariation.    
+数据中的模式为我们提供了关于关系的线索，也就是说，它们揭示了协变关系。
 
-模型是从数据中提取模式的工具。例如，考虑钻石数据。很难理解切工和价格之间的关系，因为切工和克拉，以及克拉和价格是紧密相关的。可以使用一个模型来移除价格和克拉之间非常强的关系，这样我们就可以探索剩下的细微差别。下面的代码拟合了一个从 `carat` 预测 `price` 的模型，然后计算残差（预测值和实际值之间的差异）。残差为我们提供了一个视角，来看待在移除了克拉的影响之后钻石的价格。请注意，我们没有使用 `price` 和 `carat` 的原始值，而是先对它们进行对数转换，并对对数转换后的值拟合一个模型。然后，我们对残差进行指数化，将其放回到原始价格的尺度上。
+If you think of variation as a phenomenon that creates uncertainty, covariation is a phenomenon that reduces it.    
+如果你将变异视为一种产生不确定性的现象，那么协变就是一种减少不确定性的现象。
+
+If two variables covary, you can use the values of one variable to make better predictions about the values of the second.    
+如果两个变量协变，你可以利用一个变量的值来更好地预测另一个变量的值。
+
+If the covariation is due to a causal relationship (a special case), then you can use the value of one variable to control the value of the second.    
+如果协变是由因果关系（一种特殊情况）引起的，那么你可以利用一个变量的值来控制另一个变量的值。
+
+Models are a tool for extracting patterns out of data.    
+模型是从数据中提取模式的工具。
+
+For example, consider the diamonds data.    
+例如，考虑钻石数据。
+
+It's hard to understand the relationship between cut and price, because cut and carat, and carat and price are tightly related.    
+很难理解切工和价格之间的关系，因为切工和克拉，以及克拉和价格是紧密相关的。
+
+It's possible to use a model to remove the very strong relationship between price and carat so we can explore the subtleties that remain.    
+我们可以使用一个模型来移除价格和克拉之间非常强的关系，这样我们就可以探索其中剩下的细微之处。
+
+The following code fits a model that predicts `price` from `carat` and then computes the residuals (the difference between the predicted value and the actual value).    
+以下代码拟合了一个模型，该模型根据 `carat` 预测 `price`，然后计算残差（预测值与实际值之间的差异）。
+
+The residuals give us a view of the price of the diamond, once the effect of carat has been removed.    
+残差让我们能够看到在移除了克拉效应后钻石的价格情况。
+
+Note that instead of using the raw values of `price` and `carat`, we log transform them first, and fit a model to the log-transformed values.    
+请注意，我们没有使用 `price` 和 `carat` 的原始值，而是先对它们进行对数转换，然后对对数转换后的值拟合模型。
+
+Then, we exponentiate the residuals to put them back in the scale of raw prices.    
+然后，我们对残差进行指数化，以将它们恢复到原始价格的尺度。
 
 ```{r}
 #| message: false
 #| dev: "png"
 #| fig-alt: |
-#|   钻石残差与克拉的散点图。x 轴范围从 0 到 5，y 轴范围从 0 到近 4。
-#|   大部分数据聚集在低克拉和低残差值附近。有一条清晰的曲线模式，
-#|   显示残差随着克拉的增加而减少。
+#|   A scatterplot of residuals vs. carat of diamonds. The x-axis ranges from 0 
+#|   to 5, the y-axis ranges from 0 to almost 4. Much of the data are clustered 
+#|   around low values of carat and residuals. There is a clear, curved pattern 
+#|   showing decrease in residuals as carat increases.
 library(tidymodels)
 
 diamonds <- diamonds |>
@@ -526,24 +934,35 @@ ggplot(diamonds_aug, aes(x = carat, y = .resid)) +
   geom_point()
 ```
 
-一旦你移除了克拉和价格之间的强关系，你就可以在切工和价格之间的关系中看到你所期望的：相对于它们的大小，质量更好的钻石更昂贵。
+Once you've removed the strong relationship between carat and price, you can see what you expect in the relationship between cut and price: relative to their size, better quality diamonds are more expensive.    
+一旦你移除了克拉和价格之间的强相关性，你就能在切工和价格的关系中看到你所预期的结果：相对于它们的大小而言，质量更好的钻石更昂贵。
 
 ```{r}
 #| fig-alt: |
-#|   按切工分类的残差的并排箱线图。x 轴显示了各种切工（从 Fair 到 Ideal），
-#|   y 轴范围从 0 到近 5。中位数非常相似，大约在 0.75 到 1.25 之间。
-#|   每个残差分布都是右偏的，有许多高端的离群值。
+#|   Side-by-side box plots of residuals by cut. The x-axis displays the various 
+#|   cuts (Fair to Ideal), the y-axis ranges from 0 to almost 5. The medians are 
+#|   quite similar, between roughly 0.75 to 1.25. Each of the distributions of 
+#|   residuals is right skewed, with many outliers on the higher end.
 ggplot(diamonds_aug, aes(x = cut, y = .resid)) + 
   geom_boxplot()
 ```
 
-我们在这本书中不讨论建模，因为理解模型是什么以及它们如何工作，在你掌握了数据整理和编程的工具之后会最容易。
+We're not discussing modelling in this book because understanding what models are and how they work is easiest once you have tools of data wrangling and programming in hand.    
+我们在这本书中不讨论建模，因为一旦你掌握了数据整理和编程的工具，理解模型是什么以及它们如何工作就会变得最容易。
 
-## 总结
+## Summary
 
-在本章中，你学习了各种工具来帮助你理解数据中的变异。你看到了处理单个变量和一对变量的技巧。如果你的数据中有几十个或几百个变量，这可能看起来很痛苦地受限，但它们是所有其他技术构建的基础。
+In this chapter you've learned a variety of tools to help you understand the variation within your data.    
+在本章中，你学习了各种工具来帮助你理解数据中的变异。
 
-在下一章中，我们将专注于我们可以用来交流我们结果的工具。
+You've seen techniques that work with a single variable at a time and with a pair of variables.    
+你已经看到了处理单个变量以及一对变量的技巧。
+
+This might seem painfully restrictive if you have tens or hundreds of variables in your data, but they're the foundation upon which all other techniques are built.    
+如果你的数据中有数十或数百个变量，这可能看起来限制性很强，但它们是所有其他技术构建的基础。
+
+In the next chapter, we'll focus on the tools we can use to communicate our results.    
+在下一章中，我们将专注于可以用来交流我们结果的工具。
 
 [^1]:
-    请记住，当我们需明确指出一个函数（或数据集）的来源时，我们会使用特殊形式 `package::function()` 或 `package::dataset`。
+    Remember that when we need to be explicit about where a function (or dataset) comes from, we'll use the special form `package::function()` or `package::dataset`.
