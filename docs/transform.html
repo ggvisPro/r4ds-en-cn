@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.7.32">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund">
-<title>数据转换 – R 数据科学 2e</title>
+<title>Transform – R 数据科学 2e</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,7 +74,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transform.html">数据转换</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./transform.html">Transform</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -212,7 +212,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./transform.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">数据转换</span></a>
+ <span class="menu-text">Transform</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -221,19 +221,19 @@ ul.task-list li input[type="checkbox"] {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logicals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">逻辑向量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Logical vectors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./numbers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">数值</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Numbers</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./strings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">字符串</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Strings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -370,7 +370,7 @@ ul.task-list li input[type="checkbox"] {
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title"><span id="sec-transform-intro" class="quarto-section-identifier">数据转换</span></h1>
+<h1 class="title"><span id="sec-transform-intro" class="quarto-section-identifier">Transform</span></h1>
 </div>
 
 
@@ -384,29 +384,31 @@ ul.task-list li input[type="checkbox"] {
   
 
 
-</header><p>本书的第二部分深入探讨了数据可视化。在本书的这一部分，你将学习数据框 (data frame) 中会遇到的最重要变量类型，以及可以用来处理它们的工具。</p>
+</header><p>The second part of the book was a deep dive into data visualization. In this part of the book, you’ll learn about the most important types of variables that you’ll encounter inside a data frame and learn the tools you can use to work with them.<br>
+本书的第二部分深入探讨了数据可视化。在本书的这一部分，你将学习到在数据框 (data frame) 中会遇到的最重要变量类型，以及可以用来处理它们的工具。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-ds-transform" class="quarto-float quarto-figure quarto-figure-center anchored" alt="我们的数据科学模型，其中“转换”部分以蓝色突出显示。 ">
+<div id="fig-ds-transform" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Our data science model, with transform highlighted in blue. ">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-ds-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="diagrams/data-science/transform.png" class="img-fluid figure-img" alt="我们的数据科学模型，其中“转换”部分以蓝色突出显示。 " width="535">
+<img src="diagrams/data-science/transform.png" class="img-fluid figure-img" alt="Our data science model, with transform highlighted in blue. " width="535">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ds-transform-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: 数据转换的选项在很大程度上取决于所涉及的数据类型，这也是本书这一部分的主题。
+Figure&nbsp;1: The options for data transformation depend heavily on the type of data involved, the subject of this part of the book.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>你可以根据需要阅读这些章节；它们的设计初衷是使其在很大程度上保持独立，因此可以不按顺序阅读。</p>
+<p>You can read these chapters as you need them; they’re designed to be largely standalone so that they can be read out of order.<br>
+你可以根据需要阅读这些章节；它们的设计初衷是使其在很大程度上保持独立，因此可以不按顺序阅读。</p>
 <ul>
-<li><p><a href="logicals.html" class="quarto-xref"><span>12&nbsp; 逻辑向量</span></a> 将教你有关逻辑向量的知识。这是最简单的向量类型，但功能却极其强大。你将学习如何通过数值比较来创建它们，如何用布尔代数 (Boolean algebra) 来组合它们，如何在汇总摘要中使用它们，以及如何利用它们进行条件转换。</p></li>
-<li><p><a href="numbers.html" class="quarto-xref"><span>13&nbsp; 数值</span></a> 深入探讨了处理数值向量的工具，数值向量是数据科学的动力源泉。你将学到更多关于计数以及一系列重要的转换和汇总函数的知识。</p></li>
-<li><p><a href="strings.html" class="quarto-xref"><span>14&nbsp; 字符串</span></a> 将为你提供处理字符串的工具：你将对它们进行切片、分割，然后再将它们粘合在一起。本章主要关注 stringr 包，但你也会学到一些用于从字符串中提取数据的 tidyr 函数。</p></li>
-<li><p><a href="regexps.html" class="quarto-xref"><span>15&nbsp; 正则表达式</span></a> 向你介绍正则表达式 (regular expressions)，这是一种强大的字符串处理工具。本章将带你从看到它们就觉得像是猫踩过键盘一样，到能够读懂并编写复杂的字符串模式。</p></li>
-<li><p><a href="factors.html" class="quarto-xref"><span>16&nbsp; 因子</span></a> 介绍因子 (factor)：R 用来存储分类数据的类型。当一个变量具有固定的可能值集合时，或者当你希望使用非字母顺序对字符串进行排序时，你就会使用因子。</p></li>
-<li><p><a href="datetimes.html" class="quarto-xref"><span>17&nbsp; 日期和时间</span></a> 将为你提供处理日期和日期时间的关键工具。不幸的是，你对日期时间了解得越多，它们似乎就变得越复杂，但在 lubridate 包的帮助下，你将学会如何克服最常见的挑战。</p></li>
-<li><p><a href="missing-values.html" class="quarto-xref"><span>18&nbsp; 缺失值</span></a> 深入讨论缺失值。我们已经单独讨论过几次缺失值，但现在是时候全面地讨论它们了，帮助你掌握隐式和显式缺失值之间的区别，以及如何在它们之间进行转换以及为什么要这样做。</p></li>
-<li><p><a href="joins.html" class="quarto-xref"><span>19&nbsp; 连接</span></a> 作为本书这一部分的收尾，为你提供了将两个 (或多个) 数据框连接在一起的工具。学习连接操作将迫使你深入理解“键” (key) 的概念，并思考如何识别数据集中的每一行。</p></li>
+<li><p><a href="logicals.html" class="quarto-xref"><span>12&nbsp; Logical vectors</span></a> teaches you about logical vectors. These are the simplest types of vectors, but are extremely powerful. You’ll learn how to create them with numeric comparisons, how to combine them with Boolean algebra, how to use them in summaries, and how to use them for conditional transformations. 这是最简单的向量类型，但功能极其强大。<br>你将学习如何通过数值比较来创建它们，如何用布尔代数 (Boolean algebra) 来组合它们，如何在汇总 (summaries) 中使用它们，以及如何将它们用于条件转换。</p></li>
+<li><p><a href="numbers.html" class="quarto-xref"><span>13&nbsp; Numbers</span></a> dives into tools for vectors of numbers, the powerhouse of data science. You’ll learn more about counting and a bunch of important transformation and summary functions. 你将学习更多关于计数以及一系列重要的转换和汇总函数。</p></li>
+<li><p><a href="strings.html" class="quarto-xref"><span>14&nbsp; Strings</span></a> will give you the tools to work with strings: you’ll slice them, you’ll dice them, and you’ll stick them back together again. This chapter mostly focuses on the stringr package, but you’ll also learn some more tidyr functions devoted to extracting data from character strings. 本章主要关注 stringr 包，但你也将学习一些 tidyr 中专门用于从字符串中提取数据的函数。</p></li>
+<li><p><a href="regexps.html" class="quarto-xref"><span>15&nbsp; 正则表达式</span></a> introduces you to regular expressions, a powerful tool for manipulating strings. This chapter will take you from thinking that a cat walked over your keyboard to reading and writing complex string patterns. 本章将带你从感觉像是猫走过了你的键盘，到能够读懂并编写复杂的字符串模式。</p></li>
+<li><p><a href="factors.html" class="quarto-xref"><span>16&nbsp; 因子</span></a> introduces factors: the data type that R uses to store categorical data. You use a factor when variable has a fixed set of possible values, or when you want to use a non-alphabetical ordering of a string. 当一个变量有一组固定的可能值，或者当你想对字符串使用非字母顺序排序时，你会使用因子。</p></li>
+<li><p><a href="datetimes.html" class="quarto-xref"><span>17&nbsp; 日期和时间</span></a> will give you the key tools for working with dates and date-times. Unfortunately, the more you learn about date-times, the more complicated they seem to get, but with the help of the lubridate package, you’ll learn to how to overcome the most common challenges. 不幸的是，你对日期时间了解得越多，它们似乎就变得越复杂，但在 lubridate 包的帮助下，你将学会如何克服最常见的挑战。</p></li>
+<li><p><a href="missing-values.html" class="quarto-xref"><span>18&nbsp; 缺失值</span></a> discusses missing values in depth. We’ve discussed them a couple of times in isolation, but now it’s time to discuss them holistically, helping you come to grips with the difference between implicit and explicit missing values, and how and why you might convert between them. 我们已经零星地讨论过几次，但现在是时候全面地讨论它们了，帮助你理解隐式 (implicit) 和显式 (explicit) 缺失值之间的区别，以及如何以及为何在它们之间进行转换。</p></li>
+<li><p><a href="joins.html" class="quarto-xref"><span>19&nbsp; 连接</span></a> finishes up this part of the book by giving you tools to join two (or more) data frames together. Learning about joins will force you to grapple with the idea of keys, and think about how you identify each row in a dataset. 学习连接 (joins) 将迫使你深入理解键 (keys) 的概念，并思考如何识别数据集中的每一行。</p></li>
 </ul>
 
 
@@ -815,8 +817,8 @@ Figure&nbsp;1: 数据转换的选项在很大程度上取决于所涉及的数�
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./logicals.html" class="pagination-link" aria-label="逻辑向量">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">逻辑向量</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./logicals.html" class="pagination-link" aria-label="Logical vectors">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Logical vectors</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

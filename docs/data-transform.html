@@ -247,7 +247,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="./transform.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">数据转换</span></a>
+ <span class="menu-text">Transform</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -256,19 +256,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logicals.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">逻辑向量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Logical vectors</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./numbers.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">数值</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Numbers</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./strings.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">字符串</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Strings</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -467,14 +467,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header><section id="introduction" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="introduction">
 <span class="header-section-number">3.1</span> Introduction</h2>
-<p>Visualization is an important tool for generating insight, but it’s rare that you get the data in exactly the right form you need to make the graph you want. Often you’ll need to create some new variables or summaries to answer your questions with your data, or maybe you just want to rename the variables or reorder the observations to make the data a little easier to work with. You’ll learn how to do all that (and more!) in this chapter, which will introduce you to data transformation using the <strong>dplyr</strong> package and a new dataset on flights that departed from New York City in 2013.<br>
-可视化是产生洞见的重要工具，但你很少能得到形式完全符合你需求的原始数据来制作想要的图表。通常，你需要创建一些新变量或摘要，以便用数据回答你的问题，或者你可能只是想重命名变量或重排观测值，让数据更容易处理。在本章中，你将学到所有这些（甚至更多！），本章将向你介绍如何使用 <strong>dplyr</strong> 包和一个关于 2013 年从纽约市出发航班的新数据集来进行数据转换。</p>
-<p>The goal of this chapter is to give you an overview of all the key tools for transforming a data frame. We’ll start with functions that operate on rows and then columns of a data frame, then circle back to talk more about the pipe, an important tool that you use to combine verbs. We will then introduce the ability to work with groups. We will end the chapter with a case study that showcases these functions in action. In later chapters, we’ll return to the functions in more detail as we start to dig into specific types of data (e.g., numbers, strings, dates).<br>
-本章的目标是为你概述所有用于转换数据框 (data frame) 的关键工具。我们将从操作数据框行和列的函数开始，然后回过头来更多地讨论管道 (pipe)，这是一个用于组合动词的重要工具。接着，我们将介绍处理分组的能力。本章最后会通过一个案例研究来展示这些函数的实际应用。在后面的章节中，当我们开始深入研究特定类型的数据（例如，数字、字符串、日期）时，我们会更详细地回顾这些函数。</p>
+<p>Visualization is an important tool for generating insight, but it’s rare that you get the data in exactly the right form you need to make the graph you want.<br>
+可视化是产生洞察力的重要工具，但你很少能以你需要的确切形式获得数据来制作你想要的图表。</p>
+<p>Often you’ll need to create some new variables or summaries to answer your questions with your data, or maybe you just want to rename the variables or reorder the observations to make the data a little easier to work with.<br>
+通常，你需要创建一些新的变量或摘要来用你的数据回答你的问题，或者你可能只是想重命名变量或重新排序观测值，以使数据更容易处理。</p>
+<p>You’ll learn how to do all that (and more!) in this chapter, which will introduce you to data transformation using the <strong>dplyr</strong> package and a new dataset on flights that departed from New York City in 2013.<br>
+在本章中，你将学习如何做到所有这些 (以及更多！)，本章将向你介绍如何使用 <strong>dplyr</strong> 包和一个关于 2013 年从纽约市起飞的航班的新数据集来进行数据转换。</p>
+<p>The goal of this chapter is to give you an overview of all the key tools for transforming a data frame.<br>
+本章的目标是让你对转换数据框 (data frame) 的所有关键工具有一个概览。</p>
+<p>We’ll start with functions that operate on rows and then columns of a data frame, then circle back to talk more about the pipe, an important tool that you use to combine verbs.<br>
+我们将从操作数据框的行和列的函数开始，然后回过头来更多地讨论管道 (pipe)，这是一个用来组合动词 (verb) 的重要工具。</p>
+<p>We will then introduce the ability to work with groups.<br>
+然后我们将介绍处理分组的能力。</p>
+<p>We will end the chapter with a case study that showcases these functions in action.<br>
+我们将以一个案例研究来结束本章，展示这些函数的实际应用。</p>
+<p>In later chapters, we’ll return to the functions in more detail as we start to dig into specific types of data (e.g., numbers, strings, dates).<br>
+在后面的章节中，我们将更详细地回顾这些函数，因为我们将开始深入研究特定类型的数据 (例如，数字、字符串、日期)。</p>
 <section id="prerequisites" class="level3" data-number="3.1.1"><h3 data-number="3.1.1" class="anchored" data-anchor-id="prerequisites">
 <span class="header-section-number">3.1.1</span> Prerequisites</h3>
-<p>In this chapter, we’ll focus on the dplyr package, another core member of the tidyverse. We’ll illustrate the key ideas using data from the nycflights13 package and use ggplot2 to help us understand the data.<br>
-在本章中，我们将重点关注 dplyr 包，它是 tidyverse 的另一个核心成员。我们将使用 nycflights13 包中的数据来说明关键思想，并使用 ggplot2 来帮助我们理解数据。</p>
+<p>In this chapter, we’ll focus on the dplyr package, another core member of the tidyverse.<br>
+在本章中，我们将重点介绍 dplyr 包，它是 tidyverse 的另一个核心成员。</p>
+<p>We’ll illustrate the key ideas using data from the nycflights13 package and use ggplot2 to help us understand the data.<br>
+我们将使用 nycflights13 包中的数据来说明关键思想，并使用 ggplot2 来帮助我们理解数据。</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hadley/nycflights13">nycflights13</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
@@ -489,12 +503,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
 <span><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Take careful note of the conflicts message that’s printed when you load the tidyverse. It tells you that dplyr overwrites some functions in base R. If you want to use the base version of these functions after loading dplyr, you’ll need to use their full names: <code><a href="https://rdrr.io/r/stats/filter.html">stats::filter()</a></code> and <code><a href="https://rdrr.io/r/stats/lag.html">stats::lag()</a></code>. So far, we’ve mostly ignored which package a function comes from because it doesn’t usually matter. However, knowing the package can help you find help and find related functions, so when we need to be precise about which package a function comes from, we’ll use the same syntax as R: <code>packagename::functionname()</code>.<br>
-请仔细注意加载 tidyverse 时打印的冲突信息。它告诉你 dplyr 覆盖了基础 R 中的一些函数。如果在加载 dplyr 后想使用这些函数的基础版本，你需要使用它们的全名：<code><a href="https://rdrr.io/r/stats/filter.html">stats::filter()</a></code> 和 <code><a href="https://rdrr.io/r/stats/lag.html">stats::lag()</a></code>。到目前为止，我们大多忽略了函数来自哪个包，因为这通常不重要。然而，了解包可以帮助你查找帮助和相关函数，所以当我们需精确指明函数来自哪个包时，我们将使用与 R 相同的语法：<code>packagename::functionname()</code>。</p>
+<p>Take careful note of the conflicts message that’s printed when you load the tidyverse.<br>
+请仔细注意加载 tidyverse 时打印的冲突消息。</p>
+<p>It tells you that dplyr overwrites some functions in base R.<br>
+它告诉你 dplyr 覆盖了基础 R 中的一些函数。</p>
+<p>If you want to use the base version of these functions after loading dplyr, you’ll need to use their full names: <code><a href="https://rdrr.io/r/stats/filter.html">stats::filter()</a></code> and <code><a href="https://rdrr.io/r/stats/lag.html">stats::lag()</a></code>.<br>
+如果在加载 dplyr 后想使用这些函数的基础版本，你需要使用它们的全名：<code><a href="https://rdrr.io/r/stats/filter.html">stats::filter()</a></code> 和 <code><a href="https://rdrr.io/r/stats/lag.html">stats::lag()</a></code>。</p>
+<p>So far, we’ve mostly ignored which package a function comes from because it doesn’t usually matter.<br>
+到目前为止，我们大多忽略了函数来自哪个包，因为它通常不重要。</p>
+<p>However, knowing the package can help you find help and find related functions, so when we need to be precise about which package a function comes from, we’ll use the same syntax as R: <code>packagename::functionname()</code>.<br>
+然而，知道包可以帮助你找到帮助和相关的函数，所以当我们需​​要精确地指出函数来自哪个包时，我们将使用与 R 相同的语法：<code>packagename::functionname()</code>。</p>
 </section><section id="nycflights13" class="level3" data-number="3.1.2"><h3 data-number="3.1.2" class="anchored" data-anchor-id="nycflights13">
 <span class="header-section-number">3.1.2</span> nycflights13</h3>
-<p>To explore the basic dplyr verbs, we will use <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">nycflights13::flights</a></code>. This dataset contains all 336,776 flights that departed from New York City in 2013. The data comes from the US <a href="https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&amp;QO_fu146_anzr=b0-gvzr">Bureau of Transportation Statistics</a> and is documented in <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">?flights</a></code>.<br>
-为了探索基本的 dplyr 动词，我们将使用 <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">nycflights13::flights</a></code>。该数据集包含了 2013 年从纽约市起飞的所有 336,776 个航班。数据来自美国<a href="https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&amp;QO_fu146_anzr=b0-gvzr">交通统计局</a>，并在 <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">?flights</a></code> 中有详细文档。</p>
+<p>To explore the basic dplyr verbs, we will use <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">nycflights13::flights</a></code>.<br>
+为了探索基本的 dplyr 动词，我们将使用 <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">nycflights13::flights</a></code>。</p>
+<p>This dataset contains all 336,776 flights that departed from New York City in 2013.<br>
+这个数据集包含了 2013 年从纽约市出发的所有 336,776 个航班。</p>
+<p>The data comes from the US <a href="https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&amp;QO_fu146_anzr=b0-gvzr">Bureau of Transportation Statistics</a> and is documented in <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">?flights</a></code>.<br>
+数据来自美国<a href="https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&amp;QO_fu146_anzr=b0-gvzr">交通统计局</a>，并在 <code><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">?flights</a></code> 中有文档记录。</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span></span>
 <span><span class="co">#&gt; # A tibble: 336,776 × 19</span></span>
@@ -509,7 +535,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>flights</code> is a tibble, a special type of data frame used by the tidyverse to avoid some common gotchas. The most important difference between tibbles and data frames is the way tibbles print; they are designed for large datasets, so they only show the first few rows and only the columns that fit on one screen. There are a few options to see everything. If you’re using RStudio, the most convenient is probably <code>View(flights)</code>, which opens an interactive, scrollable, and filterable view. Otherwise you can use <code>print(flights, width = Inf)</code> to show all columns, or use <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code>:<br><code>flights</code> 是一个 tibble，这是 tidyverse 使用的一种特殊类型的数据框 (data frame)，用以避免一些常见的陷阱。tibble 和 data frame 最重要的区别在于 tibble 的打印方式；它们专为大型数据集设计，因此只显示前几行以及能在一个屏幕上容纳的列。有几种方法可以查看所有内容。如果你正在使用 RStudio，最方便的可能是 <code>View(flights)</code>，它会打开一个可交互、可滚动和可筛选的视图。否则，你可以使用 <code>print(flights, width = Inf)</code> 来显示所有列，或者使用 <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code>：</p>
+<p><code>flights</code> is a tibble, a special type of data frame used by the tidyverse to avoid some common gotchas.<br><code>flights</code> 是一个 tibble，这是 tidyverse 使用的一种特殊类型的数据框，以避免一些常见的陷阱。</p>
+<p>The most important difference between tibbles and data frames is the way tibbles print; they are designed for large datasets, so they only show the first few rows and only the columns that fit on one screen.<br>
+tibble 和数据框之间最重要的区别在于 tibble 的打印方式；它们专为大型数据集设计，因此只显示前几行和能在一屏内显示的列。</p>
+<p>There are a few options to see everything.<br>
+有几个选项可以查看所有内容。</p>
+<p>If you’re using RStudio, the most convenient is probably <code>View(flights)</code>, which opens an interactive, scrollable, and filterable view.<br>
+如果你正在使用 RStudio，最方便的可能是 <code>View(flights)</code>，它会打开一个交互式的、可滚动的和可筛选的视图。</p>
+<p>Otherwise you can use <code>print(flights, width = Inf)</code> to show all columns, or use <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code>:<br>
+否则，你可以使用 <code>print(flights, width = Inf)</code> 来显示所有列，或者使用 <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code>：</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">flights</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 336,776</span></span>
@@ -534,24 +568,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span><span class="co">#&gt; $ minute         &lt;dbl&gt; 15, 29, 40, 45, 0, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 59…</span></span>
 <span><span class="co">#&gt; $ time_hour      &lt;dttm&gt; 2013-01-01 05:00:00, 2013-01-01 05:00:00, 2013-01-0…</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In both views, the variable names are followed by abbreviations that tell you the type of each variable: <code>&lt;int&gt;</code> is short for integer, <code>&lt;dbl&gt;</code> is short for double (aka real numbers), <code>&lt;chr&gt;</code> for character (aka strings), and <code>&lt;dttm&gt;</code> for date-time. These are important because the operations you can perform on a column depend heavily on its “type.”<br>
-在这两种视图中，变量名后面都跟着缩写，告诉你每个变量的类型：<code>&lt;int&gt;</code> 是整数 (integer) 的缩写，<code>&lt;dbl&gt;</code> 是双精度浮点数 (double)（也即实数）的缩写，<code>&lt;chr&gt;</code> 是字符 (character)（也即字符串）的缩写，而 <code>&lt;dttm&gt;</code> 是日期时间 (date-time) 的缩写。这些信息很重要，因为你能对一列执行的操作在很大程度上取决于它的“类型”。</p>
+<p>In both views, the variable names are followed by abbreviations that tell you the type of each variable: <code>&lt;int&gt;</code> is short for integer, <code>&lt;dbl&gt;</code> is short for double (aka real numbers), <code>&lt;chr&gt;</code> for character (aka strings), and <code>&lt;dttm&gt;</code> for date-time.<br>
+在这两种视图中，变量名后面都跟着缩写，告诉你每个变量的类型：<code>&lt;int&gt;</code> 是整数 (integer) 的缩写，<code>&lt;dbl&gt;</code> 是双精度浮点数 (double) (也称为实数) 的缩写，<code>&lt;chr&gt;</code> 是字符 (character) (也称为字符串) 的缩写，而 <code>&lt;dttm&gt;</code> 是日期时间 (date-time) 的缩写。</p>
+<p>These are important because the operations you can perform on a column depend heavily on its “type.”<br>
+这些都很重要，因为你可以对一列执行的操作在很大程度上取决于它的“类型”。</p>
 </section><section id="dplyr-basics" class="level3" data-number="3.1.3"><h3 data-number="3.1.3" class="anchored" data-anchor-id="dplyr-basics">
 <span class="header-section-number">3.1.3</span> dplyr basics</h3>
-<p>You’re about to learn the primary dplyr verbs (functions), which will allow you to solve the vast majority of your data manipulation challenges. But before we discuss their individual differences, it’s worth stating what they have in common:<br>
-你即将学习主要的 dplyr 动词（函数），它们将使你能够解决绝大多数数据操作挑战。但在我们讨论它们各自的差异之前，有必要说明它们的共同点：</p>
+<p>You’re about to learn the primary dplyr verbs (functions), which will allow you to solve the vast majority of your data manipulation challenges.<br>
+你即将学习主要的 dplyr 动词 (函数)，它们将使你能够解决绝大多数的数据操作挑战。</p>
+<p>But before we discuss their individual differences, it’s worth stating what they have in common:<br>
+但在我们讨论它们的个体差异之前，有必要说明它们的共同点：</p>
 <ol type="1">
-<li>
-<p>The first argument is always a data frame.</p>
-<p>第一个参数总是一个数据框。</p>
-</li>
+<li><p>The first argument is always a data frame.<br>
+第一个参数总是一个数据框。</p></li>
 <li><p>The subsequent arguments typically describe which columns to operate on using the variable names (without quotes).<br>
-后续的参数通常使用变量名（不带引号）来描述要操作的列。</p></li>
+后续的参数通常使用变量名 (不带引号) 来描述要操作的列。</p></li>
 <li><p>The output is always a new data frame.<br>
 输出总是一个新的数据框。</p></li>
 </ol>
-<p>Because each verb does one thing well, solving complex problems will usually require combining multiple verbs, and we’ll do so with the pipe, <code>|&gt;</code>. We’ll discuss the pipe more in <a href="#sec-the-pipe" class="quarto-xref"><span>Section 3.4</span></a>, but in brief, the pipe takes the thing on its left and passes it along to the function on its right so that <code>x |&gt; f(y)</code> is equivalent to <code>f(x, y)</code>, and <code>x |&gt; f(y) |&gt; g(z)</code> is equivalent to <code>g(f(x, y), z)</code>. The easiest way to pronounce the pipe is “then”. That makes it possible to get a sense of the following code even though you haven’t yet learned the details:<br>
-因为每个动词都能很好地完成一件事，所以解决复杂问题通常需要组合多个动词，我们将使用管道 <code>|&gt;</code> 来实现。我们将在 <a href="#sec-the-pipe" class="quarto-xref"><span>Section 3.4</span></a> 中更多地讨论管道，但简而言之，管道将其左侧的内容传递给右侧的函数，因此 <code>x |&gt; f(y)</code> 等同于 <code>f(x, y)</code>，而 <code>x |&gt; f(y) |&gt; g(z)</code> 等同于 <code>g(f(x, y), z)</code>。管道最简单的读法是“然后”(then)。这使得即使你还没有学习细节，也能大致理解以下代码的含义：</p>
+<p>Because each verb does one thing well, solving complex problems will usually require combining multiple verbs, and we’ll do so with the pipe, <code>|&gt;</code>.<br>
+因为每个动词都能很好地完成一件事，所以解决复杂问题通常需要组合多个动词，我们将使用管道 <code>|&gt;</code> 来实现这一点。</p>
+<p>We’ll discuss the pipe more in <a href="#sec-the-pipe" class="quarto-xref"><span>Section 3.4</span></a>, but in brief, the pipe takes the thing on its left and passes it along to the function on its right so that <code>x |&gt; f(y)</code> is equivalent to <code>f(x, y)</code>, and <code>x |&gt; f(y) |&gt; g(z)</code> is equivalent to <code>g(f(x, y), z)</code>.<br>
+我们将在 <a href="#sec-the-pipe" class="quarto-xref"><span>Section 3.4</span></a> 中更详细地讨论管道，但简而言之，管道将其左边的东西传递给其右边的函数，因此 <code>x |&gt; f(y)</code> 等同于 <code>f(x, y)</code>，而 <code>x |&gt; f(y) |&gt; g(z)</code> 等同于 <code>g(f(x, y), z)</code>。</p>
+<p>The easiest way to pronounce the pipe is “then”.<br>
+管道最简单的发音是“然后” (then)。</p>
+<p>That makes it possible to get a sense of the following code even though you haven’t yet learned the details:<br>
+这使得即使你还没有学习细节，也能理解以下代码的含义：</p>
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="st">"IAH"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -560,16 +602,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span>    arr_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">arr_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>dplyr’s verbs are organized into four groups based on what they operate on: <strong>rows</strong>, <strong>columns</strong>, <strong>groups</strong>, or <strong>tables</strong>. In the following sections, you’ll learn the most important verbs for rows, columns, and groups. Then, we’ll return to the join verbs that work on tables in <a href="joins.html" class="quarto-xref"><span>Chapter 19</span></a>. Let’s dive in!<br>
-dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>、<strong>列 (columns)</strong>、<strong>分组 (groups)</strong> 或 <strong>表 (tables)</strong>。在接下来的部分，你将学习针对行、列和分组的最重要的动词。然后，我们将在 <a href="joins.html" class="quarto-xref"><span>Chapter 19</span></a> 中回过头来学习处理表的连接动词。让我们开始吧！</p>
+<p>dplyr’s verbs are organized into four groups based on what they operate on: <strong>rows</strong>, <strong>columns</strong>, <strong>groups</strong>, or <strong>tables</strong>.<br>
+dplyr 的动词根据它们操作的对象分为四组：<strong>行</strong>、<strong>列</strong>、<strong>组</strong> 或 <strong>表</strong>。</p>
+<p>In the following sections, you’ll learn the most important verbs for rows, columns, and groups.<br>
+在接下来的部分中，你将学习针对行、列和组的最重要的动词。</p>
+<p>Then, we’ll return to the join verbs that work on tables in <a href="joins.html" class="quarto-xref"><span>Chapter 19</span></a>.<br>
+然后，我们将在 <a href="joins.html" class="quarto-xref"><span>Chapter 19</span></a> 中回到处理表的连接动词。</p>
+<p>Let’s dive in!<br>
+让我们开始吧！</p>
 </section></section><section id="rows" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="rows">
 <span class="header-section-number">3.2</span> Rows</h2>
-<p>The most important verbs that operate on rows of a dataset are <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, which changes which rows are present without changing their order, and <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>, which changes the order of the rows without changing which are present. Both functions only affect the rows, and the columns are left unchanged. We’ll also discuss <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> which finds rows with unique values. Unlike <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> it can also optionally modify the columns.<br>
-操作数据集行的最重要动词是 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>。<code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 改变存在的行而不改变它们的顺序，而 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 改变行的顺序而不改变存在的行。这两个函数都只影响行，列保持不变。我们还将讨论 <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code>，它能找到具有唯一值的行。与 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 不同，它还可以选择性地修改列。</p>
+<p>The most important verbs that operate on rows of a dataset are <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, which changes which rows are present without changing their order, and <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>, which changes the order of the rows without changing which are present.<br>
+操作数据集行的最重要的动词是 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>，它在不改变行顺序的情况下改变存在的行；以及 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>，它在不改变存在的行的情况下改变行的顺序。</p>
+<p>Both functions only affect the rows, and the columns are left unchanged.<br>
+这两个函数都只影响行，列保持不变。</p>
+<p>We’ll also discuss <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> which finds rows with unique values.<br>
+我们还将讨论 <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code>，它能找到具有唯一值的行。</p>
+<p>Unlike <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> it can also optionally modify the columns.<br>
+与 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 不同，它还可以选择性地修改列。</p>
 <section id="filter" class="level3" data-number="3.2.1"><h3 data-number="3.2.1" class="anchored" data-anchor-id="filter">
 <span class="header-section-number">3.2.1</span> <code>filter()</code>
 </h3>
-<p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> allows you to keep rows based on the values of the columns<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The first argument is the data frame. The second and subsequent arguments are the conditions that must be true to keep the row. For example, we could find all flights that departed more than 120 minutes (two hours) late:<br><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 允许你根据列的值保留行<sup>1</sup>。第一个参数是数据框。第二个及后续参数是保留行必须满足的条件。例如，我们可以找到所有晚点超过 120 分钟（两小时）起飞的航班：</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> allows you to keep rows based on the values of the columns<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.<br><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 允许你根据列的值保留行<sup>1</sup>。</p>
+<p>The first argument is the data frame.<br>
+第一个参数是数据框。</p>
+<p>The second and subsequent arguments are the conditions that must be true to keep the row.<br>
+第二个及后续参数是必须为真才能保留该行的条件。</p>
+<p>For example, we could find all flights that departed more than 120 minutes (two hours) late:<br>
+例如，我们可以找到所有晚点超过 120 分钟 (两小时) 的航班：</p>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dep_delay</span> <span class="op">&gt;</span> <span class="fl">120</span><span class="op">)</span></span>
@@ -585,8 +645,10 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 9,717 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>As well as <code>&gt;</code> (greater than), you can use <code>&gt;=</code> (greater than or equal to), <code>&lt;</code> (less than), <code>&lt;=</code> (less than or equal to), <code>==</code> (equal to), and <code>!=</code> (not equal to). You can also combine conditions with <code>&amp;</code> or <code>,</code> to indicate “and” (check for both conditions) or with <code>|</code> to indicate “or” (check for either condition):<br>
-除了 <code>&gt;</code> (大于)，你还可以使用 <code>&gt;=</code> (大于或等于), <code>&lt;</code> (小于), <code>&lt;=</code> (小于或等于), <code>==</code> (等于), 和 <code>!=</code> (不等于)。你也可以用 <code>&amp;</code> 或 <code>,</code> 组合条件来表示“与”（检查两个条件），或用 <code>|</code> 表示“或”（检查任一条件）：</p>
+<p>As well as <code>&gt;</code> (greater than), you can use <code>&gt;=</code> (greater than or equal to), <code>&lt;</code> (less than), <code>&lt;=</code> (less than or equal to), <code>==</code> (equal to), and <code>!=</code> (not equal to).<br>
+除了 <code>&gt;</code> (大于)，你还可以使用 <code>&gt;=</code> (大于或等于)、<code>&lt;</code> (小于)、<code>&lt;=</code> (小于或等于)、<code>==</code> (等于) 和 <code>!=</code> (不等于)。</p>
+<p>You can also combine conditions with <code>&amp;</code> or <code>,</code> to indicate “and” (check for both conditions) or with <code>|</code> to indicate “or” (check for either condition):<br>
+你还可以使用 <code>&amp;</code> 或 <code>,</code> 来组合条件，表示“与” (检查两个条件)，或使用 <code>|</code> 表示“或” (检查任一条件)：</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Flights that departed on January 1</span></span>
 <span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
@@ -618,8 +680,10 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 51,949 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>There’s a useful shortcut when you’re combining <code>|</code> and <code>==</code>: <code>%in%</code>. It keeps rows where the variable equals one of the values on the right:<br>
-当你组合使用 <code>|</code> 和 <code>==</code> 时，有一个很有用的快捷方式：<code>%in%</code>。它会保留变量值等于右侧任一值的行：</p>
+<p>There’s a useful shortcut when you’re combining <code>|</code> and <code>==</code>: <code>%in%</code>.<br>
+当你组合 <code>|</code> 和 <code>==</code> 时，有一个有用的快捷方式：<code>%in%</code>。</p>
+<p>It keeps rows where the variable equals one of the values on the right:<br>
+它会保留变量等于右侧值之一的行：</p>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># A shorter way to select flights that departed in January or February</span></span>
 <span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
@@ -637,17 +701,22 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We’ll come back to these comparisons and logical operators in more detail in <a href="logicals.html" class="quarto-xref"><span>Chapter 12</span></a>.<br>
-我们将在 <a href="logicals.html" class="quarto-xref"><span>Chapter 12</span></a> 中更详细地讨论这些比较和逻辑运算符。</p>
-<p>When you run <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> dplyr executes the filtering operation, creating a new data frame, and then prints it. It doesn’t modify the existing <code>flights</code> dataset because dplyr functions never modify their inputs. To save the result, you need to use the assignment operator, <code>&lt;-</code>:<br>
-当你运行 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 时，dplyr 会执行筛选操作，创建一个新的数据框，然后打印它。它不会修改现有的 <code>flights</code> 数据集，因为 dplyr 函数从不修改它们的输入。要保存结果，你需要使用赋值运算符 <code>&lt;-</code>：</p>
+我们将在 <a href="logicals.html" class="quarto-xref"><span>Chapter 12</span></a> 中更详细地回顾这些比较和逻辑运算符。</p>
+<p>When you run <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> dplyr executes the filtering operation, creating a new data frame, and then prints it.<br>
+当你运行 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 时，dplyr 会执行筛选操作，创建一个新的数据框，然后打印它。</p>
+<p>It doesn’t modify the existing <code>flights</code> dataset because dplyr functions never modify their inputs.<br>
+它不会修改现有的 <code>flights</code> 数据集，因为 dplyr 函数从不修改它们的输入。</p>
+<p>To save the result, you need to use the assignment operator, <code>&lt;-</code>:<br>
+要保存结果，你需要使用赋值运算符 <code>&lt;-</code>：</p>
 <div class="cell">
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">jan1</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">&amp;</span> <span class="va">day</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="common-mistakes" class="level3" data-number="3.2.2"><h3 data-number="3.2.2" class="anchored" data-anchor-id="common-mistakes">
 <span class="header-section-number">3.2.2</span> Common mistakes</h3>
-<p>When you’re starting out with R, the easiest mistake to make is to use <code>=</code> instead of <code>==</code> when testing for equality. <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> will let you know when this happens:<br>
-当你刚开始使用 R 时，最容易犯的错误是在测试相等性时使用 <code>=</code> 而不是 <code>==</code>。<code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 会在这种情况下提醒你：</p>
+<p>When you’re starting out with R, the easiest mistake to make is to use <code>=</code> instead of <code>==</code> when testing for equality.<br>
+当你刚开始使用 R 时，最容易犯的错误是在测试相等性时使用 <code>=</code> 而不是 <code>==</code>。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> will let you know when this happens:<br><code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 会在这种情况下通知你：</p>
 <div class="cell">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
@@ -657,17 +726,27 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; ℹ Did you mean `month == 1`?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Another mistakes is you write “or” statements like you would in English:<br>
-另一个错误是像在英语中那样写“或”语句：</p>
+另一个错误是你像用英语一样写“或”语句：</p>
 <div class="cell">
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">month</span> <span class="op">==</span> <span class="fl">1</span> <span class="op">|</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This “works”, in the sense that it doesn’t throw an error, but it doesn’t do what you want because <code>|</code> first checks the condition <code>month == 1</code> and then checks the condition <code>2</code>, which is not a sensible condition to check. We’ll learn more about what’s happening here and why in <a href="logicals.html#sec-order-operations-boolean" class="quarto-xref"><span>Section 12.3.2</span></a>.<br>
-这“行得通”，因为它不会抛出错误，但它不会做你想要的事情，因为 <code>|</code> 首先检查条件 <code>month == 1</code>，然后检查条件 <code>2</code>，这不是一个合理的检查条件。我们将在 <a href="logicals.html#sec-order-operations-boolean" class="quarto-xref"><span>Section 12.3.2</span></a> 中更多地了解这里发生了什么以及为什么会这样。</p>
+<p>This “works”, in the sense that it doesn’t throw an error, but it doesn’t do what you want because <code>|</code> first checks the condition <code>month == 1</code> and then checks the condition <code>2</code>, which is not a sensible condition to check.<br>
+这“行得通”，因为它不会抛出错误，但它没有做你想要的，因为 <code>|</code> 首先检查条件 <code>month == 1</code>，然后检查条件 <code>2</code>，这不是一个合理的检查条件。</p>
+<p>We’ll learn more about what’s happening here and why in <a href="logicals.html#sec-order-operations-boolean" class="quarto-xref"><span>Section 12.3.2</span></a>.<br>
+我们将在 <a href="logicals.html#sec-order-operations-boolean" class="quarto-xref"><span>Section 12.3.2</span></a> 中更多地了解这里发生了什么以及为什么会这样。</p>
 </section><section id="arrange" class="level3" data-number="3.2.3"><h3 data-number="3.2.3" class="anchored" data-anchor-id="arrange">
 <span class="header-section-number">3.2.3</span> <code>arrange()</code>
 </h3>
-<p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> changes the order of the rows based on the value of the columns. It takes a data frame and a set of column names (or more complicated expressions) to order by. If you provide more than one column name, each additional column will be used to break ties in the values of the preceding columns. For example, the following code sorts by the departure time, which is spread over four columns. We get the earliest years first, then within a year, the earliest months, etc.<br><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 根据列的值改变行的顺序。它接受一个数据框和一组用于排序的列名（或更复杂的表达式）。如果你提供多个列名，每个额外的列将用于打破前面列值中的平局。例如，以下代码按出发时间排序，该时间分布在四个列中。我们首先得到最早的年份，然后在一年内得到最早的月份，依此类推。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> changes the order of the rows based on the value of the columns.<br><code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 根据列的值改变行的顺序。</p>
+<p>It takes a data frame and a set of column names (or more complicated expressions) to order by.<br>
+它接受一个数据框和一组列名 (或更复杂的表达式) 作为排序依据。</p>
+<p>If you provide more than one column name, each additional column will be used to break ties in the values of the preceding columns.<br>
+如果你提供多个列名，每个额外的列将用于打破前面列值中的平局。</p>
+<p>For example, the following code sorts by the departure time, which is spread over four columns.<br>
+例如，以下代码按出发时间排序，该时间分布在四列中。</p>
+<p>We get the earliest years first, then within a year, the earliest months, etc.<br>
+我们首先得到最早的年份，然后在一年内，得到最早的月份，依此类推。</p>
 <div class="cell">
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span>, <span class="va">dep_time</span><span class="op">)</span></span>
@@ -683,8 +762,10 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can use <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code> on a column inside of <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> to re-order the data frame based on that column in descending (big-to-small) order. For example, this code orders flights from most to least delayed:<br>
-你可以在 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 内对列使用 <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code>，以按该列的降序（从大到小）重新排序数据框。例如，这段代码将航班按延误程度从高到低排序：</p>
+<p>You can use <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code> on a column inside of <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> to re-order the data frame based on that column in descending (big-to-small) order.<br>
+你可以在 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> 内部对列使用 <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code>，以按该列的降序 (从大到小) 重新排序数据框。</p>
+<p>For example, this code orders flights from most to least delayed:<br>
+例如，此代码将航班从最晚点到最少晚点排序：</p>
 <div class="cell">
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span><span class="op">)</span></span>
@@ -701,11 +782,13 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that the number of rows has not changed – we’re only arranging the data, we’re not filtering it.<br>
-注意，行的数量没有改变——我们只是在排列数据，而不是筛选数据。</p>
+请注意，行数没有改变——我们只是在排列数据，而不是筛选数据。</p>
 </section><section id="distinct" class="level3" data-number="3.2.4"><h3 data-number="3.2.4" class="anchored" data-anchor-id="distinct">
 <span class="header-section-number">3.2.4</span> <code>distinct()</code>
 </h3>
-<p><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> finds all the unique rows in a dataset, so technically, it primarily operates on the rows. Most of the time, however, you’ll want the distinct combination of some variables, so you can also optionally supply column names:<br><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> 找出数据集中的所有唯一行，所以从技术上讲，它主要操作的是行。然而，大多数时候，你会想要一些变量的独特组合，所以你也可以选择性地提供列名：</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> finds all the unique rows in a dataset, so technically, it primarily operates on the rows.<br><code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> 在数据集中查找所有唯一的行，因此从技术上讲，它主要作用于行。</p>
+<p>Most of the time, however, you’ll want the distinct combination of some variables, so you can also optionally supply column names:<br>
+然而，大多数时候，你会想要一些变量的独特组合，所以你也可以选择性地提供列名：</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Remove duplicate rows, if any</span></span>
 <span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
@@ -737,7 +820,7 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 218 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Alternatively, if you want to keep the other columns when filtering for unique rows, you can use the <code>.keep_all = TRUE</code> option.<br>
-另外，如果你在筛选唯一行时想保留其他列，可以使用 <code>.keep_all = TRUE</code> 选项。</p>
+或者，如果你想在筛选唯一行时保留其他列，可以使用 <code>.keep_all = TRUE</code> 选项。</p>
 <div class="cell">
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">origin</span>, <span class="va">dest</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -754,9 +837,13 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It’s not a coincidence that all of these distinct flights are on January 1: <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> will find the first occurrence of a unique row in the dataset and discard the rest.<br>
-所有这些不同的航班都发生在 1 月 1 日并非巧合：<code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> 会找到数据集中唯一行的首次出现，并丢弃其余的。</p>
-<p>If you want to find the number of occurrences instead, you’re better off swapping <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> for <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code>. With the <code>sort = TRUE</code> argument, you can arrange them in descending order of the number of occurrences. You’ll learn more about count in <a href="numbers.html#sec-counts" class="quarto-xref"><span>Section 13.3</span></a>.<br>
-如果你想找出出现次数，最好用 <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> 替换 <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code>。通过 <code>sort = TRUE</code> 参数，你可以按出现次数的降序排列它们。你将在 <a href="numbers.html#sec-counts" class="quarto-xref"><span>Section 13.3</span></a> 中学到更多关于 <code>count</code> 的知识。</p>
+所有这些不同的航班都在 1 月 1 日并非巧合：<code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> 会找到数据集中唯一行的第一次出现，并丢弃其余的。</p>
+<p>If you want to find the number of occurrences instead, you’re better off swapping <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> for <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code>.<br>
+如果你想查找出现次数，最好将 <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct()</a></code> 换成 <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code>。</p>
+<p>With the <code>sort = TRUE</code> argument, you can arrange them in descending order of the number of occurrences.<br>
+使用 <code>sort = TRUE</code> 参数，你可以按出现次数的降序排列它们。</p>
+<p>You’ll learn more about count in <a href="numbers.html#sec-counts" class="quarto-xref"><span>Section 13.3</span></a>.<br>
+你将在 <a href="numbers.html#sec-counts" class="quarto-xref"><span>Section 13.3</span></a> 中学到更多关于 <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> 的知识。</p>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">origin</span>, <span class="va">dest</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -797,7 +884,11 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <section id="sec-mutate" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="sec-mutate">
 <span class="header-section-number">3.3.1</span> <code>mutate()</code>
 </h3>
-<p>The job of <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> is to add new columns that are calculated from the existing columns. In the transform chapters, you’ll learn a large set of functions that you can use to manipulate different types of variables. For now, we’ll stick with basic algebra, which allows us to compute the <code>gain</code>, how much time a delayed flight made up in the air, and the <code>speed</code> in miles per hour:<br><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 的工作是添加从现有列计算得出的新列。在转换章节中，你将学习大量可用于操作不同类型变量的函数。目前，我们将坚持使用基础代数，这使我们能够计算 <code>gain</code>（延误的航班在空中弥补了多少时间）和 <code>speed</code>（以英里/小时为单位的速度）：</p>
+<p>The job of <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> is to add new columns that are calculated from the existing columns.<br><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 的工作是添加从现有列计算出的新列。</p>
+<p>In the transform chapters, you’ll learn a large set of functions that you can use to manipulate different types of variables.<br>
+在转换章节中，你将学习大量可用于操作不同类型变量的函数。</p>
+<p>For now, we’ll stick with basic algebra, which allows us to compute the <code>gain</code>, how much time a delayed flight made up in the air, and the <code>speed</code> in miles per hour:<br>
+现在，我们将坚持使用基本代数，它允许我们计算 <code>gain</code> (延误的航班在空中弥补了多少时间) 和 <code>speed</code> (以英里/小时为单位)：</p>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
@@ -816,8 +907,10 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 13 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>By default, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> adds new columns on the right-hand side of your dataset, which makes it difficult to see what’s happening here. We can use the <code>.before</code> argument to instead add the variables to the left-hand side<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:<br>
-默认情况下，<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 会在你的数据集的右侧添加新列，这使得很难看清这里发生了什么。我们可以使用 <code>.before</code> 参数来将变量添加到左侧<sup>2</sup>：</p>
+<p>By default, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> adds new columns on the right-hand side of your dataset, which makes it difficult to see what’s happening here.<br>
+默认情况下，<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 会在数据集的右侧添加新列，这使得很难看清这里发生了什么。</p>
+<p>We can use the <code>.before</code> argument to instead add the variables to the left-hand side<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:<br>
+我们可以使用 <code>.before</code> 参数来将变量添加到左侧<sup>2</sup>：</p>
 <div class="cell">
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
@@ -837,8 +930,11 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 12 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The <code>.</code> indicates that <code>.before</code> is an argument to the function, not the name of a third new variable we are creating. You can also use <code>.after</code> to add after a variable, and in both <code>.before</code> and <code>.after</code> you can use the variable name instead of a position. For example, we could add the new variables after <code>day</code>:<br>
-这个 <code>.</code> 表示 <code>.before</code> 是函数的一个参数，而不是我们正在创建的第三个新变量的名称。你也可以使用 <code>.after</code> 在某个变量之后添加，并且在 <code>.before</code> 和 <code>.after</code> 中，你都可以使用变量名而不是位置。例如，我们可以在 <code>day</code> 之后添加新变量：</p>
+<p>The <code>.</code> indicates that <code>.before</code> is an argument to the function, not the name of a third new variable we are creating.<br><code>.</code> 表示 <code>.before</code> 是函数的一个参数，而不是我们正在创建的第三个新变量的名称。</p>
+<p>You can also use <code>.after</code> to add after a variable, and in both <code>.before</code> and <code>.after</code> you can use the variable name instead of a position.<br>
+你也可以使用 <code>.after</code> 在变量之后添加，在 <code>.before</code> 和 <code>.after</code> 中，你都可以使用变量名而不是位置。</p>
+<p>For example, we could add the new variables after <code>day</code>:<br>
+例如，我们可以在 <code>day</code> 之后添加新变量：</p>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
@@ -847,8 +943,12 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span>    .after <span class="op">=</span> <span class="va">day</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Alternatively, you can control which variables are kept with the <code>.keep</code> argument. A particularly useful argument is <code>"used"</code> which specifies that we only keep the columns that were involved or created in the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> step. For example, the following output will contain only the variables <code>dep_delay</code>, <code>arr_delay</code>, <code>air_time</code>, <code>gain</code>, <code>hours</code>, and <code>gain_per_hour</code>.<br>
-另外，你可以用 <code>.keep</code> 参数来控制保留哪些变量。一个特别有用的参数是 <code>"used"</code>，它指定我们只保留在 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 步骤中涉及或创建的列。例如，下面的输出将只包含变量 <code>dep_delay</code>、<code>arr_delay</code>、<code>air_time</code>、<code>gain</code>、<code>hours</code> 和 <code>gain_per_hour</code>。</p>
+<p>Alternatively, you can control which variables are kept with the <code>.keep</code> argument.<br>
+或者，你可以使用 <code>.keep</code> 参数来控制保留哪些变量。</p>
+<p>A particularly useful argument is <code>"used"</code> which specifies that we only keep the columns that were involved or created in the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> step.<br>
+一个特别有用的参数是 <code>"used"</code>，它指定我们只保留在 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 步骤中涉及或创建的列。</p>
+<p>For example, the following output will contain only the variables <code>dep_delay</code>, <code>arr_delay</code>, <code>air_time</code>, <code>gain</code>, <code>hours</code>, and <code>gain_per_hour</code>.<br>
+例如，以下输出将只包含 <code>dep_delay</code>、<code>arr_delay</code>、<code>air_time</code>、<code>gain</code>、<code>hours</code> 和 <code>gain_per_hour</code> 变量。</p>
 <div class="cell">
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
@@ -858,63 +958,70 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span>    .keep <span class="op">=</span> <span class="st">"used"</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that since we haven’t assigned the result of the above computation back to <code>flights</code>, the new variables <code>gain</code>, <code>hours</code>, and <code>gain_per_hour</code> will only be printed but will not be stored in a data frame. And if we want them to be available in a data frame for future use, we should think carefully about whether we want the result to be assigned back to <code>flights</code>, overwriting the original data frame with many more variables, or to a new object. Often, the right answer is a new object that is named informatively to indicate its contents, e.g., <code>delay_gain</code>, but you might also have good reasons for overwriting <code>flights</code>.<br>
-请注意，由于我们没有将上述计算的结果赋值回 <code>flights</code>，新变量 <code>gain</code>、<code>hours</code> 和 <code>gain_per_hour</code> 只会被打印出来，而不会存储在数据框中。如果我们希望它们在数据框中可供将来使用，我们应该仔细考虑是希望将结果赋值回 <code>flights</code>，从而用更多变量覆盖原始数据框，还是赋值给一个新对象。通常，正确的答案是创建一个信息丰富的新对象来表明其内容，例如 <code>delay_gain</code>，但你可能也有充分的理由来覆盖 <code>flights</code>。</p>
+<p>Note that since we haven’t assigned the result of the above computation back to <code>flights</code>, the new variables <code>gain</code>, <code>hours</code>, and <code>gain_per_hour</code> will only be printed but will not be stored in a data frame.<br>
+请注意，由于我们没有将上述计算的结果分配回 <code>flights</code>，新变量 <code>gain</code>、<code>hours</code> 和 <code>gain_per_hour</code> 将只被打印而不会存储在数据框中。</p>
+<p>And if we want them to be available in a data frame for future use, we should think carefully about whether we want the result to be assigned back to <code>flights</code>, overwriting the original data frame with many more variables, or to a new object.<br>
+如果我们希望它们在数据框中可供将来使用，我们应该仔细考虑是否要将结果分配回 <code>flights</code> (用更多的变量覆盖原始数据框)，还是分配给一个新对象。</p>
+<p>Often, the right answer is a new object that is named informatively to indicate its contents, e.g., <code>delay_gain</code>, but you might also have good reasons for overwriting <code>flights</code>.<br>
+通常，正确的答案是一个新对象，其名称具有信息性，以指示其内容，例如 <code>delay_gain</code>，但你也可能有充分的理由覆盖 <code>flights</code>。</p>
 </section><section id="sec-select" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="sec-select">
 <span class="header-section-number">3.3.2</span> <code>select()</code>
 </h3>
-<p>It’s not uncommon to get datasets with hundreds or even thousands of variables. In this situation, the first challenge is often just focusing on the variables you’re interested in. <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> allows you to rapidly zoom in on a useful subset using operations based on the names of the variables:<br>
-获得包含成百上千个变量的数据集并不少见。在这种情况下，首要挑战往往只是关注你感兴趣的变量。<code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 允许你使用基于变量名称的操作，快速锁定到一个有用的子集：</p>
+<p>It’s not uncommon to get datasets with hundreds or even thousands of variables.<br>
+获得包含数百甚至数千个变量的数据集并不少见。</p>
+<p>In this situation, the first challenge is often just focusing on the variables you’re interested in.<br>
+在这种情况下，第一个挑战通常只是关注你感兴趣的变量。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> allows you to rapidly zoom in on a useful subset using operations based on the names of the variables:<br><code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 允许你使用基于变量名称的操作快速放大到一个有用的子集：</p>
 <ul>
 <li>
 <p>Select columns by name:<br>
 按名称选择列：</p>
-<div class="cell">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p><code>{r}     #| results: false     flights |&gt;        select(year, month, day)</code></p>
 </li>
 <li>
 <p>Select all columns between year and day (inclusive):<br>
-选择从 year 到 day（包括）的所有列：</p>
-<div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">year</span><span class="op">:</span><span class="va">day</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+选择从 year 到 day (含) 的所有列：</p>
+<p><code>{r}     #| results: false     flights |&gt;        select(year:day)</code></p>
 </li>
 <li>
 <p>Select all columns except those from year to day (inclusive):<br>
-选择除从 year 到 day（包括）之外的所有列：</p>
-<div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">!</span><span class="va">year</span><span class="op">:</span><span class="va">day</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Historically this operation was done with <code>-</code> instead of <code>!</code>, so you’re likely to see that in the wild. These two operators serve the same purpose but with subtle differences in behavior. We recommend using <code>!</code> because it reads as “not” and combines well with <code>&amp;</code> and <code>|</code>.<br>
-旧版本中，这个操作是用 <code>-</code> 而不是 <code>!</code> 来完成的，所以你可能会在实际中看到它们。这两个运算符的作用相同，但在行为上有细微差别。我们建议使用 <code>!</code>，因为它读作“非”，并且与 <code>&amp;</code> 和 <code>|</code> 结合得很好。</p>
+选择除了从 year 到 day (含) 之外的所有列：</p>
+<p><code>{r}     #| results: false     flights |&gt;        select(!year:day)</code></p>
+<p>Historically this operation was done with <code>-</code> instead of <code>!</code>, so you’re likely to see that in the wild.<br>
+历史上，这个操作是使用 <code>-</code> 而不是 <code>!</code> 完成的，所以你很可能在野外看到它。</p>
+<p>These two operators serve the same purpose but with subtle differences in behavior.<br>
+这两个运算符的目的相同，但在行为上有细微的差别。</p>
+<p>We recommend using <code>!</code> because it reads as “not” and combines well with <code>&amp;</code> and <code>|</code>.<br>
+我们建议使用 <code>!</code>，因为它读作“非” (not)，并且能很好地与 <code>&amp;</code> 和 <code>|</code> 结合。</p>
 </li>
 <li>
 <p>Select all columns that are characters:<br>
 选择所有字符类型的列：</p>
-<div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html">where</a></span><span class="op">(</span><span class="va">is.character</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p><code>{r}     #| results: false     flights |&gt;        select(where(is.character))</code></p>
 </li>
 </ul>
 <p>There are a number of helper functions you can use within <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>:<br>
 在 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 中你可以使用许多辅助函数：</p>
 <ul>
-<li><p><code>starts_with("abc")</code>: matches names that begin with “abc”.<br><code>starts_with("abc")</code>：匹配以 “abc” 开头的名称。</p></li>
-<li><p><code>ends_with("xyz")</code>: matches names that end with “xyz”.<br><code>ends_with("xyz")</code>：匹配以 “xyz” 结尾的名称。</p></li>
-<li><p><code>contains("ijk")</code>: matches names that contain “ijk”.<br><code>contains("ijk")</code>：匹配包含 “ijk” 的名称。</p></li>
-<li><p><code>num_range("x", 1:3)</code>: matches <code>x1</code>, <code>x2</code> and <code>x3</code>.<br><code>num_range("x", 1:3)</code>：匹配 <code>x1</code>、<code>x2</code> 和 <code>x3</code>。</p></li>
+<li><p><code>starts_with("abc")</code>: matches names that begin with “abc”.<br>
+匹配以 “abc” 开头的名称。</p></li>
+<li><p><code>ends_with("xyz")</code>: matches names that end with “xyz”.<br>
+匹配以 “xyz” 结尾的名称。</p></li>
+<li><p><code>contains("ijk")</code>: matches names that contain “ijk”.<br>
+匹配包含 “ijk” 的名称。</p></li>
+<li><p><code>num_range("x", 1:3)</code>: matches <code>x1</code>, <code>x2</code> and <code>x3</code>.<br>
+匹配 <code>x1</code>, <code>x2</code> 和 <code>x3</code>。</p></li>
 </ul>
-<p>See <code><a href="https://dplyr.tidyverse.org/reference/select.html">?select</a></code> for more details. Once you know regular expressions (the topic of <a href="regexps.html" class="quarto-xref"><span>Chapter 15</span></a>) you’ll also be able to use <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches()</a></code> to select variables that match a pattern.<br>
-更多细节请参见 <code><a href="https://dplyr.tidyverse.org/reference/select.html">?select</a></code>。一旦你了解了正则表达式（<a href="regexps.html" class="quarto-xref"><span>Chapter 15</span></a> 的主题），你也将能够使用 <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches()</a></code> 来选择匹配模式的变量。</p>
-<p>You can rename variables as you <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> them by using <code>=</code>. The new name appears on the left-hand side of the <code>=</code>, and the old variable appears on the right-hand side:<br>
-你可以在 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 时使用 <code>=</code> 来重命名变量。新名称出现在 <code>=</code> 的左侧，旧变量出现在右侧：</p>
+<p>See <code><a href="https://dplyr.tidyverse.org/reference/select.html">?select</a></code> for more details.<br>
+查看 <code><a href="https://dplyr.tidyverse.org/reference/select.html">?select</a></code> 获取更多细节。</p>
+<p>Once you know regular expressions (the topic of <a href="regexps.html" class="quarto-xref"><span>Chapter 15</span></a>) you’ll also be able to use <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches()</a></code> to select variables that match a pattern.<br>
+一旦你了解了正则表达式 (regular expressions) (<a href="regexps.html" class="quarto-xref"><span>Chapter 15</span></a> 的主题)，你还可以使用 <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches()</a></code> 来选择匹配模式的变量。</p>
+<p>You can rename variables as you <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> them by using <code>=</code>.<br>
+你可以在 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 时使用 <code>=</code> 来重命名变量。</p>
+<p>The new name appears on the left-hand side of the <code>=</code>, and the old variable appears on the right-hand side:<br>
+新名称出现在 <code>=</code> 的左侧，旧变量出现在右侧：</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>tail_num <span class="op">=</span> <span class="va">tailnum</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 336,776 × 1</span></span>
 <span><span class="co">#&gt;   tail_num</span></span>
@@ -931,9 +1038,9 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span class="header-section-number">3.3.3</span> <code>rename()</code>
 </h3>
 <p>If you want to keep all the existing variables and just want to rename a few, you can use <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> instead of <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>:<br>
-如果你想保留所有现有变量，而只想重命名其中几个，你可以使用 <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> 而不是 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>：</p>
+如果你想保留所有现有变量，而只想重命名少数几个，你可以使用 <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> 代替 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>：</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>tail_num <span class="op">=</span> <span class="va">tailnum</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 336,776 × 19</span></span>
 <span><span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span></span>
@@ -952,10 +1059,14 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 </section><section id="relocate" class="level3" data-number="3.3.4"><h3 data-number="3.3.4" class="anchored" data-anchor-id="relocate">
 <span class="header-section-number">3.3.4</span> <code>relocate()</code>
 </h3>
-<p>Use <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> to move variables around. You might want to collect related variables together or move important variables to the front. By default <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> moves variables to the front:<br>
-使用 <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> 来移动变量。你可能想将相关的变量收集在一起，或者将重要的变量移到前面。默认情况下，<code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> 会将变量移动到最前面：</p>
+<p>Use <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> to move variables around.<br>
+使用 <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> 来移动变量。</p>
+<p>You might want to collect related variables together or move important variables to the front.<br>
+你可能想将相关的变量收集在一起，或者将重要的变量移到前面。</p>
+<p>By default <code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> moves variables to the front:<br>
+默认情况下，<code><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate()</a></code> 将变量移动到最前面：</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">time_hour</span>, <span class="va">air_time</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 336,776 × 19</span></span>
 <span><span class="co">#&gt;   time_hour           air_time  year month   day dep_time sched_dep_time</span></span>
@@ -970,9 +1081,9 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 12 more variables: dep_delay &lt;dbl&gt;, arr_time &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can also specify where to put them using the <code>.before</code> and <code>.after</code> arguments, just like in <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>:<br>
-你还可以像在 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 中一样，使用 <code>.before</code> 和 <code>.after</code> 参数来指定它们的位置：</p>
+你也可以像在 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> 中一样，使用 <code>.before</code> 和 <code>.after</code> 参数来指定将它们放在哪里：</p>
 <div class="cell">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">year</span><span class="op">:</span><span class="va">dep_time</span>, .after <span class="op">=</span> <span class="va">time_hour</span><span class="op">)</span></span>
 <span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"arr"</span><span class="op">)</span>, .before <span class="op">=</span> <span class="va">dep_time</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -986,20 +1097,20 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <li>
 <p>What does the <code><a href="https://tidyselect.r-lib.org/reference/all_of.html">any_of()</a></code> function do? Why might it be helpful in conjunction with this vector?</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"day"</span>, <span class="st">"dep_delay"</span>, <span class="st">"arr_delay"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">variables</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"day"</span>, <span class="st">"dep_delay"</span>, <span class="st">"arr_delay"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </li>
 <li>
 <p>Does the result of running the following code surprise you? How do the select helpers deal with upper and lower case by default? How can you change that default?</p>
 <div class="cell">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"TIME"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"TIME"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </li>
 <li><p>Rename <code>air_time</code> to <code>air_time_min</code> to indicate units of measurement and move it to the beginning of the data frame.</p></li>
 <li>
 <p>Why doesn’t the following work, and what does the error mean?</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">tailnum</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in `arrange()`:</span></span>
@@ -1010,10 +1121,12 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 </li>
 </ol></section></section><section id="sec-the-pipe" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="sec-the-pipe">
 <span class="header-section-number">3.4</span> The pipe</h2>
-<p>We’ve shown you simple examples of the pipe above, but its real power arises when you start to combine multiple verbs. For example, imagine that you wanted to find the fastest flights to Houston’s IAH airport: you need to combine <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>:<br>
-我们上面已经展示了管道的简单例子，但它真正的威力在于当你开始组合多个动词时。例如，假设你想找到飞往休斯顿 IAH 机场的最快航班：你需要组合使用 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>：</p>
+<p>We’ve shown you simple examples of the pipe above, but its real power arises when you start to combine multiple verbs.<br>
+我们在上面向你展示了管道的简单示例，但它真正的威力在于当你开始组合多个动词时。</p>
+<p>For example, imagine that you wanted to find the fastest flights to Houston’s IAH airport: you need to combine <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>, and <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>:<br>
+例如，假设你想找到飞往休斯顿 IAH 机场的最快航班：你需要组合 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>：</p>
 <div class="cell">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">dest</span> <span class="op">==</span> <span class="st">"IAH"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>speed <span class="op">=</span> <span class="va">distance</span> <span class="op">/</span> <span class="va">air_time</span> <span class="op">*</span> <span class="fl">60</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">year</span><span class="op">:</span><span class="va">day</span>, <span class="va">dep_time</span>, <span class="va">carrier</span>, <span class="va">flight</span>, <span class="va">speed</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -1030,11 +1143,13 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <span><span class="co">#&gt; # ℹ 7,192 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Even though this pipeline has four steps, it’s easy to skim because the verbs come at the start of each line: start with the <code>flights</code> data, then filter, then mutate, then select, then arrange.<br>
-尽管这个管道有四个步骤，但它很容易浏览，因为动词都出现在每行的开头：从 <code>flights</code> 数据开始，然后筛选 (filter)，然后派生 (mutate)，然后选择 (select)，最后排列 (arrange)。</p>
-<p>What would happen if we didn’t have the pipe? We could nest each function call inside the previous call:<br>
-如果我们没有管道会怎么样？我们可以将每个函数调用嵌套在前一个调用中：</p>
+尽管这个管道有四个步骤，但它很容易浏览，因为动词都出现在每行的开头：从 <code>flights</code> 数据开始，然后筛选，然后转换，然后选择，然后排列。</p>
+<p>What would happen if we didn’t have the pipe?<br>
+如果我们没有管道会怎么样？</p>
+<p>We could nest each function call inside the previous call:<br>
+我们可以将每个函数调用嵌套在前一个调用中：</p>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span></span>
@@ -1051,23 +1166,25 @@ dplyr 的动词根据其操作对象分为四组：<strong>行 (rows)</strong>�
 <p>Or we could use a bunch of intermediate objects:<br>
 或者我们可以使用一堆中间对象：</p>
 <div class="cell">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">flights</span>, <span class="va">dest</span> <span class="op">==</span> <span class="st">"IAH"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">flights</span>, <span class="va">dest</span> <span class="op">==</span> <span class="st">"IAH"</span><span class="op">)</span></span>
 <span><span class="va">flights2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="va">flights1</span>, speed <span class="op">=</span> <span class="va">distance</span> <span class="op">/</span> <span class="va">air_time</span> <span class="op">*</span> <span class="fl">60</span><span class="op">)</span></span>
 <span><span class="va">flights3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">flights2</span>, <span class="va">year</span><span class="op">:</span><span class="va">day</span>, <span class="va">dep_time</span>, <span class="va">carrier</span>, <span class="va">flight</span>, <span class="va">speed</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">flights3</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">speed</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>While both forms have their time and place, the pipe generally produces data analysis code that is easier to write and read.<br>
-虽然这两种形式各有其用武之地，但管道通常能生成更易于编写和阅读的数据分析代码。</p>
-<p>To add the pipe to your code, we recommend using the built-in keyboard shortcut Ctrl/Cmd + Shift + M. You’ll need to make one change to your RStudio options to use <code>|&gt;</code> instead of <code>%&gt;%</code> as shown in <a href="#fig-pipe-options" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>; more on <code>%&gt;%</code> shortly.<br>
-要在你的代码中添加管道，我们建议使用内置的键盘快捷键 Ctrl/Cmd + Shift + M。你需要对你的 RStudio 选项做一个更改，以使用 <code>|&gt;</code> 而不是 <code>%&gt;%</code>，如 <a href="#fig-pipe-options" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> 所示；稍后将详细介绍 <code>%&gt;%</code>。</p>
+虽然这两种形式都有其适用的时机和场合，但管道通常能生成更易于编写和阅读的数据分析代码。</p>
+<p>To add the pipe to your code, we recommend using the built-in keyboard shortcut Ctrl/Cmd + Shift + M.<br>
+要将管道添加到你的代码中，我们建议使用内置的键盘快捷键 Ctrl/Cmd + Shift + M。</p>
+<p>You’ll need to make one change to your RStudio options to use <code>|&gt;</code> instead of <code>%&gt;%</code> as shown in <a href="#fig-pipe-options" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>; more on <code>%&gt;%</code> shortly.<br>
+你需要对 RStudio 选项进行一项更改，以使用 <code>|&gt;</code> 而不是 <code>%&gt;%</code>，如 <a href="#fig-pipe-options" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> 所示；稍后将详细介绍 <code>%&gt;%</code>。</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-pipe-options" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Screenshot showing the &quot;Use native pipe operator&quot; option which can be found on the &quot;Editing&quot; panel of the &quot;Code&quot; options.">
+<div id="fig-pipe-options" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Screenshot showing the &quot;Use native pipe operator&quot; option which can be found on the &quot;Editing&quot; panel of the &quot;Code&quot; options. <br> 屏幕截图显示了“使用原生管道运算符”选项，该选项可在“代码”选项的“编辑”面板中找到。">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-pipe-options-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="screenshots/rstudio-pipe-options.png" class="img-fluid figure-img" alt="Screenshot showing the &quot;Use native pipe operator&quot; option which can be found on the &quot;Editing&quot; panel of the &quot;Code&quot; options." width="616">
+<img src="screenshots/rstudio-pipe-options.png" class="img-fluid figure-img" alt="Screenshot showing the &quot;Use native pipe operator&quot; option which can be found on the &quot;Editing&quot; panel of the &quot;Code&quot; options. <br> 屏幕截图显示了“使用原生管道运算符”选项，该选项可在“代码”选项的“编辑”面板中找到。" width="616">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pipe-options-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: To insert <code>|&gt;</code>, make sure the “Use native pipe operator” option is checked.
+Figure&nbsp;3.1: To insert <code>|&gt;</code>, make sure the “Use native pipe operator” option is checked. <br> 要插入 <code>|&gt;</code>，请确保选中“使用原生管道运算符” (Use native pipe operator) 选项。
 </figcaption></figure>
 </div>
 </div>
@@ -1082,30 +1199,44 @@ magrittr
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you’ve been using the tidyverse for a while, you might be familiar with the <code>%&gt;%</code> pipe provided by the <strong>magrittr</strong> package. The magrittr package is included in the core tidyverse, so you can use <code>%&gt;%</code> whenever you load the tidyverse:<br>
-如果你已经使用 tidyverse 一段时间了，你可能熟悉由 <strong>magrittr</strong> 包提供的 <code>%&gt;%</code> 管道。magrittr 包包含在核心 tidyverse 中，所以每当你加载 tidyverse 时都可以使用 <code>%&gt;%</code>：</p>
+<p>If you’ve been using the tidyverse for a while, you might be familiar with the <code>%&gt;%</code> pipe provided by the <strong>magrittr</strong> package.<br>
+如果你已经使用 tidyverse 一段时间了，你可能熟悉 <strong>magrittr</strong> 包提供的 <code>%&gt;%</code> 管道。</p>
+<p>The magrittr package is included in the core tidyverse, so you can use <code>%&gt;%</code> whenever you load the tidyverse:<br>
+magrittr 包包含在 tidyverse 核心中，因此每当你加载 tidyverse 时都可以使用 <code>%&gt;%</code>：</p>
 <div class="cell">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>For simple cases, <code>|&gt;</code> and <code>%&gt;%</code> behave identically. So why do we recommend the base pipe? Firstly, because it’s part of base R, it’s always available for you to use, even when you’re not using the tidyverse. Secondly, <code>|&gt;</code> is quite a bit simpler than <code>%&gt;%</code>: in the time between the invention of <code>%&gt;%</code> in 2014 and the inclusion of <code>|&gt;</code> in R 4.1.0 in 2021, we gained a better understanding of the pipe. This allowed the base implementation to jettison infrequently used and less important features.<br>
-在简单的情况下，<code>|&gt;</code> 和 <code>%&gt;%</code> 的行为是相同的。那么我们为什么推荐基础管道呢？首先，因为它是基础 R 的一部分，所以即使你不使用 tidyverse，它也总是可用的。其次，<code>|&gt;</code> 比 <code>%&gt;%</code> 简单得多：在 2014 年 <code>%&gt;%</code> 发明和 2021 年 <code>|&gt;</code> 被包含在 R 4.1.0 之间的这段时间里，我们对管道有了更好的理解。这使得基础实现能够摒弃不常用和不太重要的功能。</p>
+<p>For simple cases, <code>|&gt;</code> and <code>%&gt;%</code> behave identically.<br>
+在简单的情况下，<code>|&gt;</code> 和 <code>%&gt;%</code> 的行为完全相同。</p>
+<p>So why do we recommend the base pipe?<br>
+那么我们为什么推荐基础管道呢？</p>
+<p>Firstly, because it’s part of base R, it’s always available for you to use, even when you’re not using the tidyverse.<br>
+首先，因为它是基础 R 的一部分，所以即使你不使用 tidyverse，它也始终可用。</p>
+<p>Secondly, <code>|&gt;</code> is quite a bit simpler than <code>%&gt;%</code>: in the time between the invention of <code>%&gt;%</code> in 2014 and the inclusion of <code>|&gt;</code> in R 4.1.0 in 2021, we gained a better understanding of the pipe.<br>
+其次，<code>|&gt;</code> 比 <code>%&gt;%</code> 简单得多：在 2014 年 <code>%&gt;%</code> 发明和 2021 年 R 4.1.0 包含 <code>|&gt;</code> 之间的时间里，我们对管道有了更好的理解。</p>
+<p>This allowed the base implementation to jettison infrequently used and less important features.<br>
+这使得基础实现可以摒弃不常用和不太重要的功能。</p>
 </div>
 </div>
 </section><section id="groups" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="groups">
 <span class="header-section-number">3.5</span> Groups</h2>
-<p>So far you’ve learned about functions that work with rows and columns. dplyr gets even more powerful when you add in the ability to work with groups. In this section, we’ll focus on the most important functions: <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, and the slice family of functions.<br>
-到目前为止，你已经学习了处理行和列的函数。当你加入了处理分组的能力后，dplyr 会变得更加强大。在本节中，我们将重点介绍最重要的函数：<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 以及 slice 系列函数。</p>
+<p>So far you’ve learned about functions that work with rows and columns.<br>
+到目前为止，你已经学习了处理行和列的函数。</p>
+<p>dplyr gets even more powerful when you add in the ability to work with groups.<br>
+当你加入处理分组的能力时，dplyr 会变得更加强大。</p>
+<p>In this section, we’ll focus on the most important functions: <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, and the slice family of functions.<br>
+在本节中，我们将重点介绍最重要的函数：<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>、<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 和 slice 系列函数。</p>
 <section id="group_by" class="level3" data-number="3.5.1"><h3 data-number="3.5.1" class="anchored" data-anchor-id="group_by">
 <span class="header-section-number">3.5.1</span> <code>group_by()</code>
 </h3>
 <p>Use <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> to divide your dataset into groups meaningful for your analysis:<br>
 使用 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 将你的数据集划分为对你的分析有意义的组：</p>
 <div class="cell">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 336,776 × 19</span></span>
 <span><span class="co">#&gt; # Groups:   month [12]</span></span>
@@ -1120,14 +1251,19 @@ magrittr
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> doesn’t change the data but, if you look closely at the output, you’ll notice that the output indicates that it is “grouped by” month (<code>Groups: month [12]</code>). This means subsequent operations will now work “by month”. <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> adds this grouped feature (referred to as class) to the data frame, which changes the behavior of the subsequent verbs applied to the data.<br><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 不会改变数据，但是，如果你仔细看输出，你会注意到输出表明它是按月“分组”的（<code>Groups: month [12]</code>）。这意味着后续的操作现在将“按月”进行。<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 将这个分组特性（称为类 (class)）添加到数据框中，这会改变后续应用于该数据的动词的行为。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> doesn’t change the data but, if you look closely at the output, you’ll notice that the output indicates that it is “grouped by” month (<code>Groups: month [12]</code>).<br><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 不会改变数据，但是，如果你仔细观察输出，你会注意到输出表明它已按月份“分组” (<code>Groups: month [12]</code>)。</p>
+<p>This means subsequent operations will now work “by month”.<br>
+这意味着后续操作现在将“按月”工作。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> adds this grouped feature (referred to as class) to the data frame, which changes the behavior of the subsequent verbs applied to the data.<br><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 将此分组特征 (称为类) 添加到数据框中，这会改变应用于数据的后续动词的行为。</p>
 </section><section id="sec-summarize" class="level3" data-number="3.5.2"><h3 data-number="3.5.2" class="anchored" data-anchor-id="sec-summarize">
 <span class="header-section-number">3.5.2</span> <code>summarize()</code>
 </h3>
-<p>The most important grouped operation is a summary, which, if being used to calculate a single summary statistic, reduces the data frame to have a single row for each group. In dplyr, this operation is performed by <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, as shown by the following example, which computes the average departure delay by month:<br>
-最重要的分组操作是摘要，如果用于计算单个摘要统计量，它会将数据框缩减为每个组只有一行。在 dplyr 中，这个操作由 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code><sup>3</sup> 执行，如下例所示，该示例计算了按月平均的出发延误：</p>
+<p>The most important grouped operation is a summary, which, if being used to calculate a single summary statistic, reduces the data frame to have a single row for each group.<br>
+最重要的分组操作是摘要，如果用于计算单个摘要统计量，它会将数据框减少为每个组只有一行。</p>
+<p>In dplyr, this operation is performed by <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, as shown by the following example, which computes the average departure delay by month:<br>
+在 dplyr 中，此操作由 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code><sup>3</sup> 执行，如下例所示，该示例计算按月平均出发延误：</p>
 <div class="cell">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
 <span>    avg_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span></span>
@@ -1143,10 +1279,16 @@ magrittr
 <span><span class="co">#&gt; 6     6        NA</span></span>
 <span><span class="co">#&gt; # ℹ 6 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Uh-oh! Something has gone wrong, and all of our results are <code>NA</code>s (pronounced “N-A”), R’s symbol for missing value. This happened because some of the observed flights had missing data in the delay column, and so when we calculated the mean including those values, we got an <code>NA</code> result. We’ll come back to discuss missing values in detail in <a href="missing-values.html" class="quarto-xref"><span>Chapter 18</span></a>, but for now, we’ll tell the <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> function to ignore all missing values by setting the argument <code>na.rm</code> to <code>TRUE</code>:<br>
-哦豁！出问题了，我们所有的结果都是 <code>NA</code>（读作“N-A”），这是 R 中表示缺失值的符号。这是因为一些观测到的航班在延误列中有缺失数据，所以当我们计算包含这些值的平均值时，我们得到了一个 <code>NA</code> 结果。我们将在 <a href="missing-values.html" class="quarto-xref"><span>Chapter 18</span></a> 中详细讨论缺失值，但现在，我们将通过将参数 <code>na.rm</code> 设置为 <code>TRUE</code> 来告诉 <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> 函数忽略所有缺失值：</p>
+<p>Uh-oh!<br>
+噢！</p>
+<p>Something has gone wrong, and all of our results are <code>NA</code>s (pronounced “N-A”), R’s symbol for missing value.<br>
+出问题了，我们所有的结果都是 <code>NA</code> (读作“N-A”)，这是 R 中表示缺失值的符号。</p>
+<p>This happened because some of the observed flights had missing data in the delay column, and so when we calculated the mean including those values, we got an <code>NA</code> result.<br>
+发生这种情况是因为一些观察到的航班在延误列中有缺失数据，因此当我们计算包括这些值的平均值时，我们得到了一个 <code>NA</code> 结果。</p>
+<p>We’ll come back to discuss missing values in detail in <a href="missing-values.html" class="quarto-xref"><span>Chapter 18</span></a>, but for now, we’ll tell the <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> function to ignore all missing values by setting the argument <code>na.rm</code> to <code>TRUE</code>:<br>
+我们将在 <a href="missing-values.html" class="quarto-xref"><span>Chapter 18</span></a> 中详细讨论缺失值，但现在，我们将通过将参数 <code>na.rm</code> 设置为 <code>TRUE</code> 来告诉 <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> 函数忽略所有缺失值：</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
 <span>    avg_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -1162,10 +1304,12 @@ magrittr
 <span><span class="co">#&gt; 6     6      20.8</span></span>
 <span><span class="co">#&gt; # ℹ 6 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>You can create any number of summaries in a single call to <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>. You’ll learn various useful summaries in the upcoming chapters, but one very useful summary is <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>, which returns the number of rows in each group:<br>
-你可以在一次 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 调用中创建任意数量的摘要。在接下来的章节中，你将学习各种有用的摘要函数，但一个非常有用的摘要是 <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>，它返回每个组中的行数：</p>
+<p>You can create any number of summaries in a single call to <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>.<br>
+你可以在一次 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 调用中创建任意数量的摘要。</p>
+<p>You’ll learn various useful summaries in the upcoming chapters, but one very useful summary is <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>, which returns the number of rows in each group:<br>
+你将在接下来的章节中学到各种有用的摘要，但一个非常有用的摘要是 <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>，它返回每个组中的行数：</p>
 <div class="cell">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
 <span>    avg_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
@@ -1183,22 +1327,29 @@ magrittr
 <span><span class="co">#&gt; # ℹ 6 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Means and counts can get you a surprisingly long way in data science!<br>
-均值和计数在数据科学中能带你走得很远！</p>
+均值和计数可以让你在数据科学领域走得很远！</p>
 </section><section id="the-slice_-functions" class="level3" data-number="3.5.3"><h3 data-number="3.5.3" class="anchored" data-anchor-id="the-slice_-functions">
 <span class="header-section-number">3.5.3</span> The <code>slice_</code> functions</h3>
 <p>There are five handy functions that allow you to extract specific rows within each group:<br>
-有五个方便的函数，可以让你在每个组内提取特定的行：</p>
+有五个方便的函数，可以让你提取每个组中的特定行：</p>
 <ul>
-<li><p><code>df |&gt; slice_head(n = 1)</code> takes the first row from each group.<br><code>df |&gt; slice_head(n = 1)</code> 取每个分组的第一行。</p></li>
-<li><p><code>df |&gt; slice_tail(n = 1)</code> takes the last row in each group.<br><code>df |&gt; slice_tail(n = 1)</code> 取每个分组的最后一行。</p></li>
-<li><p><code>df |&gt; slice_min(x, n = 1)</code> takes the row with the smallest value of column <code>x</code>.<br><code>df |&gt; slice_min(x, n = 1)</code> 取每个分组中 <code>x</code> 列最小值所在的行。</p></li>
-<li><p><code>df |&gt; slice_max(x, n = 1)</code> takes the row with the largest value of column <code>x</code>.<br><code>df |&gt; slice_max(x, n = 1)</code> 取每个分组中 <code>x</code> 列最大值所在的行。</p></li>
-<li><p><code>df |&gt; slice_sample(n = 1)</code> takes one random row.<br><code>df |&gt; slice_sample(n = 1)</code> 随机取每个分组中的一行。</p></li>
+<li><p><code>df |&gt; slice_head(n = 1)</code> takes the first row from each group.<br>
+从每个组中取第一行。</p></li>
+<li><p><code>df |&gt; slice_tail(n = 1)</code> takes the last row in each group.<br>
+从每个组中取最后一行。</p></li>
+<li><p><code>df |&gt; slice_min(x, n = 1)</code> takes the row with the smallest value of column <code>x</code>.<br>
+取 <code>x</code> 列值最小的行。</p></li>
+<li><p><code>df |&gt; slice_max(x, n = 1)</code> takes the row with the largest value of column <code>x</code>.<br>
+取 <code>x</code> 列值最大的行。</p></li>
+<li><p><code>df |&gt; slice_sample(n = 1)</code> takes one random row.<br>
+取一个随机行。</p></li>
 </ul>
-<p>You can vary <code>n</code> to select more than one row, or instead of <code>n =</code>, you can use <code>prop = 0.1</code> to select (e.g.) 10% of the rows in each group. For example, the following code finds the flights that are most delayed upon arrival at each destination:<br>
-你可以改变 <code>n</code> 来选择多于一行，或者用 <code>prop = 0.1</code> 代替 <code>n =</code> 来选择（例如）每个组中 10% 的行。例如，以下代码找到每个目的地到达时延误最严重的航班：</p>
+<p>You can vary <code>n</code> to select more than one row, or instead of <code>n =</code>, you can use <code>prop = 0.1</code> to select (e.g.) 10% of the rows in each group.<br>
+你可以改变 <code>n</code> 来选择多于一行，或者用 <code>prop = 0.1</code> 来代替 <code>n =</code>，以选择 (例如) 每个组中 10% 的行。</p>
+<p>For example, the following code finds the flights that are most delayed upon arrival at each destination:<br>
+例如，以下代码查找在每个目的地到达时延误最严重的航班：</p>
 <div class="cell">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">dest</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">arr_delay</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">dest</span><span class="op">)</span></span>
@@ -1215,16 +1366,23 @@ magrittr
 <span><span class="co">#&gt; # ℹ 102 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that there are 105 destinations but we get 108 rows here. What’s up? <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> keep tied values so <code>n = 1</code> means give us all rows with the highest value. If you want exactly one row per group you can set <code>with_ties = FALSE</code>.<br>
-注意，这里有 105 个目的地，但我们得到了 108 行。怎么回事？<code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> 会保留并列的值，所以 <code>n = 1</code> 意味着给我们所有具有最高值的行。如果你想每个组只得到一行，你可以设置 <code>with_ties = FALSE</code>。</p>
+<p>Note that there are 105 destinations but we get 108 rows here.<br>
+请注意，这里有 105 个目的地，但我们得到了 108 行。</p>
+<p>What’s up?<br>
+怎么回事？</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> keep tied values so <code>n = 1</code> means give us all rows with the highest value.<br><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code> 会保留并列值，所以 <code>n = 1</code> 意味着给我们所有具有最高值的行。</p>
+<p>If you want exactly one row per group you can set <code>with_ties = FALSE</code>.<br>
+如果你想每个组只保留一行，你可以设置 <code>with_ties = FALSE</code>。</p>
 <p>This is similar to computing the max delay with <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>, but you get the whole corresponding row (or rows if there’s a tie) instead of the single summary statistic.<br>
-这与用 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 计算最大延迟类似，但你得到的是整个对应的行（如果有并列则为多行），而不仅仅是单个摘要统计量。</p>
+这类似于用 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 计算最大延迟，但你会得到整个对应的行 (如果有并列，则为多行)，而不是单个摘要统计量。</p>
 </section><section id="grouping-by-multiple-variables" class="level3" data-number="3.5.4"><h3 data-number="3.5.4" class="anchored" data-anchor-id="grouping-by-multiple-variables">
 <span class="header-section-number">3.5.4</span> Grouping by multiple variables</h3>
-<p>You can create groups using more than one variable. For example, we could make a group for each date.<br>
-你可以使用多个变量来创建分组。例如，我们可以为每个日期创建一个分组。</p>
+<p>You can create groups using more than one variable.<br>
+你可以使用多个变量创建分组。</p>
+<p>For example, we could make a group for each date.<br>
+例如，我们可以为每个日期创建一个分组。</p>
 <div class="cell">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">|&gt;</span>  </span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span></span>
 <span><span class="va">daily</span></span>
 <span><span class="co">#&gt; # A tibble: 336,776 × 19</span></span>
@@ -1240,31 +1398,37 @@ magrittr
 <span><span class="co">#&gt; # ℹ 336,770 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>When you summarize a tibble grouped by more than one variable, each summary peels off the last group. In hindsight, this wasn’t a great way to make this function work, but it’s difficult to change without breaking existing code. To make it obvious what’s happening, dplyr displays a message that tells you how you can change this behavior:<br>
-当你对一个按多个变量分组的 tibble 进行汇总时，每次汇总都会剥离掉最后一个分组。事后看来，这并不是一个很好的函数工作方式，但要改变它而不破坏现有代码是很困难的。为了清楚地说明正在发生什么，dplyr 会显示一条消息，告诉你如何改变这种行为：</p>
+<p>When you summarize a tibble grouped by more than one variable, each summary peels off the last group.<br>
+当你对按多个变量分组的 tibble 进行汇总时，每个汇总都会剥离最后一个分组。</p>
+<p>In hindsight, this wasn’t a great way to make this function work, but it’s difficult to change without breaking existing code.<br>
+事后看来，这不是一个让这个函数工作的好方法，但很难在不破坏现有代码的情况下进行更改。</p>
+<p>To make it obvious what’s happening, dplyr displays a message that tells you how you can change this behavior:<br>
+为了清楚地说明发生了什么，dplyr 会显示一条消息，告诉你如何改变这种行为：</p>
 <div class="cell">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily_flights</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily_flights</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `summarise()` has grouped output by 'year', 'month'. You can override using</span></span>
 <span><span class="co">#&gt; the `.groups` argument.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>If you’re happy with this behavior, you can explicitly request it in order to suppress the message:<br>
-如果你对这种行为满意，可以明确地请求它以抑制该消息：</p>
+如果你对这种行为感到满意，可以明确请求它以抑制消息：</p>
 <div class="cell">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily_flights</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily_flights</span> <span class="op">&lt;-</span> <span class="va">daily</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
 <span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>, </span>
 <span>    .groups <span class="op">=</span> <span class="st">"drop_last"</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Alternatively, change the default behavior by setting a different value, e.g., <code>"drop"</code> to drop all grouping or <code>"keep"</code> to preserve the same groups.<br>
-或者，通过设置不同的值来改变默认行为，例如，<code>"drop"</code> 用于删除所有分组，或者 <code>"keep"</code> 用于保留相同的分组。</p>
+或者，通过设置不同的值来更改默认行为，例如，<code>"drop"</code> 用于删除所有分组，<code>"keep"</code> 用于保留相同的分组。</p>
 </section><section id="ungrouping" class="level3" data-number="3.5.5"><h3 data-number="3.5.5" class="anchored" data-anchor-id="ungrouping">
 <span class="header-section-number">3.5.5</span> Ungrouping</h3>
-<p>You might also want to remove grouping from a data frame without using <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>. You can do this with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>.<br>
-你可能也想在不使用 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 的情况下从数据框中移除分组。你可以用 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> 来实现。</p>
+<p>You might also want to remove grouping from a data frame without using <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>.<br>
+你可能还想在不使用 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> 的情况下从数据框中删除分组。</p>
+<p>You can do this with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>.<br>
+你可以使用 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> 来做到这一点。</p>
 <div class="cell">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 336,776 × 19</span></span>
 <span><span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span></span>
@@ -1279,9 +1443,9 @@ magrittr
 <span><span class="co">#&gt; # ℹ 11 more variables: arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, …</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s see what happens when you summarize an ungrouped data frame.<br>
-现在让我们看看当你对一个未分组的数据框进行汇总时会发生什么。</p>
+现在让我们看看当你汇总一个未分组的数据框时会发生什么。</p>
 <div class="cell">
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">daily</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
 <span>    avg_delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
@@ -1293,14 +1457,15 @@ magrittr
 <span><span class="co">#&gt; 1      12.6  336776</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You get a single row back because dplyr treats all the rows in an ungrouped data frame as belonging to one group.<br>
-你只会得到一行结果，因为 dplyr 将未分组数据框中的所有行都视为属于同一个组。</p>
+你只会得到一行，因为 dplyr 将未分组数据框中的所有行都视为属于一个组。</p>
 </section><section id="by" class="level3" data-number="3.5.6"><h3 data-number="3.5.6" class="anchored" data-anchor-id="by">
 <span class="header-section-number">3.5.6</span> <code>.by</code>
 </h3>
-<p>dplyr 1.1.0 includes a new, experimental, syntax for per-operation grouping, the <code>.by</code> argument. <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> aren’t going away, but you can now also use the <code>.by</code> argument to group within a single operation:<br>
-dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的分组，即 <code>.by</code> 参数。<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> 不会消失，但你现在也可以在单个操作中使用 <code>.by</code> 参数进行分组：</p>
+<p>dplyr 1.1.0 includes a new, experimental, syntax for per-operation grouping, the <code>.by</code> argument.<br>
+dplyr 1.1.0 包含了一个新的、实验性的、用于按操作分组的语法，即 <code>.by</code> 参数。</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> aren’t going away, but you can now also use the <code>.by</code> argument to group within a single operation:<br><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> 不会消失，但你现在也可以使用 <code>.by</code> 参数在单个操作内进行分组：</p>
 <div class="cell">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
 <span>    delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
 <span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -1310,16 +1475,20 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 <p>Or if you want to group by multiple variables:<br>
 或者如果你想按多个变量分组：</p>
 <div class="cell">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">flights</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
 <span>    delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
 <span>    n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">origin</span>, <span class="va">dest</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><code>.by</code> works with all verbs and has the advantage that you don’t need to use the <code>.groups</code> argument to suppress the grouping message or <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> when you’re done.<br><code>.by</code> 适用于所有动词，其优点是当你完成操作后，不需要使用 <code>.groups</code> 参数来抑制分组消息，也不需要使用 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>。</p>
-<p>We didn’t focus on this syntax in this chapter because it was very new when we wrote the book. We did want to mention it because we think it has a lot of promise and it’s likely to be quite popular. You can learn more about it in the <a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/">dplyr 1.1.0 blog post</a>.<br>
-我们在本章中没有重点介绍这个语法，因为在我们写书时它还是非常新的。我们之所以想提及它，是因为我们认为它有很大的潜力，很可能会变得非常流行。你可以在 <a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/">dplyr 1.1.0 博客文章</a> 中了解更多相关信息。</p>
+<p><code>.by</code> works with all verbs and has the advantage that you don’t need to use the <code>.groups</code> argument to suppress the grouping message or <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code> when you’re done.<br><code>.by</code> 适用于所有动词，其优点是当你完成操作后，无需使用 <code>.groups</code> 参数来抑制分组消息或使用 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>。</p>
+<p>We didn’t focus on this syntax in this chapter because it was very new when we wrote the book.<br>
+我们在本章中没有重点介绍这种语法，因为在我们写书时它还是非常新的。</p>
+<p>We did want to mention it because we think it has a lot of promise and it’s likely to be quite popular.<br>
+我们确实想提一下它，因为我们认为它有很大的潜力，而且很可能会非常流行。</p>
+<p>You can learn more about it in the <a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/">dplyr 1.1.0 blog post</a>.<br>
+你可以在 <a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/">dplyr 1.1.0 博客文章</a> 中了解更多相关信息。</p>
 </section><section id="exercises-2" class="level3" data-number="3.5.7"><h3 data-number="3.5.7" class="anchored" data-anchor-id="exercises-2">
 <span class="header-section-number">3.5.7</span> Exercises</h3>
 <ol type="1">
@@ -1331,7 +1500,7 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 <li>
 <p>Suppose we have the following tiny data frame:</p>
 <div class="cell">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span><span class="op">)</span>,</span>
 <span>  z <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"K"</span>, <span class="st">"K"</span>, <span class="st">"L"</span>, <span class="st">"L"</span>, <span class="st">"K"</span><span class="op">)</span></span>
@@ -1341,21 +1510,21 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 <li>
 <p>Write down what you think the output will look like, then check if you were correct, and describe what <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> does.</p>
 <div class="cell">
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </li>
 <li>
 <p>Write down what you think the output will look like, then check if you were correct, and describe what <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> does. Also, comment on how it’s different from the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> in part (a).</p>
 <div class="cell">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </li>
 <li>
 <p>Write down what you think the output will look like, then check if you were correct, and describe what the pipeline does.</p>
 <div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1363,7 +1532,7 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 <li>
 <p>Write down what you think the output will look like, then check if you were correct, and describe what the pipeline does. Then, comment on what the message says.</p>
 <div class="cell">
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1371,7 +1540,7 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 <li>
 <p>Write down what you think the output will look like, then check if you were correct, and describe what the pipeline does. How is the output different from the one in part (d)?</p>
 <div class="cell">
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1379,7 +1548,7 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 <li>
 <p>Write down what you think the outputs will look like, then check if you were correct, and describe what each pipeline does. How are the outputs of the two pipelines different?</p>
 <div class="cell">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">z</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>mean_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -1392,10 +1561,16 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 </li>
 </ol></section></section><section id="sec-sample-size" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="sec-sample-size">
 <span class="header-section-number">3.6</span> Case study: aggregates and sample size</h2>
-<p>Whenever you do any aggregation, it’s always a good idea to include a count (<code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>). That way, you can ensure that you’re not drawing conclusions based on very small amounts of data. We’ll demonstrate this with some baseball data from the <strong>Lahman</strong> package. Specifically, we will compare what proportion of times a player gets a hit (<code>H</code>) vs.&nbsp;the number of times they try to put the ball in play (<code>AB</code>):<br>
-每当你做任何聚合操作时，最好都包含一个计数 (<code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>)。这样，你可以确保你不是基于非常少量的数据得出结论。我们将使用 <strong>Lahman</strong> 包中的一些棒球数据来演示这一点。具体来说，我们将比较一个球员击中球的比例 (<code>H</code>) 与他们尝试将球击入场内的次数 (<code>AB</code>)：</p>
+<p>Whenever you do any aggregation, it’s always a good idea to include a count (<code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>).<br>
+每当你进行任何聚合时，包含一个计数 (<code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code>) 总是好主意。</p>
+<p>That way, you can ensure that you’re not drawing conclusions based on very small amounts of data.<br>
+这样，你可以确保你不是基于非常少量的数据得出结论。</p>
+<p>We’ll demonstrate this with some baseball data from the <strong>Lahman</strong> package.<br>
+我们将使用 <strong>Lahman</strong> 包中的一些棒球数据来演示这一点。</p>
+<p>Specifically, we will compare what proportion of times a player gets a hit (<code>H</code>) vs.&nbsp;the number of times they try to put the ball in play (<code>AB</code>):<br>
+具体来说，我们将比较球员击中球的次数 (<code>H</code>) 与他们尝试将球击入场内的次数 (<code>AB</code>) 的比例：</p>
 <div class="cell">
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">batters</span> <span class="op">&lt;-</span> <span class="fu">Lahman</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/Lahman/man/Batting.html">Batting</a></span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">batters</span> <span class="op">&lt;-</span> <span class="fu">Lahman</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/Lahman/man/Batting.html">Batting</a></span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">playerID</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
 <span>    performance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">H</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">AB</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
@@ -1414,32 +1589,40 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 <span><span class="co">#&gt; # ℹ 20,724 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>When we plot the skill of the batter (measured by the batting average, <code>performance</code>) against the number of opportunities to hit the ball (measured by times at bat, <code>n</code>), you see two patterns:<br>
-当我们将击球手的技术（通过击球率 <code>performance</code> 衡量）与击球机会的数量（通过打席次数 <code>n</code> 衡量）绘制成图时，你会看到两种模式：</p>
+当我们将击球手的技术 (用击球率 <code>performance</code> 衡量) 与击球机会数 (用击球次数 <code>n</code> 衡量) 绘制成图时，你会看到两种模式：</p>
 <ol type="1">
-<li><p>The variation in <code>performance</code> is larger among players with fewer at-bats. The shape of this plot is very characteristic: whenever you plot a mean (or other summary statistics) vs.&nbsp;group size, you’ll see that the variation decreases as the sample size increases<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p></li>
-<li><p>在打席次数较少的球员中，<code>performance</code> 的变异更大。这个图的形状非常有特点：每当你绘制均值（或其他汇总统计量）与组大小的关系图时，你都会看到变异随着样本量的增加而减小<sup>4</sup>。</p></li>
+<li>
+<p>The variation in <code>performance</code> is larger among players with fewer at-bats.<br>
+击球次数较少的球员的 <code>performance</code> 变化更大。</p>
+<p>The shape of this plot is very characteristic: whenever you plot a mean (or other summary statistics) vs.&nbsp;group size, you’ll see that the variation decreases as the sample size increases<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.<br>
+这张图的形状非常有特点：每当你绘制均值 (或其他摘要统计量) 与组大小的关系图时，你都会看到随着样本量的增加，变异会减小<sup>4</sup>。</p>
+</li>
 <li><p>There’s a positive correlation between skill (<code>performance</code>) and opportunities to hit the ball (<code>n</code>) because teams want to give their best batters the most opportunities to hit the ball.<br>
-2. 技术（<code>performance</code>）和击球机会（<code>n</code>）之间存在正相关，因为球队希望给他们最好的击球手最多的击球机会。</p></li>
+技术 (<code>performance</code>) 与击球机会 (<code>n</code>) 之间存在正相关关系，因为球队希望给他们最好的击球手最多的击球机会。</p></li>
 </ol>
 <div class="cell">
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">batters</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">batters</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">n</span>, y <span class="op">=</span> <span class="va">performance</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="data-transform_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid figure-img" alt="A scatterplot of the number of batting performances vs. batting opportunities  overlaid with a smoothed line. Average performance increases sharply from 0.2 at when n is ~100 to 0.25 when n is ~1000. Average performance continues to increase linearly at a much shallower slope, reaching 0.3 when n is ~12,000." width="576"></p>
+<figure class="figure"><p><img src="data-transform_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" alt="A scatterplot of the number of batting performances vs. batting opportunities  overlaid with a smoothed line. Average performance increases sharply from 0.2 at when n is ~100 to 0.25 when n is ~1000. Average performance continues to increase linearly at a much shallower slope, reaching 0.3 when n is ~12,000. <br> 击球表现次数与击球机会次数的散点图，并叠加了一条平滑线。平均表现从 n 约为 100 时的 0.2 急剧增加到 n 约为 1000 时的 0.25。平均表现继续以更平缓的斜率线性增长，在 n 约为 12,000 时达到 0.3。" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Note the handy pattern for combining ggplot2 and dplyr. You just have to remember to switch from <code>|&gt;</code>, for dataset processing, to <code>+</code> for adding layers to your plot.<br>
-请注意结合 ggplot2 和 dplyr 的便捷模式。你只需要记住从用于数据集处理的 <code>|&gt;</code> 切换到用于向绘图添加图层的 <code>+</code> 即可。</p>
-<p>This also has important implications for ranking. If you naively sort on <code>desc(performance)</code>, the people with the best batting averages are clearly the ones who tried to put the ball in play very few times and happened to get a hit, they’re not necessarily the most skilled players:<br>
-这对排名也有重要影响。如果你天真地按 <code>desc(performance)</code> 排序，击球率最高的人显然是那些尝试击球次数很少但碰巧击中的人，他们不一定是最有技术的球员：</p>
+<p>Note the handy pattern for combining ggplot2 and dplyr.<br>
+注意结合 ggplot2 和 dplyr 的便捷模式。</p>
+<p>You just have to remember to switch from <code>|&gt;</code>, for dataset processing, to <code>+</code> for adding layers to your plot.<br>
+你只需要记住从用于数据集处理的 <code>|&gt;</code> 切换到用于向绘图添加图层的 <code>+</code>。</p>
+<p>This also has important implications for ranking.<br>
+这对排名也有重要影响。</p>
+<p>If you naively sort on <code>desc(performance)</code>, the people with the best batting averages are clearly the ones who tried to put the ball in play very few times and happened to get a hit, they’re not necessarily the most skilled players:<br>
+如果你天真地按 <code>desc(performance)</code> 排序，那么击球率最高的人显然是那些尝试将球击入场内次数很少但碰巧击中了的人，他们不一定是最有技术的球员：</p>
 <div class="cell">
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">batters</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">batters</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">performance</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 20,730 × 3</span></span>
 <span><span class="co">#&gt;   playerID  performance     n</span></span>
@@ -1453,13 +1636,19 @@ dplyr 1.1.0 包含了一个新的、实验性的语法，用于单次操作的�
 <span><span class="co">#&gt; # ℹ 20,724 more rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can find a good explanation of this problem and how to overcome it at <a href="http://varianceexplained.org/r/empirical_bayes_baseball/">http://varianceexplained.org/r/empirical_bayes_baseball/</a> and <a href="https://www.evanmiller.org/how-not-to-sort-by-average-rating.html">https://www.evanmiller.org/how-not-to-sort-by-average-rating.html</a>.<br>
-你可以在 <a href="http://varianceexplained.org/r/empirical_bayes_baseball/">http://varianceexplained.org/r/empirical_bayes_baseball/</a> 和 <a href="https://www.evanmiller.org/how-not-to-sort-by-average-rating.html">https://www.evanmiller.org/how-not-to-sort-by-average-rating.html</a> 找到对这个问题以及如何解决它的很好的解释。</p>
+你可以在 <a href="http://varianceexplained.org/r/empirical_bayes_baseball/">http://varianceexplained.org/r/empirical_bayes_baseball/</a> 和 <a href="https://www.evanmiller.org/how-not-to-sort-by-average-rating.html">https://www.evanmiller.org/how-not-to-sort-by-average-rating.html</a> 找到对这个问题以及如何克服它的很好解释。</p>
 </section><section id="summary" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="summary">
 <span class="header-section-number">3.7</span> Summary</h2>
-<p>In this chapter, you’ve learned the tools that dplyr provides for working with data frames. The tools are roughly grouped into three categories: those that manipulate the rows (like <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>), those that manipulate the columns (like <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>) and those that manipulate groups (like <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>). In this chapter, we’ve focused on these “whole data frame” tools, but you haven’t yet learned much about what you can do with the individual variable. We’ll return to that in the Transform part of the book, where each chapter provides tools for a specific type of variable.<br>
-在本章中，你学习了 dplyr 提供的用于处理数据框的工具。这些工具大致分为三类：操作行的（如 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>）、操作列的（如 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>）以及操作分组的（如 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>）。在本章中，我们专注于这些“整个数据框”的工具，但你尚未深入学习如何处理单个变量。我们将在本书的“转换”部分回到这一点，其中每一章都为特定类型的变量提供工具。</p>
+<p>In this chapter, you’ve learned the tools that dplyr provides for working with data frames.<br>
+在本章中，你学习了 dplyr 为处理数据框提供的工具。</p>
+<p>The tools are roughly grouped into three categories: those that manipulate the rows (like <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>), those that manipulate the columns (like <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>) and those that manipulate groups (like <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>).<br>
+这些工具大致分为三类：操作行的工具 (如 <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>)、操作列的工具 (如 <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>) 以及操作组的工具 (如 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> 和 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>)。</p>
+<p>In this chapter, we’ve focused on these “whole data frame” tools, but you haven’t yet learned much about what you can do with the individual variable.<br>
+在本章中，我们重点介绍了这些“整个数据框”的工具，但你还没有学到太多关于如何处理单个变量的知识。</p>
+<p>We’ll return to that in the Transform part of the book, where each chapter provides tools for a specific type of variable.<br>
+我们将在本书的“转换”部分回到这个问题，其中每一章都为特定类型的变量提供了工具。</p>
 <p>In the next chapter, we’ll pivot back to workflow to discuss the importance of code style and keeping your code well organized to make it easy for you and others to read and understand.<br>
-在下一章中，我们将转回工作流程，讨论代码风格的重要性以及保持代码良好组织，以便你和他人易于阅读和理解。</p>
+在下一章中，我们将转回工作流程，讨论代码风格的重要性以及保持代码井井有条，以便你和其他人易于阅读和理解。</p>
 
 
 </section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
