@@ -1,0 +1,2376 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund">
+<title>28&nbsp; Quarto – R 数据科学 2e
+（双语）</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./quarto-formats.html" rel="next">
+<link href="./communicate.html" rel="prev">
+<link href="./cover.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-cfa698a38273543b64ee69d493127e2a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script defer="" data-domain="r4ds.hadley.nz" src="https://plausible.io/js/plausible.js"></script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./communicate.html">沟通</a></li><li class="breadcrumb-item"><a href="./quarto.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Quarto</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">R 数据科学 2e （双语）</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/ggvisPro/r4ds-cn/" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./preface-2e.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface to the second edition</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./whole-game.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Whole game</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Workflow: basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data transformation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-style.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">工作流：代码风格</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-tidy.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">数据整理</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-scripts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">工作流：脚本和项目</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">数据导入</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./workflow-help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">工作流：获取帮助</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./visualize.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">可视化</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./layers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">图层</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./EDA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">探索性数据分析</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./communication.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">沟通</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">数据转换</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logicals.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">逻辑向量</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./numbers.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">数值</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./strings.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">字符串</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regexps.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正则表达式</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./factors.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">因子</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./datetimes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">日期和时间</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing-values.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">缺失值</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./joins.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">连接</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./import.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">导入</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spreadsheets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">电子表格</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./databases.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">数据库</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./arrow.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Arrow</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rectangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">层级数据</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./webscraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">网络抓取</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./program.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">编程</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">函数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./iteration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">迭代</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./base-R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Base R 实战指南</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./communicate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">沟通</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quarto-formats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Quarto 格式</span></span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#%E5%BC%95%E8%A8%80" id="toc-引言" class="nav-link active" data-scroll-target="#%E5%BC%95%E8%A8%80"><span class="header-section-number">28.1</span> 引言</a>
+  <ul class="collapse">
+<li><a href="#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6" id="toc-先决条件" class="nav-link" data-scroll-target="#%E5%85%88%E5%86%B3%E6%9D%A1%E4%BB%B6"><span class="header-section-number">28.1.1</span> 先决条件</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#quarto-%E5%9F%BA%E7%A1%80" id="toc-quarto-基础" class="nav-link" data-scroll-target="#quarto-%E5%9F%BA%E7%A1%80"><span class="header-section-number">28.2</span> Quarto 基础</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0" id="toc-练习" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0"><span class="header-section-number">28.2.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E7%BC%96%E8%BE%91%E5%99%A8" id="toc-可视化编辑器" class="nav-link" data-scroll-target="#%E5%8F%AF%E8%A7%86%E5%8C%96%E7%BC%96%E8%BE%91%E5%99%A8"><span class="header-section-number">28.3</span> 可视化编辑器</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0-1" id="toc-练习-1" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-1"><span class="header-section-number">28.3.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-source-editor" id="toc-sec-source-editor" class="nav-link" data-scroll-target="#sec-source-editor"><span class="header-section-number">28.4</span> 源代码编辑器</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0-2" id="toc-练习-2" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-2"><span class="header-section-number">28.4.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#%E4%BB%A3%E7%A0%81%E5%9D%97" id="toc-代码块" class="nav-link" data-scroll-target="#%E4%BB%A3%E7%A0%81%E5%9D%97"><span class="header-section-number">28.5</span> 代码块</a>
+  <ul class="collapse">
+<li><a href="#%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%87%E7%AD%BE" id="toc-代码块标签" class="nav-link" data-scroll-target="#%E4%BB%A3%E7%A0%81%E5%9D%97%E6%A0%87%E7%AD%BE"><span class="header-section-number">28.5.1</span> 代码块标签</a></li>
+  <li><a href="#%E4%BB%A3%E7%A0%81%E5%9D%97%E9%80%89%E9%A1%B9" id="toc-代码块选项" class="nav-link" data-scroll-target="#%E4%BB%A3%E7%A0%81%E5%9D%97%E9%80%89%E9%A1%B9"><span class="header-section-number">28.5.2</span> 代码块选项</a></li>
+  <li><a href="#%E5%85%A8%E5%B1%80%E9%80%89%E9%A1%B9" id="toc-全局选项" class="nav-link" data-scroll-target="#%E5%85%A8%E5%B1%80%E9%80%89%E9%A1%B9"><span class="header-section-number">28.5.3</span> 全局选项</a></li>
+  <li><a href="#%E5%86%85%E8%81%94%E4%BB%A3%E7%A0%81" id="toc-内联代码" class="nav-link" data-scroll-target="#%E5%86%85%E8%81%94%E4%BB%A3%E7%A0%81"><span class="header-section-number">28.5.4</span> 内联代码</a></li>
+  <li><a href="#%E7%BB%83%E4%B9%A0-3" id="toc-练习-3" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-3"><span class="header-section-number">28.5.5</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-figures" id="toc-sec-figures" class="nav-link" data-scroll-target="#sec-figures"><span class="header-section-number">28.6</span> 图形</a>
+  <ul class="collapse">
+<li><a href="#%E5%9B%BE%E5%BD%A2%E5%B0%BA%E5%AF%B8" id="toc-图形尺寸" class="nav-link" data-scroll-target="#%E5%9B%BE%E5%BD%A2%E5%B0%BA%E5%AF%B8"><span class="header-section-number">28.6.1</span> 图形尺寸</a></li>
+  <li><a href="#%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E9%80%89%E9%A1%B9" id="toc-其他重要选项" class="nav-link" data-scroll-target="#%E5%85%B6%E4%BB%96%E9%87%8D%E8%A6%81%E9%80%89%E9%A1%B9"><span class="header-section-number">28.6.2</span> 其他重要选项</a></li>
+  <li><a href="#%E7%BB%83%E4%B9%A0-4" id="toc-练习-4" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-4"><span class="header-section-number">28.6.3</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#%E8%A1%A8%E6%A0%BC" id="toc-表格" class="nav-link" data-scroll-target="#%E8%A1%A8%E6%A0%BC"><span class="header-section-number">28.7</span> 表格</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0-5" id="toc-练习-5" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-5"><span class="header-section-number">28.7.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-caching" id="toc-sec-caching" class="nav-link" data-scroll-target="#sec-caching"><span class="header-section-number">28.8</span> 缓存</a>
+  <ul class="collapse">
+<li><a href="#%E7%BB%83%E4%B9%A0-6" id="toc-练习-6" class="nav-link" data-scroll-target="#%E7%BB%83%E4%B9%A0-6"><span class="header-section-number">28.8.1</span> 练习</a></li>
+  </ul>
+</li>
+  <li><a href="#%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4" id="toc-故障排除" class="nav-link" data-scroll-target="#%E6%95%85%E9%9A%9C%E6%8E%92%E9%99%A4"><span class="header-section-number">28.9</span> 故障排除</a></li>
+  <li>
+<a href="#yaml-%E6%A0%87%E5%A4%B4" id="toc-yaml-标头" class="nav-link" data-scroll-target="#yaml-%E6%A0%87%E5%A4%B4"><span class="header-section-number">28.10</span> YAML 标头</a>
+  <ul class="collapse">
+<li><a href="#%E8%87%AA%E5%8C%85%E5%90%AB" id="toc-自包含" class="nav-link" data-scroll-target="#%E8%87%AA%E5%8C%85%E5%90%AB"><span class="header-section-number">28.10.1</span> 自包含</a></li>
+  <li><a href="#%E5%8F%82%E6%95%B0" id="toc-参数" class="nav-link" data-scroll-target="#%E5%8F%82%E6%95%B0"><span class="header-section-number">28.10.2</span> 参数</a></li>
+  <li><a href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E5%92%8C%E5%BC%95%E6%96%87" id="toc-参考文献和引文" class="nav-link" data-scroll-target="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE%E5%92%8C%E5%BC%95%E6%96%87"><span class="header-section-number">28.10.3</span> 参考文献和引文</a></li>
+  </ul>
+</li>
+  <li><a href="#%E5%B7%A5%E4%BD%9C%E6%B5%81" id="toc-工作流" class="nav-link" data-scroll-target="#%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="header-section-number">28.11</span> 工作流</a></li>
+  <li><a href="#%E6%80%BB%E7%BB%93" id="toc-总结" class="nav-link" data-scroll-target="#%E6%80%BB%E7%BB%93"><span class="header-section-number">28.12</span> 总结</a></li>
+  <li>
+<a href="#sec-data-visualization" id="toc-sec-data-visualization" class="nav-link" data-scroll-target="#sec-data-visualization"><span class="header-section-number">29</span> Data visualization</a>
+  <ul class="collapse">
+<li>
+<a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">29.1</span> Introduction</a>
+  <ul class="collapse">
+<li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites"><span class="header-section-number">29.1.1</span> Prerequisites</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#first-steps" id="toc-first-steps" class="nav-link" data-scroll-target="#first-steps"><span class="header-section-number">29.2</span> First steps</a>
+  <ul class="collapse">
+<li><a href="#the-penguins-data-frame" id="toc-the-penguins-data-frame" class="nav-link" data-scroll-target="#the-penguins-data-frame"><span class="header-section-number">29.2.1</span> The <code>penguins</code> data frame</a></li>
+  <li><a href="#sec-ultimate-goal" id="toc-sec-ultimate-goal" class="nav-link" data-scroll-target="#sec-ultimate-goal"><span class="header-section-number">29.2.2</span> Ultimate goal</a></li>
+  <li><a href="#creating-a-ggplot" id="toc-creating-a-ggplot" class="nav-link" data-scroll-target="#creating-a-ggplot"><span class="header-section-number">29.2.3</span> Creating a ggplot</a></li>
+  <li><a href="#sec-adding-aesthetics-layers" id="toc-sec-adding-aesthetics-layers" class="nav-link" data-scroll-target="#sec-adding-aesthetics-layers"><span class="header-section-number">29.2.4</span> Adding aesthetics and layers</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">29.2.5</span> Exercises</a></li>
+  </ul>
+</li>
+  <li><a href="#sec-ggplot2-calls" id="toc-sec-ggplot2-calls" class="nav-link" data-scroll-target="#sec-ggplot2-calls"><span class="header-section-number">29.3</span> ggplot2 calls</a></li>
+  <li>
+<a href="#visualizing-distributions" id="toc-visualizing-distributions" class="nav-link" data-scroll-target="#visualizing-distributions"><span class="header-section-number">29.4</span> Visualizing distributions</a>
+  <ul class="collapse">
+<li><a href="#a-categorical-variable" id="toc-a-categorical-variable" class="nav-link" data-scroll-target="#a-categorical-variable"><span class="header-section-number">29.4.1</span> A categorical variable</a></li>
+  <li><a href="#a-numerical-variable" id="toc-a-numerical-variable" class="nav-link" data-scroll-target="#a-numerical-variable"><span class="header-section-number">29.4.2</span> A numerical variable</a></li>
+  <li><a href="#exercises-1" id="toc-exercises-1" class="nav-link" data-scroll-target="#exercises-1"><span class="header-section-number">29.4.3</span> Exercises</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#visualizing-relationships" id="toc-visualizing-relationships" class="nav-link" data-scroll-target="#visualizing-relationships"><span class="header-section-number">29.5</span> Visualizing relationships</a>
+  <ul class="collapse">
+<li><a href="#a-numerical-and-a-categorical-variable" id="toc-a-numerical-and-a-categorical-variable" class="nav-link" data-scroll-target="#a-numerical-and-a-categorical-variable"><span class="header-section-number">29.5.1</span> A numerical and a categorical variable</a></li>
+  <li><a href="#two-categorical-variables" id="toc-two-categorical-variables" class="nav-link" data-scroll-target="#two-categorical-variables"><span class="header-section-number">29.5.2</span> Two categorical variables</a></li>
+  <li><a href="#two-numerical-variables" id="toc-two-numerical-variables" class="nav-link" data-scroll-target="#two-numerical-variables"><span class="header-section-number">29.5.3</span> Two numerical variables</a></li>
+  <li><a href="#three-or-more-variables" id="toc-three-or-more-variables" class="nav-link" data-scroll-target="#three-or-more-variables"><span class="header-section-number">29.5.4</span> Three or more variables</a></li>
+  <li><a href="#exercises-2" id="toc-exercises-2" class="nav-link" data-scroll-target="#exercises-2"><span class="header-section-number">29.5.5</span> Exercises</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#sec-ggsave" id="toc-sec-ggsave" class="nav-link" data-scroll-target="#sec-ggsave"><span class="header-section-number">29.6</span> Saving your plots</a>
+  <ul class="collapse">
+<li><a href="#exercises-3" id="toc-exercises-3" class="nav-link" data-scroll-target="#exercises-3"><span class="header-section-number">29.6.1</span> Exercises</a></li>
+  </ul>
+</li>
+  <li><a href="#common-problems" id="toc-common-problems" class="nav-link" data-scroll-target="#common-problems"><span class="header-section-number">29.7</span> Common problems</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">29.8</span> Summary</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/quarto.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./communicate.html">沟通</a></li><li class="breadcrumb-item"><a href="./quarto.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Quarto</span></a></li></ol></nav><div class="quarto-title">
+<h1 class="title"><span id="sec-quarto" class="quarto-section-identifier"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Quarto</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="引言" class="level2" data-number="28.1"><h2 data-number="28.1" class="anchored" data-anchor-id="引言">
+<span class="header-section-number">28.1</span> 引言</h2>
+<p>Quarto 为数据科学提供了一个统一的创作框架，它将你的代码、代码的运行结果以及你的文字说明整合在一起。Quarto 文档是完全可复现的，并支持数十种输出格式，如 PDF、Word 文件、演示文稿等。</p>
+<p>Quarto 文件旨在以三种方式使用：</p>
+<ol type="1">
+<li><p>用于与决策者沟通，他们希望关注结论，而不是分析背后的代码。</p></li>
+<li><p>用于与其他数据科学家（包括未来的你！）协作，他们既对你的结论感兴趣，也对你如何得出结论（即代码）感兴趣。</p></li>
+<li><p>作为一种<em>从事</em>数据科学的环境，如同现代的实验笔记，你不仅可以记录你做了什么，还可以记录你的所思所想。</p></li>
+</ol>
+<p>Quarto 是一个命令行界面工具，而不是一个 R 包。这意味着，总的来说，你无法通过 <code>?</code> 来获取帮助。因此，在本章的学习过程中以及将来使用 Quarto 时，你应该参考 <a href="https://quarto.org">Quarto 文档</a>。</p>
+<p>如果你是 R Markdown 用户，你可能会想：“Quarto 听起来很像 R Markdown”。你没说错！Quarto 将 R Markdown 生态系统中的许多包（rmarkdown、bookdown、distill、xaringan 等）的功能统一到一个单一、一致的系统中，并且除了 R 之外，还扩展了对 Python 和 Julia 等多种编程语言的原生支持。从某种意义上说，Quarto 体现了十多年来扩展和支持 R Markdown 生TAI系统所学到的一切。</p>
+<section id="先决条件" class="level3" data-number="28.1.1"><h3 data-number="28.1.1" class="anchored" data-anchor-id="先决条件">
+<span class="header-section-number">28.1.1</span> 先决条件</h3>
+<p>你需要 Quarto 命令行界面 (Quarto CLI)，但你不需要显式地安装或加载它，因为 RStudio 会在需要时自动完成这两项工作。</p>
+</section></section><section id="quarto-基础" class="level2" data-number="28.2"><h2 data-number="28.2" class="anchored" data-anchor-id="quarto-基础">
+<span class="header-section-number">28.2</span> Quarto 基础</h2>
+<p>这是一个 Quarto 文件——一个扩展名为 <code>.qmd</code> 的纯文本文件：</p>
+<div class="cell">
+<pre><code>---
+title: "Diamond sizes"
+date: 2022-09-12
+format: html
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+
+smaller &lt;- diamonds |&gt; 
+  filter(carat &lt;= 2.5)
+```
+
+We have data about `r nrow(diamonds)` diamonds.
+Only `r nrow(diamonds) - nrow(smaller)` are larger than 2.5 carats.
+The distribution of the remainder is shown below:
+
+```{r}
+#| label: plot-smaller-diamonds
+#| echo: false
+
+smaller |&gt; 
+  ggplot(aes(x = carat)) + 
+  geom_freqpoly(binwidth = 0.01)
+```</code></pre>
+</div>
+<p>它包含三种重要的内容类型：</p>
+<ol type="1">
+<li>一个（可选的）由 <code>---</code> 包围的 <strong>YAML 标头</strong>。</li>
+<li>由 <code>```</code> 包围的 R <strong>代码块</strong> (chunks)。</li>
+<li>混合了简单文本格式的文本，如 <code># 标题</code> 和 <code>_斜体_</code>。</li>
+</ol>
+<p><a href="#fig-diamond-sizes-notebook" class="quarto-xref">Figure&nbsp;<span>28.1</span></a> 展示了 RStudio 中一个 <code>.qmd</code> 文档的笔记本界面，其中代码和输出交错显示。你可以通过点击代码块顶部的运行图标（看起来像一个播放按钮），或按 Cmd/Ctrl + Shift + Enter 来运行每个代码块。RStudio 会执行代码并将结果内联显示在代码下方。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-diamond-sizes-notebook" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio 窗口，左侧是名为 “diamond-sizes.qmd” 的 Quarto 文档， 右侧是空白的查看器窗口。Quarto 文档中有一个代码块， 用于创建重量小于 2.5 克拉的钻石的频率图。该图显示， 随着重量的增加，频率降低。">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-diamond-sizes-notebook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="quarto/diamond-sizes-notebook.png" class="img-fluid figure-img" style="width:90.0%" alt="RStudio 窗口，左侧是名为 “diamond-sizes.qmd” 的 Quarto 文档， 右侧是空白的查看器窗口。Quarto 文档中有一个代码块， 用于创建重量小于 2.5 克拉的钻石的频率图。该图显示， 随着重量的增加，频率降低。">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diamond-sizes-notebook-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.1: RStudio 中的一个 Quarto 文档。代码和输出在文档中交错显示， 绘图输出直接出现在代码下方。
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>如果你不喜欢在文档中看到你的绘图和输出，而更愿意使用 RStudio 的控制台和绘图窗格，你可以点击“Render”旁边的齿轮图标，然后切换到“Chunk Output in Console”，如 <a href="#fig-diamond-sizes-console-output" class="quarto-xref">Figure&nbsp;<span>28.2</span></a> 所示。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-diamond-sizes-console-output" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio 窗口，左侧是名为 &quot;diamond-sizes.qmd&quot; 的 Quarto 文档， 右下角是“绘图”窗格。Quarto 文档中有一个代码块， 用于创建重量小于 2.5 克拉的钻石的频率图。 该图显示在“绘图”窗格中，并显示随着重量的增加，频率降低。 RStudio 中“在控制台中显示代码块输出”的选项也被高亮显示。">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-diamond-sizes-console-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="quarto/diamond-sizes-console-output.png" class="img-fluid figure-img" style="width:90.0%" alt="RStudio 窗口，左侧是名为 &quot;diamond-sizes.qmd&quot; 的 Quarto 文档， 右下角是“绘图”窗格。Quarto 文档中有一个代码块， 用于创建重量小于 2.5 克拉的钻石的频率图。 该图显示在“绘图”窗格中，并显示随着重量的增加，频率降低。 RStudio 中“在控制台中显示代码块输出”的选项也被高亮显示。">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diamond-sizes-console-output-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.2: RStudio 中的一个 Quarto 文档，绘图输出显示在“绘图”窗格中。
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>要生成包含所有文本、代码和结果的完整报告，请点击“Render”或按 Cmd/Ctrl + Shift + K。你也可以通过 <code>quarto::quarto_render("diamond-sizes.qmd")</code> 以编程方式执行此操作。这将在查看器窗格中显示报告，如 <a href="#fig-diamond-sizes-report" class="quarto-xref">Figure&nbsp;<span>28.3</span></a> 所示，并创建一个 HTML 文件。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-diamond-sizes-report" class="quarto-float quarto-figure quarto-figure-center anchored" alt="RStudio 窗口，左侧是名为 “diamond-sizes.qmd” 的 Quarto 文档， 右下角是“绘图”窗格。渲染后的文档不显示任何代码， 但代码在源文档中是可见的。">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-diamond-sizes-report-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="quarto/diamond-sizes-report.png" class="img-fluid figure-img" style="width:90.0%" alt="RStudio 窗口，左侧是名为 “diamond-sizes.qmd” 的 Quarto 文档， 右下角是“绘图”窗格。渲染后的文档不显示任何代码， 但代码在源文档中是可见的。">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diamond-sizes-report-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.3: RStudio 中的一个 Quarto 文档，渲染后的文档显示在“查看器”窗格中。
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>当你渲染文档时，Quarto 会将 <code>.qmd</code> 文件发送给 <strong>knitr</strong>，<a href="https://yihui.org/knitr/">https://yihui.org/knitr/</a>，它会执行所有的代码块，并创建一个新的 markdown (<code>.md</code>) 文档，其中包含代码及其输出。然后，knitr 生成的 markdown 文件由 <strong>pandoc</strong>，<a href="https://pandoc.org/" class="uri">https://pandoc.org</a> 处理，它负责创建最终的文件。这个过程如 <a href="#fig-quarto-flow" class="quarto-xref">Figure&nbsp;<span>28.4</span></a> 所示。这种两步工作流的优点是，你可以创建非常广泛的输出格式，你将在 <a href="quarto-formats.html" class="quarto-xref"><span>Chapter 29</span></a> 中了解到这一点。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-quarto-flow" class="quarto-float quarto-figure quarto-figure-center anchored" alt="工作流图，从 qmd 文件开始，然后是 knitr，然后是 md， 然后是 pandoc，最后是 PDF、MS Word 或 HTML。 ">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-quarto-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/quarto-flow.png" class="img-fluid figure-img" style="width:75.0%" alt="工作流图，从 qmd 文件开始，然后是 knitr，然后是 md， 然后是 pandoc，最后是 PDF、MS Word 或 HTML。 ">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-quarto-flow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.4: Quarto 工作流图，从 qmd，到 knitr，到 md，到 pandoc， 最后输出为 PDF、MS Word 或 HTML 格式。
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>要开始使用你自己的 <code>.qmd</code> 文件，请在菜单栏中选择 <em>File &gt; New File &gt; Quarto Document…</em>。RStudio 将启动一个向导，你可以用它来预填充你的文件，其中包含有用的内容，提醒你 Quarto 的关键功能是如何工作的。</p>
+<p>接下来的部分将更详细地探讨 Quarto 文档的三个组成部分：markdown 文本、代码块和 YAML 标头。</p>
+<section id="练习" class="level3" data-number="28.2.1"><h3 data-number="28.2.1" class="anchored" data-anchor-id="练习">
+<span class="header-section-number">28.2.1</span> 练习</h3>
+<ol type="1">
+<li><p>使用 <em>File &gt; New File &gt; Quarto Document</em> 创建一个新的 Quarto 文档。阅读说明。练习单独运行代码块。然后通过点击相应的按钮和使用相应的键盘快捷键来渲染文档。验证你可以修改代码，重新运行它，并看到修改后的输出。</p></li>
+<li><p>为三种内置格式中的每一种创建一个新的 Quarto 文档：HTML、PDF 和 Word。渲染这三个文档。输出有何不同？输入有何不同？（你可能需要安装 LaTeX 才能构建 PDF 输出——如果需要，RStudio 会提示你。）</p></li>
+</ol></section></section><section id="可视化编辑器" class="level2" data-number="28.3"><h2 data-number="28.3" class="anchored" data-anchor-id="可视化编辑器">
+<span class="header-section-number">28.3</span> 可视化编辑器</h2>
+<p>RStudio 中的可视化编辑器为创作 Quarto 文档提供了一个 <a href="https://en.wikipedia.org/wiki/WYSIWYM">WYSIWYM</a> (所见即所想，What You See Is What You Mean) 界面。在底层，Quarto 文档（<code>.qmd</code> 文件）中的文字是使用 Markdown 编写的，这是一种用于格式化纯文本文件的轻量级约定。事实上，Quarto 使用的是 Pandoc markdown（Quarto 能理解的一种轻微扩展的 Markdown 版本），包括表格、引文、交叉引用、脚注、divs/spans、定义列表、属性、原始 HTML/TeX 等，并且支持执行代码单元格和内联查看其输出。虽然 Markdown 被设计得易于读写，正如你将在 <a href="#sec-source-editor" class="quarto-xref"><span>Section 28.4</span></a> 中看到的那样，它仍然需要学习新的语法。因此，如果你是计算文档（如 <code>.qmd</code> 文件）的新手，但有使用 Google Docs 或 MS Word 等工具的经验，那么在 RStudio 中开始使用 Quarto 的最简单方法就是使用可视化编辑器。</p>
+<p>在可视化编辑器中，你可以使用菜单栏上的按钮插入图像、表格、交叉引用等，也可以使用通用的 &lt;kbd&gt;⌘&lt;/kbd&gt; + &lt;kbd&gt;/&lt;/kbd&gt; 或 &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;/&lt;/kbd&gt; 快捷键插入几乎任何东西。如果你在一行的开头（如 <a href="#fig-visual-editor" class="quarto-xref">Figure&nbsp;<span>28.5</span></a> 所示），你也可以只输入 &lt;kbd&gt;/&lt;/kbd&gt; 来调用该快捷键。</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-visual-editor" class="quarto-float quarto-figure quarto-figure-center anchored" alt="一个 Quarto 文档，展示了可视化编辑器的各种功能， 如文本格式（斜体、粗体、下划线、小型大写字母、代码、上标和下标）， 一级到三级标题，项目符号列表和编号列表，链接， 带链接的短语，以及图像（以及一个用于自定义图像大小、 添加标题和替代文本等的弹出窗口），带有标题行的表格， 以及“插入任何内容”工具，其选项包括插入 R 代码块、 Python 代码块、div、项目符号列表、编号列表或一级标题（工具中的前几个选项）。">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-visual-editor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="quarto/quarto-visual-editor.png" class="img-fluid figure-img" style="width:75.0%" alt="一个 Quarto 文档，展示了可视化编辑器的各种功能， 如文本格式（斜体、粗体、下划线、小型大写字母、代码、上标和下标）， 一级到三级标题，项目符号列表和编号列表，链接， 带链接的短语，以及图像（以及一个用于自定义图像大小、 添加标题和替代文本等的弹出窗口），带有标题行的表格， 以及“插入任何内容”工具，其选项包括插入 R 代码块、 Python 代码块、div、项目符号列表、编号列表或一级标题（工具中的前几个选项）。">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-visual-editor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.5: Quarto 可视化编辑器。
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>可视化编辑器也方便了插入图像和自定义其显示方式。你可以直接将剪贴板中的图像粘贴到可视化编辑器中（RStudio 会将该图像的副本放置在项目目录中并链接到它），也可以使用可视化编辑器的“Insert &gt; Figure / Image”菜单浏览到要插入的图像或粘贴其 URL。此外，使用同一菜单，你可以调整图像大小，并添加标题、替代文本和链接。</p>
+<p>可视化编辑器还有许多我们在此未列举的功能，随着你创作经验的增加，你可能会发现它们很有用。</p>
+<p>最重要的是，虽然可视化编辑器以格式化的方式显示你的内容，但在底层，它以纯 Markdown 的形式保存你的内容，你可以在可视化编辑器和源代码编辑器之间来回切换，使用任一工具查看和编辑你的内容。</p>
+<section id="练习-1" class="level3" data-number="28.3.1"><h3 data-number="28.3.1" class="anchored" data-anchor-id="练习-1">
+<span class="header-section-number">28.3.1</span> 练习</h3>
+<ol type="1">
+<li>使用可视化编辑器重新创建 <a href="#fig-visual-editor" class="quarto-xref">Figure&nbsp;<span>28.5</span></a> 中的文档。</li>
+<li>使用可视化编辑器，通过“Insert”菜单和“插入任何内容”工具插入一个代码块。</li>
+<li>使用可视化编辑器，找出如何：
+<ol type="a">
+<li>添加脚注。</li>
+<li>添加水平线。</li>
+<li>添加块引用。</li>
+</ol>
+</li>
+<li>在可视化编辑器中，进入“Insert &gt; Citation”，并使用其 DOI (数字对象标识符) <a href="https://doi.org/10.21105/joss.01686">10.21105/joss.01686</a> 插入一篇题为 <a href="https://joss.theoj.org/papers/10.21105/joss.01686">Welcome to the Tidyverse</a> 的论文的引文。渲染文档并观察引文在文档中的显示方式。你观察到文档的 YAML 有什么变化？</li>
+</ol></section></section><section id="sec-source-editor" class="level2" data-number="28.4"><h2 data-number="28.4" class="anchored" data-anchor-id="sec-source-editor">
+<span class="header-section-number">28.4</span> 源代码编辑器</h2>
+<p>你也可以在没有可视化编辑器辅助的情况下，使用 RStudio 中的源代码编辑器来编辑 Quarto 文档。虽然可视化编辑器对于有使用 Google Docs 等工具写作经验的人来说会感到熟悉，但源代码编辑器对于有编写 R 脚本或 R Markdown 文档经验的人来说会感到熟悉。源代码编辑器对于调试任何 Quarto 语法错误也很有用，因为在纯文本中更容易发现这些错误。</p>
+<p>以下指南展示了如何在源代码编辑器中使用 Pandoc 的 Markdown 来创作 Quarto 文档。</p>
+<div class="cell">
+<pre><code>## Text formatting
+
+*italic* **bold** ~~strikeout~~ `code`
+
+superscript^2^ subscript~2~
+
+[underline]{.underline} [small caps]{.smallcaps}
+
+## Headings
+
+# 1st Level Header
+
+## 2nd Level Header
+
+### 3rd Level Header
+
+## Lists
+
+-   Bulleted list item 1
+
+-   Item 2
+
+    -   Item 2a
+
+    -   Item 2b
+
+1.  Numbered list item 1
+
+2.  Item 2.
+    The numbers are incremented automatically in the output.
+
+## Links and images
+
+&lt;http://example.com&gt;
+
+[linked phrase](http://example.com)
+
+![optional caption text](quarto.png){fig-alt="Quarto logo and the word quarto spelled in small case letters"}
+
+## Tables
+
+| First Header | Second Header |
+|--------------|---------------|
+| Content Cell | Content Cell  |
+| Content Cell | Content Cell  |</code></pre>
+</div>
+<p>学习这些语法的最好方法就是亲手尝试。这可能需要几天时间，但很快它们就会成为你的第二天性，你将不再需要刻意去想它们。如果你忘记了，可以通过 <em>Help &gt; Markdown Quick Reference</em> 打开一个方便的参考表。</p>
+<section id="练习-2" class="level3" data-number="28.4.1"><h3 data-number="28.4.1" class="anchored" data-anchor-id="练习-2">
+<span class="header-section-number">28.4.1</span> 练习</h3>
+<ol type="1">
+<li><p>练习你所学的知识，创建一份简短的简历。标题应该是你的名字，并且你应该包含（至少）教育或工作经历的标题。每个部分都应该包含一个职位/学位的项目符号列表。用粗体突出显示年份。</p></li>
+<li>
+<p>使用源代码编辑器和 Markdown 快速参考，找出如何：</p>
+<ol type="a">
+<li>添加脚注。</li>
+<li>添加水平线。</li>
+<li>添加块引用。</li>
+</ol>
+</li>
+<li><p>从 <a href="https://github.com/hadley/r4ds/tree/main/quarto">https://github.com/hadley/r4ds/tree/main/quarto</a> 复制 <code>diamond-sizes.qmd</code> 的内容并粘贴到本地的 R Quarto 文档中。检查你是否可以运行它，然后在频率多边形图后添加文本，描述其最显著的特征。</p></li>
+<li><p>在 Google Doc 或 MS Word 中创建一个文档（或找到一个你以前创建的文档），其中包含一些内容，如标题、超链接、格式化文本等。复制此文档的内容并将其粘贴到可视化编辑器的 Quarto 文档中。然后，切换到源代码编辑器并检查源代码。</p></li>
+</ol></section></section><section id="代码块" class="level2" data-number="28.5"><h2 data-number="28.5" class="anchored" data-anchor-id="代码块">
+<span class="header-section-number">28.5</span> 代码块</h2>
+<p>要在 Quarto 文档中运行代码，你需要插入一个代码块。有三种方法可以做到这一点：</p>
+<ol type="1">
+<li><p>键盘快捷键 Cmd + Option + I / Ctrl + Alt + I。</p></li>
+<li><p>编辑器工具栏中的“Insert”按钮图标。</p></li>
+<li><p>手动输入代码块分隔符 <code>```{r}</code> 和 <code>```</code>。</p></li>
+</ol>
+<p>我们建议你学习键盘快捷键。从长远来看，它会为你节省大量时间！</p>
+<p>你可以继续使用你现在（我们希望！）已经熟知并喜爱的键盘快捷键来运行代码：Cmd/Ctrl + Enter。然而，代码块有了一个新的键盘快捷键：Cmd/Ctrl + Shift + Enter，它会运行代码块中的所有代码。把代码块想象成一个函数。一个代码块应该是相对独立的，并专注于一个单一的任务。</p>
+<p>接下来的部分描述了代码块标头，它由 <code>```{r}</code> 组成，后面可以跟一个可选的代码块标签和各种其他的代码块选项，每个选项都在新的一行，并以 <code>#|</code> 开头。</p>
+<section id="代码块标签" class="level3" data-number="28.5.1"><h3 data-number="28.5.1" class="anchored" data-anchor-id="代码块标签">
+<span class="header-section-number">28.5.1</span> 代码块标签</h3>
+<p>代码块可以有一个可选的标签，例如：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: simple-addition</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>#&gt; [1] 2</code></pre>
+</div>
+<p>这有三个优点：</p>
+<ol type="1">
+<li><p>你可以使用脚本编辑器左下角的下拉代码导航器更轻松地导航到特定的代码块：</p></li>
+</ol>
+<p>#| echo: false #| out-width: “30%” #| fig-alt: | #| RStudio IDE 的片段，仅显示下拉代码导航器， #| 其中显示了三个代码块。代码块 1 是 setup。代码块 2 是 cars， #| 它在一个名为 Quarto 的部分中。代码块 3 是 pressure， #| 它在一个名为“包含绘图”的部分中。 knitr::include_graphics(“screenshots/quarto-chunk-nav.png”) ```</p>
+<ol start="2" type="1">
+<li><p>由代码块生成的图形将具有有意义的名称，这使得它们在其他地方更容易使用。更多相关内容见 <a href="#sec-figures" class="quarto-xref"><span>Section 28.6</span></a>。</p></li>
+<li><p>你可以建立缓存代码块的网络，以避免每次运行时都重新执行耗时的计算。更多相关内容见 <a href="#sec-caching" class="quarto-xref"><span>Section 28.8</span></a>。</p></li>
+</ol>
+<p>你的代码块标签应该简短但具有描述性，并且不应包含空格。我们建议使用破折号 (<code>-</code>) 来分隔单词（而不是下划线 <code>_</code>），并避免在代码块标签中使用其他特殊字符。</p>
+<p>你通常可以自由地为你的代码块命名，但有一个代码块名称具有特殊行为：<code>setup</code>。当你在笔记模式下时，名为 <code>setup</code> 的代码块将在运行任何其他代码之前自动运行一次。</p>
+<p>此外，代码块标签不能重复。每个代码块标签必须是唯一的。</p>
+</section><section id="代码块选项" class="level3" data-number="28.5.2"><h3 data-number="28.5.2" class="anchored" data-anchor-id="代码块选项">
+<span class="header-section-number">28.5.2</span> 代码块选项</h3>
+<p>代码块的输出可以通过<strong>选项</strong>进行定制，这些选项是提供给代码块标头的字段。Knitr 提供了近 60 个选项，你可以用它们来定制你的代码块。在这里，我们将介绍你将频繁使用的最重要的代码块选项。你可以在 <a href="https://yihui.org/knitr/options/" class="uri">https://yihui.org/knitr/options</a> 查看完整列表。</p>
+<p>最重要的一组选项控制你的代码块是否被执行，以及哪些结果会插入到最终的报告中：</p>
+<ul>
+<li><p><code>eval: false</code> 阻止代码被执行。（显然，如果代码不运行，就不会生成任何结果）。这对于显示示例代码，或者在不注释掉每一行的情况下禁用一大块代码很有用。</p></li>
+<li><p><code>include: false</code> 运行代码，但不在最终文档中显示代码或结果。可用于你不想让报告变得杂乱的设置代码。</p></li>
+<li><p><code>echo: false</code> 阻止代码（而不是结果）出现在最终文件中。当编写面向不希望看到底层 R 代码的人的报告时，请使用此选项。</p></li>
+<li><p><code>message: false</code> 或 <code>warning: false</code> 阻止消息或警告出现在最终文件中。</p></li>
+<li><p><code>results: hide</code> 隐藏打印输出；<code>fig-show: hide</code> 隐藏绘图。</p></li>
+<li><p><code>error: true</code> 即使代码返回错误，也会让渲染继续进行。这很少是你想要包含在报告最终版本中的东西，但如果你需要精确调试 <code>.qmd</code> 文件内部发生了什么，它可能非常有用。如果你正在教 R 并且想故意包含一个错误，它也很有用。默认值 <code>error: false</code> 会在文档中出现单个错误时导致渲染失败。</p></li>
+</ul>
+<p>这些代码块选项中的每一个都被添加到代码块的标头中，跟在 <code>#|</code> 之后。例如，在下面的代码块中，结果不会被打印，因为 <code>eval</code> 被设置为 <code>false</code>。</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: simple-multiplication</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="dv">2</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>下表总结了每个选项抑制了哪些类型的输出：</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th style="text-align: left;">选项</th>
+<th style="text-align: center;">运行代码</th>
+<th style="text-align: center;">显示代码</th>
+<th style="text-align: center;">输出</th>
+<th style="text-align: center;">绘图</th>
+<th style="text-align: center;">消息</th>
+<th style="text-align: center;">警告</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>eval: false</code></td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>include: false</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;">X</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>echo: false</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>results: hide</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>fig-show: hide</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>message: false</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">X</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>warning: false</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">X</td>
+</tr>
+</tbody>
+</table></section><section id="全局选项" class="level3" data-number="28.5.3"><h3 data-number="28.5.3" class="anchored" data-anchor-id="全局选项">
+<span class="header-section-number">28.5.3</span> 全局选项</h3>
+<p>随着你更多地使用 knitr，你会发现一些默认的代码块选项不符合你的需求，你想要更改它们。</p>
+<p>你可以在文档的 YAML 中，在 <code>execute</code> 下添加你偏好的选项来做到这一点。例如，如果你正在为一群不需要看到你的代码，只需要你的结果和叙述的观众准备报告，你可以在文档级别设置 <code>echo: false</code>。这将默认隐藏代码，因此只显示你特意选择显示的代码块（使用 <code>echo: true</code>）。你可能会考虑设置 <code>message: false</code> 和 <code>warning: false</code>，但这会使调试问题变得更加困难，因为你在最终文档中看不到任何消息。</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"我的报告"</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>由于 Quarto 被设计为多语言的（可与 R 以及 Python、Julia 等其他语言一起工作），所以并非所有的 knitr 选项都在文档执行级别可用，因为其中一些只适用于 knitr，而不适用于 Quarto 用于在其他语言中运行代码的其他引擎（例如 Jupyter）。然而，你仍然可以在 <code>knitr</code> 字段下的 <code>opts_chunk</code> 中将它们设置为文档的全局选项。例如，在编写书籍和教程时，我们设置：</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"教程"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">knitr</span><span class="kw">:</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">opts_chunk</span><span class="kw">:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">comment</span><span class="kw">:</span><span class="at"> </span><span class="st">"#&gt;"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">collapse</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>这使用了我们偏好的注释格式，并确保代码和输出紧密地结合在一起。</p>
+</section><section id="内联代码" class="level3" data-number="28.5.4"><h3 data-number="28.5.4" class="anchored" data-anchor-id="内联代码">
+<span class="header-section-number">28.5.4</span> 内联代码</h3>
+<p>还有另一种将 R 代码嵌入到 Quarto 文档中的方法：直接嵌入文本中，使用：<code>`r `</code>。如果你在文本中提到数据的属性，这会非常有用。例如，本章开头使用的示例文档中有：</p>
+<blockquote class="blockquote">
+<p>我们有关于 <code>`r nrow(diamonds)`</code> 颗钻石的数据。 只有 <code>`r nrow(diamonds) - nrow(smaller)`</code> 颗钻石大于 2.5 克拉。 剩余部分的分布如下所示：</p>
+</blockquote>
+<p>当报告被渲染时，这些计算的结果会被插入到文本中：</p>
+<blockquote class="blockquote">
+<p>我们有关于 53940 颗钻石的数据。 只有 126 颗钻石大于 2.5 克拉。 剩余部分的分布如下所示：</p>
+</blockquote>
+<p>在文本中插入数字时，<code><a href="https://rdrr.io/r/base/format.html">format()</a></code> 是你的好帮手。它允许你设置 <code>digits</code> 的数量，这样你就不会打印出精度高到离谱的数字，还可以设置 <code>big.mark</code> 使数字更容易阅读。你可能会将这些组合成一个辅助函数：</p>
+<div class="cell">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">comma</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="fu">comma</span><span class="op">(</span><span class="fl">3452345</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "3,452,345"</span></span>
+<span><span class="fu">comma</span><span class="op">(</span><span class="fl">.12358124331</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "0.12"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section><section id="练习-3" class="level3" data-number="28.5.5"><h3 data-number="28.5.5" class="anchored" data-anchor-id="练习-3">
+<span class="header-section-number">28.5.5</span> 练习</h3>
+<ol type="1">
+<li><p>添加一个部分，探讨钻石大小如何随切工、颜色和净度而变化。假设你正在为不懂 R 的人写报告，并且不要在每个代码块上设置 <code>echo: false</code>，而是设置一个全局选项。</p></li>
+<li><p>从 <a href="https://github.com/hadley/r4ds/tree/main/quarto">https://github.com/hadley/r4ds/tree/main/quarto</a> 下载 <code>diamond-sizes.qmd</code>。添加一个描述最大的 20 颗钻石的部分，包括一个显示它们最重要属性的表格。</p></li>
+<li><p>修改 <code>diamonds-sizes.qmd</code> 以使用 <code>label_comma()</code> 来生成格式精美的输出。同时，也包括大于 2.5 克拉的钻石的百分比。</p></li>
+</ol></section></section><section id="sec-figures" class="level2" data-number="28.6"><h2 data-number="28.6" class="anchored" data-anchor-id="sec-figures">
+<span class="header-section-number">28.6</span> 图形</h2>
+<p>Quarto 文档中的图形可以是被嵌入的（例如，一个 PNG 或 JPEG 文件），也可以是代码块运行的结果。</p>
+<p>要嵌入一个外部文件中的图像，你可以在 RStudio 的可视化编辑器中使用“Insert”菜单，然后选择“Figure / Image”。这将弹出一个菜单，你可以在其中浏览到你想要插入的图像，并为其添加替代文本或标题，以及调整其大小。在可视化编辑器中，你也可以简单地将剪贴板中的图像粘贴到你的文档中，RStudio 会将该图像的副本放置在你的项目文件夹中。</p>
+<p>如果你包含一个生成图形的代码块（例如，包含一个 <code>ggplot()</code> 调用），生成的图形将自动包含在你的 Quarto 文档中。</p>
+<section id="图形尺寸" class="level3" data-number="28.6.1"><h3 data-number="28.6.1" class="anchored" data-anchor-id="图形尺寸">
+<span class="header-section-number">28.6.1</span> 图形尺寸</h3>
+<p>在 Quarto 中，图形最大的挑战是让你的图形获得正确的尺寸和形状。有五个主要的选项控制图形尺寸：<code>fig-width</code>、<code>fig-height</code>、<code>fig-asp</code>、<code>out-width</code> 和 <code>out-height</code>。图像尺寸之所以具有挑战性，是因为有两个尺寸（R 创建的图形的尺寸和它在输出文档中插入的尺寸），并且有多种指定尺寸的方式（即高度、宽度和纵横比：三选二）。</p>
+<p>我们推荐使用这五个选项中的三个：</p>
+<ul>
+<li><p>如果图形具有一致的宽度，它们往往在美学上更令人愉悦。为了实现这一点，请在默认设置中设置 <code>fig-width: 6</code>（6英寸）和 <code>fig-asp: 0.618</code>（黄金比例）。然后在单个代码块中，只调整 <code>fig-asp</code>。</p></li>
+<li>
+<p>使用 <code>out-width</code> 控制输出尺寸，并将其设置为输出文档正文宽度的百分比。我们建议 <code>out-width: "70%"</code> 和 <code>fig-align: center</code>。</p>
+<p>这给绘图留出了呼吸的空间，而不会占用太多空间。</p>
+</li>
+<li><p>要将多个绘图放在一行中，请为两个绘图设置 <code>layout-ncol</code> 为 2，为三个绘图设置 <code>layout-ncol</code> 为 3，依此类推。如果 <code>layout-ncol</code> 是 2，这实际上会将每个绘图的 <code>out-width</code> 设置为 “50%”；如果 <code>layout-ncol</code> 是 3，则为 “33%”，依此类推。根据你试图说明的内容（例如，显示数据或显示绘图变体），你可能还需要调整 <code>fig-width</code>，如下所述。</p></li>
+</ul>
+<p>如果你发现你需要眯着眼睛才能看清绘图中的文字，你需要调整 <code>fig-width</code>。如果 <code>fig-width</code> 大于图形在最终文档中渲染的尺寸，文字就会太小；如果 <code>fig-width</code> 小于最终尺寸，文字就会太大。你通常需要做一些实验来找出 <code>fig-width</code> 和文档中最终宽度之间的正确比例。为了说明这个原理，下面三个绘图的 <code>fig-width</code> 分别是 4、6 和 8：</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="quarto_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" style="width:50.0%" alt="汽车高速公路里程与排量的散点图，其中数据点 大小正常，坐标轴文本和标签的字体大小与周围文本相似。"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="quarto_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" style="width:50.0%" alt="汽车高速公路里程与排量的散点图，其中数据点 比前一个图小，坐标轴文本和标签也比周围文本小。"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="quarto_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" style="width:50.0%" alt="汽车高速公路里程与排量的散点图，其中数据点 比前一个图更小，坐标轴文本和标签也比周围文本更小。"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>如果你想确保所有图形的字体大小都一致，那么每当你设置 <code>out-width</code> 时，你都需要调整 <code>fig-width</code> 以保持与你的默认 <code>out-width</code> 相同的比例。例如，如果你的默认 <code>fig-width</code> 是 6，<code>out-width</code> 是 “70%”，那么当你设置 <code>out-width: "50%"</code> 时，你需要将 <code>fig-width</code> 设置为 4.3 (6 * 0.5 / 0.7)。</p>
+<p>图形尺寸和缩放是一门艺术和科学，要做到恰到好处可能需要一个迭代的试错过程。你可以在 <a href="https://www.tidyverse.org/blog/2020/08/taking-control-of-plot-scaling/">这篇关于控制绘图缩放的博客文章</a> 中了解更多关于图形尺寸的信息。</p>
+</section><section id="其他重要选项" class="level3" data-number="28.6.2"><h3 data-number="28.6.2" class="anchored" data-anchor-id="其他重要选项">
+<span class="header-section-number">28.6.2</span> 其他重要选项</h3>
+<p>当像本书这样将代码和文本混合在一起时，你可以设置 <code>fig-show: hold</code>，这样绘图就会在代码之后显示。这有一个令人愉悦的副作用，即迫使你用解释来打断大段的代码。</p>
+<p>要为绘图添加标题，请使用 <code>fig-cap</code>。在 Quarto 中，这会将图形从内联变为“浮动”。</p>
+<p>如果你正在生成 PDF 输出，默认的图形类型是 PDF。这是一个很好的默认设置，因为 PDF 是高质量的矢量图形。但是，如果你要显示数千个点，它们可能会产生非常大且速度慢的绘图。在这种情况下，设置 <code>fig-format: "png"</code> 来强制使用 PNG。它们的质量稍低，但会紧凑得多。</p>
+<p>给生成图形的代码块命名是一个好主意，即使你不常给其他代码块加标签。代码块标签用于生成磁盘上图形的文件名，所以给你的代码块命名可以让你更容易地挑选出绘图并在其他情况下重用（例如，如果你想快速地将单个绘图放入一封电子邮件中）。</p>
+</section><section id="练习-4" class="level3" data-number="28.6.3"><h3 data-number="28.6.3" class="anchored" data-anchor-id="练习-4">
+<span class="header-section-number">28.6.3</span> 练习</h3>
+<ol type="1">
+<li>在可视化编辑器中打开 <code>diamond-sizes.qmd</code>，找到一张钻石的图片，复制它，然后粘贴到文档中。双击图片并添加一个标题。调整图片大小并渲染你的文档。观察图片是如何保存在你当前的工作目录中的。</li>
+<li>编辑 <code>diamond-sizes.qmd</code> 中生成绘图的代码块的标签，使其以前缀 <code>fig-</code> 开头，并使用代码块选项 <code>fig-cap</code> 为图形添加一个标题。然后，编辑代码块上方的文本，使用“Insert &gt; Cross Reference”添加对该图形的交叉引用。</li>
+<li>使用以下代码块选项更改图形的大小，一次一个，渲染你的文档，并描述图形是如何变化的。
+<ol type="a">
+<li><code>fig-width: 10</code></li>
+<li><code>fig-height: 3</code></li>
+<li><code>out-width: "100%"</code></li>
+<li><code>out-width: "20%"</code></li>
+</ol>
+</li>
+</ol></section></section><section id="表格" class="level2" data-number="28.7"><h2 data-number="28.7" class="anchored" data-anchor-id="表格">
+<span class="header-section-number">28.7</span> 表格</h2>
+<p>与图形类似，你可以在 Quarto 文档中包含两种类型的表格。它们可以是你直接在 Quarto 文档中创建的 markdown 表格（使用“Insert Table”菜单），也可以是代码块运行结果生成的表格。在本节中，我们将重点关注后者，即通过计算生成的表格。</p>
+<p>默认情况下，Quarto 会像你在控制台中看到的那样打印数据框和矩阵：</p>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span>
+<span><span class="co">#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb</span></span>
+<span><span class="co">#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4</span></span>
+<span><span class="co">#&gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4</span></span>
+<span><span class="co">#&gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1</span></span>
+<span><span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1</span></span>
+<span><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>如果你希望数据以附加格式显示，可以使用 <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code> 函数。下面的代码生成了 <a href="#tbl-kable" class="quarto-xref">Table&nbsp;<span>28.1</span></a>。</p>
+<div class="cell">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span>, <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-kable" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-kable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;28.1: 一个 knitr kable 表格。
+</figcaption><div aria-describedby="tbl-kable-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">mpg</th>
+<th style="text-align: right;">cyl</th>
+<th style="text-align: right;">disp</th>
+<th style="text-align: right;">hp</th>
+<th style="text-align: right;">drat</th>
+<th style="text-align: right;">wt</th>
+<th style="text-align: right;">qsec</th>
+<th style="text-align: right;">vs</th>
+<th style="text-align: right;">am</th>
+<th style="text-align: right;">gear</th>
+<th style="text-align: right;">carb</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Mazda RX4</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">2.620</td>
+<td style="text-align: right;">16.46</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mazda RX4 Wag</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">2.875</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Datsun 710</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">3.85</td>
+<td style="text-align: right;">2.320</td>
+<td style="text-align: right;">18.61</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hornet 4 Drive</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">258</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.08</td>
+<td style="text-align: right;">3.215</td>
+<td style="text-align: right;">19.44</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hornet Sportabout</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">360</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">3.15</td>
+<td style="text-align: right;">3.440</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>阅读 <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">?knitr::kable</a></code> 的文档，了解你可以用来自定义表格的其他方法。如果需要更深度的定制，可以考虑 <strong>gt</strong>、<strong>huxtable</strong>、<strong>reactable</strong>、<strong>kableExtra</strong>、<strong>xtable</strong>、<strong>stargazer</strong>、<strong>pander</strong>、<strong>tables</strong> 和 <strong>ascii</strong> 这些包。它们各自提供了一套从 R 代码返回格式化表格的工具。</p>
+<section id="练习-5" class="level3" data-number="28.7.1"><h3 data-number="28.7.1" class="anchored" data-anchor-id="练习-5">
+<span class="header-section-number">28.7.1</span> 练习</h3>
+<ol type="1">
+<li>在可视化编辑器中打开 <code>diamond-sizes.qmd</code>，插入一个代码块，并使用 <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable()</a></code> 添加一个表格，显示 <code>diamonds</code> 数据框的前 5 行。</li>
+<li>改用 <code><a href="https://gt.rstudio.com/reference/gt.html">gt::gt()</a></code> 显示同一个表格。</li>
+<li>添加一个以前缀 <code>tbl-</code> 开头的代码块标签，并使用代码块选项 <code>tbl-cap</code> 为表格添加一个标题。然后，编辑代码块上方的文本，使用“Insert &gt; Cross Reference”添加对该表格的交叉引用。</li>
+</ol></section></section><section id="sec-caching" class="level2" data-number="28.8"><h2 data-number="28.8" class="anchored" data-anchor-id="sec-caching">
+<span class="header-section-number">28.8</span> 缓存</h2>
+<p>通常情况下，每次渲染文档都是从一个完全干净的环境开始的。这对于可复现性来说非常好，因为它确保了你已经用代码捕捉到了每一个重要的计算。然而，如果你有一些计算需要很长时间，这可能会很痛苦。解决方案是 <code>cache: true</code>。</p>
+<p>你可以在文档级别启用 Knitr 缓存，以缓存文档中所有计算的结果，使用标准的 YAML 选项：</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"我的文档"</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">cache</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>你也可以在代码块级别启用缓存，以缓存特定代码块中计算的结果：</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 耗时计算的代码...</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>设置后，这会将代码块的输出保存到磁盘上一个特殊命名的文件中。在后续运行中，knitr 会检查代码是否已更改，如果未更改，它将重用缓存的结果。</p>
+<p>缓存系统必须谨慎使用，因为默认情况下它只基于代码本身，而不是其依赖项。例如，在这里 <code>processed_data</code> 代码块依赖于 <code>raw-data</code> 代码块：</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: raw-data</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>rawdata <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"一个_非常_大的_文件.csv"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: processed_data</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>processed_data <span class="ot">&lt;-</span> rawdata <span class="sc">|&gt;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(import_var)) <span class="sc">|&gt;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_variable =</span> <span class="fu">complicated_transformation</span>(x, y, z))</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>缓存 <code>processed_data</code> 代码块意味着如果 dplyr 管道被更改，它将被重新运行，但如果 <code>read_csv()</code> 调用发生更改，它将不会被重新运行。你可以使用 <code>dependson</code> 代码块选项来避免这个问题：</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: processed-data</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| dependson: "raw-data"</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>processed_data <span class="ot">&lt;-</span> rawdata <span class="sc">|&gt;</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(import_var)) <span class="sc">|&gt;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">new_variable =</span> <span class="fu">complicated_transformation</span>(x, y, z))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>dependson</code> 应该包含一个字符向量，其中包含被缓存的代码块所依赖的<em>每一个</em>代码块。每当 knitr 检测到其依赖项之一发生更改时，它就会更新被缓存代码块的结果。</p>
+<p>请注意，如果 <code>a_very_large_file.csv</code> 发生更改，代码块将不会更新，因为 knitr 缓存只跟踪 <code>.qmd</code> 文件内部的更改。如果你还想跟踪该文件的更改，可以使用 <code>cache.extra</code> 选项。这是一个任意的 R 表达式，当它发生更改时将使缓存失效。一个好用的函数是 <code><a href="https://rdrr.io/r/base/file.info.html">file.mtime()</a></code>：它返回文件的最后修改时间。然后你可以这样写：</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: raw-data</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache.extra: !expr file.mtime("a_very_large_file.csv")</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>rawdata <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"a_very_large_file.csv"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>我们采纳了 <a href="https://twitter.com/drob/status/738786604731490304">David Robinson</a> 的建议来命名这些代码块：每个代码块都以它创建的主要对象命名。这使得理解 <code>dependson</code> 规范变得更容易。</p>
+<p>随着你的缓存策略变得越来越复杂，定期使用 <code><a href="https://rdrr.io/pkg/knitr/man/clean_cache.html">knitr::clean_cache()</a></code> 清除所有缓存是一个好主意。</p>
+<section id="练习-6" class="level3" data-number="28.8.1"><h3 data-number="28.8.1" class="anchored" data-anchor-id="练习-6">
+<span class="header-section-number">28.8.1</span> 练习</h3>
+<ol type="1">
+<li>建立一个代码块网络，其中 <code>d</code> 依赖于 <code>c</code> 和 <code>b</code>，而 <code>b</code> 和 <code>c</code> 都依赖于 <code>a</code>。让每个代码块打印 <code><a href="https://lubridate.tidyverse.org/reference/now.html">lubridate::now()</a></code>，设置 <code>cache: true</code>，然后验证你对缓存的理解。</li>
+</ol></section></section><section id="故障排除" class="level2" data-number="28.9"><h2 data-number="28.9" class="anchored" data-anchor-id="故障排除">
+<span class="header-section-number">28.9</span> 故障排除</h2>
+<p>对 Quarto 文档进行故障排除可能具有挑战性，因为你不再处于交互式的 R 环境中，你需要学习一些新技巧。此外，错误可能是由于 Quarto 文档本身的问题，也可能是由于 Quarto 文档中的 R 代码问题。</p>
+<p>在带有代码块的文档中，一个常见的错误是重复的代码块标签，如果你的工作流程涉及复制和粘贴代码块，这种情况尤其普遍。要解决此问题，你只需更改其中一个重复的标签即可。</p>
+<p>如果错误是由于文档中的 R 代码引起的，你应该首先尝试在交互式会话中重现问题。重启 R，然后“Run all chunks”（运行所有代码块），可以从“Code”菜单下的“Run region”中选择，也可以使用键盘快捷键 Ctrl + Alt + R。如果幸运的话，这会重现问题，你就可以在交互式环境中找出问题所在。</p>
+<p>如果这没有帮助，那么你的交互式环境和 Quarto 环境之间一定存在某些差异。你将需要系统地探索这些选项。最常见的差异是工作目录：Quarto 的工作目录是它所在的目录。通过在代码块中包含 <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> 来检查工作目录是否如你所料。</p>
+<p>接下来，集思广益，想出所有可能导致该错误的因素。你需要系统地检查它们在你的 R 会话和你的 Quarto 会话中是否相同。最简单的方法是在导致问题的代码块上设置 <code>error: true</code>，然后使用 <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> 和 <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> 来检查设置是否如你所料。</p>
+</section><section id="yaml-标头" class="level2" data-number="28.10"><h2 data-number="28.10" class="anchored" data-anchor-id="yaml-标头">
+<span class="header-section-number">28.10</span> YAML 标头</h2>
+<p>你可以通过调整 YAML 标头的参数来控制许多其他“整个文档”的设置。你可能想知道 YAML 代表什么：它是 “YAML Ain’t Markup Language”（YAML 不是一种标记语言），旨在以一种易于人类读写的方式表示分层数据。Quarto 用它来控制输出的许多细节。在这里，我们将讨论三个方面：自包含文档、文档参数和参考文献。</p>
+<section id="自包含" class="level3" data-number="28.10.1"><h3 data-number="28.10.1" class="anchored" data-anchor-id="自包含">
+<span class="header-section-number">28.10.1</span> 自包含</h3>
+<p>HTML 文档通常有许多外部依赖项（例如，图像、CSS 样式表、JavaScript 等），默认情况下，Quarto 会将这些依赖项放在与你的 <code>.qmd</code> 文件同目录下的一个 <code>_files</code> 文件夹中。如果你将 HTML 文件发布到托管平台（例如，QuartoPub，<a href="https://quartopub.com/">https://quartopub.com/</a>），这个目录中的依赖项会与你的文档一起发布，因此在已发布的报告中可用。但是，如果你想通过电子邮件将报告发送给同事，你可能更喜欢一个单一的、自包含的 HTML 文档，它嵌入了所有的依赖项。你可以通过指定 <code>embed-resources</code> 选项来做到这一点：</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>生成的文件将是自包含的，因此它不需要任何外部文件，也不需要互联网访问即可由浏览器正确显示。</p>
+</section><section id="参数" class="level3" data-number="28.10.2"><h3 data-number="28.10.2" class="anchored" data-anchor-id="参数">
+<span class="header-section-number">28.10.2</span> 参数</h3>
+<p>Quarto 文档可以包含一个或多个参数，其值可以在你渲染报告时设置。当你希望用不同的关键输入值重新渲染同一份报告时，参数非常有用。例如，你可能需要按分公司生成销售报告、按学生生成考试成绩，或者按国家生成人口统计摘要。要声明一个或多个参数，请使用 <code>params</code> 字段。</p>
+<p>这个例子使用一个 <code>my_class</code> 参数来决定显示哪一类汽车：</p>
+<div class="cell">
+<pre><code>---
+format: html
+params:
+  my_class: "suv"
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+
+class &lt;- mpg |&gt; filter(class == params$my_class)
+```
+
+# Fuel economy for `r params$my_class`s
+
+```{r}
+#| message: false
+
+ggplot(class, aes(x = displ, y = hwy)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE)
+```</code></pre>
+</div>
+<p>如你所见，参数在代码块中作为一个名为 <code>params</code> 的只读列表可用。</p>
+<p>你可以将原子向量直接写入 YAML 标头。你也可以通过在参数值前加上 <code>!expr</code> 来运行任意 R 表达式。这是指定日期/时间参数的好方法。</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">params</span><span class="kw">:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">start</span><span class="kw">:</span><span class="at"> !expr lubridate::ymd("2015-01-01")</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">snapshot</span><span class="kw">:</span><span class="at"> !expr lubridate::ymd_hms("2015-01-01 12:30:00")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="参考文献和引文" class="level3" data-number="28.10.3"><h3 data-number="28.10.3" class="anchored" data-anchor-id="参考文献和引文">
+<span class="header-section-number">28.10.3</span> 参考文献和引文</h3>
+<p>Quarto 可以自动生成多种样式的引文和参考文献。在 Quarto 文档中添加引文和参考文献最直接的方法是使用 RStudio 中的可视化编辑器。</p>
+<p>要使用可视化编辑器添加引文，请转到“Insert &gt; Citation”。可以从多种来源插入引文：</p>
+<ol type="1">
+<li><p><a href="https://quarto.org/docs/visual-editor/technical.html#citations-from-dois">DOI</a> (文档对象标识符) 引用。</p></li>
+<li><p><a href="https://quarto.org/docs/visual-editor/technical.html#citations-from-zotero">Zotero</a> 个人或小组文献库。</p></li>
+<li><p>搜索 <a href="https://www.crossref.org/">Crossref</a>、<a href="https://datacite.org/">DataCite</a> 或 <a href="https://pubmed.ncbi.nlm.nih.gov/">PubMed</a>。</p></li>
+<li><p>你的文档参考文献（文档目录中的一个 <code>.bib</code> 文件）。</p></li>
+</ol>
+<p>在底层，可视化模式使用标准的 Pandoc markdown 表示法来表示引文（例如，<code>[@citation]</code>）。</p>
+<p>如果你使用前三种方法之一添加引文，可视化编辑器将自动为你创建一个 <code>bibliography.bib</code> 文件，并将参考文献添加到其中。它还会在文档的 YAML 中添加一个 <code>bibliography</code> 字段。随着你添加更多的参考文献，这个文件将被它们的引文填充。你也可以直接使用许多常见的参考文献格式编辑此文件，包括 BibLaTeX、BibTeX、EndNote、Medline。</p>
+<p>要在源代码编辑器中的 .qmd 文件内创建引文，请使用由 ‘@’ + 参考文献文件中的引文标识符组成的键。然后将引文放在方括号内。以下是一些示例：</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>用分号分隔多个引文：Blah blah <span class="co">[</span><span class="ot">@smith04; @doe99</span><span class="co">]</span>。</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>你可以在方括号内添加任意注释：</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>Blah blah <span class="co">[</span><span class="ot">参见 @doe99, pp. 33-35; 以及 @smith04, ch. 1</span><span class="co">]</span>。</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>去掉方括号以创建文内引文：@smith04 </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>说 blah，或者 @smith04 <span class="co">[</span><span class="ot">p. 33</span><span class="co">]</span> 说 blah。</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>在引文前添加一个 <span class="in">`-`</span> 来抑制作者的名字：</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>Smith 说 blah <span class="co">[</span><span class="ot">-@smith04</span><span class="co">]</span>。</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>当 Quarto 渲染你的文件时，它将在你的文档末尾构建并附加一个参考文献列表。该参考文献列表将包含你的参考文献文件中的每一个被引用的参考文献，但它不会包含一个章节标题。因此，通常的做法是在你的文件末尾为参考文献添加一个章节标题，例如 <code># 参考文献</code> 或 <code># Bibliography</code>。</p>
+<p>你可以通过在 <code>csl</code> 字段中引用一个 CSL (citation style language) 文件来更改你的引文和参考文献的样式：</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> rmarkdown.bib</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> apa.csl</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>与 <code>bibliography</code> 字段一样，你的 csl 文件应包含文件的路径。这里我们假设 csl 文件与 .qmd 文件在同一个目录中。一个寻找常见参考文献样式 CSL 文件的好地方是 <a href="https://github.com/citation-style-language/styles">https://github.com/citation-style-language/styles</a>。</p>
+</section></section><section id="工作流" class="level2" data-number="28.11"><h2 data-number="28.11" class="anchored" data-anchor-id="工作流">
+<span class="header-section-number">28.11</span> 工作流</h2>
+<p>早些时候，我们讨论了捕获 R 代码的基本工作流，即你在<em>控制台</em>中交互式地工作，然后在<em>脚本编辑器</em>中捕获有效的内容。Quarto 将控制台和脚本编辑器结合在一起，模糊了交互式探索和长期代码捕获之间的界限。你可以在一个代码块内快速迭代，用 Cmd/Ctrl + Shift + Enter 编辑和重新执行。当你满意时，你就可以继续前进，开始一个新的代码块。</p>
+<p>Quarto 之所以重要，还因为它将文字和代码如此紧密地集成在一起。这使它成为一个很棒的<strong>分析笔记</strong>，因为它让你能够开发代码并记录你的想法。分析笔记与物理科学中的经典实验笔记有许多相同的目标。它：</p>
+<ul>
+<li><p>记录你做了什么以及为什么这么做。无论你的记忆力有多好，如果你不记录你所做的事情，总有一天你会忘记重要的细节。把它们写下来，这样你就不会忘记！</p></li>
+<li><p>支持严谨的思考。如果你边做边记录你的想法，并持续反思它们，你更有可能得出一个强有力的分析。当最终你写下你的分析与他人分享时，这也为你节省了时间。</p></li>
+<li><p>帮助他人理解你的工作。独自进行数据分析的情况很少，你通常会作为一个团队的一部分工作。实验笔记可以帮助你不仅分享你做了什么，还分享你为什么这么做给你的同事或实验室伙伴。</p></li>
+</ul>
+<p>许多关于有效使用实验笔记的好建议也可以转化为分析笔记。我们借鉴了自己的经验和 Colin Purrington 关于实验笔记的建议 (<a href="https://colinpurrington.com/tips/lab-notebooks">https://colinpurrington.com/tips/lab-notebooks</a>)，总结出以下几点提示：</p>
+<ul>
+<li><p>确保每个笔记都有一个描述性的标题，一个引人入胜的文件名，以及一个简要描述分析目标的第一段。</p></li>
+<li>
+<p>使用 YAML 标头的日期字段来记录你开始写笔记的日期：</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> 2016-08-23</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>使用 ISO8601 YYYY-MM-DD 格式，这样就不会有歧义。即使你通常不这样写日期，也要使用它！</p>
+</li>
+<li><p>如果你在一个分析想法上花费了大量时间，结果却发现是个死胡同，不要删除它！写一个简短的说明，说明它为什么失败，并把它留在笔记里。这会帮助你在将来回到这个分析时避免重蹈覆辙。</p></li>
+<li><p>一般来说，你最好在 R 之外进行数据录入。但如果你确实需要记录一小段数据，请使用 <code><a href="https://tibble.tidyverse.org/reference/tribble.html">tibble::tribble()</a></code> 清晰地把它列出来。</p></li>
+<li><p>如果你在一个数据文件中发现错误，永远不要直接修改它，而是编写代码来纠正这个值。并解释你为什么要做这个修正。</p></li>
+<li><p>在一天结束之前，确保你能渲染这个笔记。如果你在使用缓存，确保清除缓存。这将让你在代码还记忆犹新的时候修复任何问题。</p></li>
+<li><p>如果你希望你的代码长期可复现（即你可以在下个月或明年回来运行它），你需要跟踪你的代码使用的包的版本。一个严谨的方法是使用 <strong>renv</strong>，<a href="https://rstudio.github.io/renv/index.html">https://rstudio.github.io/renv/index.html</a>，它将包存储在你的项目目录中。一个快速而粗略的技巧是包含一个运行 <code><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo()</a></code> 的代码块——这不能让你轻松地重现你今天的包，但至少你会知道它们曾经是什么样的。</p></li>
+<li><p>在你的职业生涯中，你将会创建非常非常多的分析笔记。你将如何组织它们，以便将来能再次找到它们？我们建议将它们存储在各自的项目中，并想出一个好的命名方案。</p></li>
+</ul></section><section id="总结" class="level2" data-number="28.12"><h2 data-number="28.12" class="anchored" data-anchor-id="总结">
+<span class="header-section-number">28.12</span> 总结</h2>
+<p>在本章中，我们向你介绍了 Quarto，这是一个用于创作和发布可复现计算文档的工具，它将你的代码和文字说明整合在一处。你学习了如何在 RStudio 中使用可视化或源代码编辑器编写 Quarto 文档，代码块如何工作以及如何为它们自定义选项，如何在你的 Quarto 文档中包含图形和表格，以及为计算进行缓存的选项。此外，你还学习了如何调整 YAML 标头选项来创建自包含或参数化的文档，以及如何包含引文和参考文献。我们还为你提供了一些故障排除和工作流的技巧。</p>
+<p>虽然这个介绍应该足以让你开始使用 Quarto，但仍有许多东西需要学习。Quarto 还相对年轻，并且仍在快速发展。了解其创新的最佳去处是 Quarto 的官方网站：<a href="https://quarto.org/" class="uri">https://quarto.org</a>。</p>
+<p>我们在这里没有涉及两个重要的主题：协作以及如何准确地将你的想法传达给其他人的细节。协作是现代数据科学的重要组成部分，通过使用像 Git 和 GitHub 这样的版本控制工具，你可以让你的生活轻松得多。我们推荐由 Jenny Bryan 编写的 “Happy Git with R”，这是一本面向 R 用户的 Git 和 GitHub 用户友好入门读物。该书可在线免费获取：<a href="https://happygitwithr.com">https://happygitwithr.com</a>。</p>
+<p>我们也没有谈及为了清晰地传达你的分析结果，你到底应该写些什么。为了提高你的写作水平，我们强烈推荐阅读 Joseph M. Williams &amp; Joseph Bizup 的 <a href="https://www.amazon.com/Style-Lessons-Clarity-Grace-12th/dp/0134080416"><em>Style: Lessons in Clarity and Grace</em></a> 或 George Gopen 的 <a href="https://www.amazon.com/Sense-Structure-Writing-Readers-Perspective/dp/0205296327"><em>The Sense of Structure: Writing from the Reader’s Perspective</em></a>。这两本书都将帮助你理解句子和段落的结构，并为你提供使你的写作更清晰的工具。（这些书如果买新的会相当昂贵，但许多英语课程都在使用它们，所以有很多便宜的二手书）。George Gopen 也在 <a href="https://www.georgegopen.com/litigation-articles.html">https://www.georgegopen.com/litigation-articles.html</a> 上发表了一些关于写作的短文。它们是针对律师的，但几乎所有内容也同样适用于数据科学家。</p>
+
+
+</section><section id="sec-data-visualization" class="level1" data-number="29"><h1 data-number="29">
+<span class="header-section-number">29</span> Data visualization</h1>
+<pre class="{r}"><code>#| echo: false
+source("_common.R")</code></pre>
+<section id="introduction" class="level2" data-number="29.1"><h2 data-number="29.1" class="anchored" data-anchor-id="introduction">
+<span class="header-section-number">29.1</span> Introduction</h2>
+<blockquote class="blockquote">
+<p>“The simple graph has brought more information to the data analyst’s mind than any other device.” — John Tukey<br>
+“简单的图形给数据分析师带来的信息比任何其他设备都多。” — 约翰·图基 (John Tukey)</p>
+</blockquote>
+<p>R has several systems for making graphs, but ggplot2 is one of the most elegant and most versatile. ggplot2 implements the <strong>grammar of graphics</strong>, a coherent system for describing and building graphs. With ggplot2, you can do more and faster by learning one system and applying it in many places.<br>
+R 有多个用于制作图形的系统，但 ggplot2 是其中最优雅、功能最全面的之一。ggplot2 实现了<strong>图形语法</strong> (grammar of graphics)，这是一个用于描述和构建图形的连贯系统。通过学习 ggplot2，你可以在许多地方应用这一系统，从而更快、更好地完成工作。</p>
+<p>This chapter will teach you how to visualize your data using <strong>ggplot2</strong>. We will start by creating a simple scatterplot and use that to introduce aesthetic mappings and geometric objects – the fundamental building blocks of ggplot2. We will then walk you through visualizing distributions of single variables as well as visualizing relationships between two or more variables. We’ll finish off with saving your plots and troubleshooting tips.<br>
+本章将教你如何使用 <strong>ggplot2</strong> 来可视化你的数据。我们将从创建一个简单的散点图开始，并以此介绍美学映射 (aesthetic mappings) 和几何对象 (geometric objects)——它们是 ggplot2 的基本构建模块。然后，我们将引导你学习如何可视化单个变量的分布以及两个或多个变量之间的关系。最后，我们会介绍如何保存你的图形以及一些故障排除技巧。</p>
+<section id="prerequisites" class="level3" data-number="29.1.1"><h3 data-number="29.1.1" class="anchored" data-anchor-id="prerequisites">
+<span class="header-section-number">29.1.1</span> Prerequisites</h3>
+<p>This chapter focuses on ggplot2, one of the core packages in the tidyverse. To access the datasets, help pages, and functions used in this chapter, load the tidyverse by running:<br>
+本章重点介绍 ggplot2，它是 tidyverse 中的核心包之一。要访问本章中使用的数据集、帮助页面和函数，请通过运行以下代码加载 tidyverse：</p>
+<pre class="{r}"><code><a href="https://tidyverse.tidyverse.org">#| label: setup
+library(tidyverse)</a></code></pre>
+<p>That one line of code loads the core tidyverse; the packages that you will use in almost every data analysis. It also tells you which functions from the tidyverse conflict with functions in base R (or from other packages you might have loaded)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.<br>
+这一行代码加载了 tidyverse 的核心包；这些包几乎在每次数据分析中都会用到。它还会告诉你 tidyverse 中的哪些函数与基础 R（或其他你可能已加载的包）中的函数存在冲突<sup>1</sup>。</p>
+<p>If you run this code and get the error message <code>there is no package called 'tidyverse'</code>, you’ll need to first install it, then run <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> once again.<br>
+如果你运行此代码并收到错误消息 <code>there is no package called 'tidyverse'</code>，你需要先安装它，然后再运行一次 <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>。</p>
+<pre class="{r}"><code>#| eval: false
+install.packages("tidyverse")
+library(tidyverse)</code></pre>
+<p>You only need to install a package once, but you need to load it every time you start a new session.<br>
+你只需要安装一个包一次，但每次开始新会话时都需要加载它。</p>
+<p>In addition to tidyverse, we will also use the <strong>palmerpenguins</strong> package, which includes the <code>penguins</code> dataset containing body measurements for penguins on three islands in the Palmer Archipelago, and the ggthemes package, which offers a colorblind safe color palette.<br>
+除了 tidyverse，我们还将使用 <strong>palmerpenguins</strong> 包，其中包含了 <code>penguins</code> 数据集，该数据集包含帕默群岛三个岛屿上企鹅的身体测量数据；我们还会用到 ggthemes 包，它提供了一个色盲安全的调色板。</p>
+<pre class="{r}"><code><a href="https://allisonhorst.github.io/palmerpenguins/">library(palmerpenguins)
+library(ggthemes)</a></code></pre>
+</section></section><section id="first-steps" class="level2" data-number="29.2"><h2 data-number="29.2" class="anchored" data-anchor-id="first-steps">
+<span class="header-section-number">29.2</span> First steps</h2>
+<p>Do penguins with longer flippers weigh more or less than penguins with shorter flippers? You probably already have an answer, but try to make your answer precise. What does the relationship between flipper length and body mass look like? Is it positive? Negative? Linear? Nonlinear? Does the relationship vary by the species of the penguin? How about by the island where the penguin lives? Let’s create visualizations that we can use to answer these questions.<br>
+鳍状肢较长的企鹅比鳍状肢较短的企鹅重还是轻？你可能已经有了答案，但请尝试让你的答案更精确。鳍状肢长度和体重之间的关系是怎样的？是正相关？负相关？线性的？非线性的？这种关系是否因企鹅的种类而异？又是否因企鹅居住的岛屿而异？让我们创建可视化图表来回答这些问题。</p>
+<section id="the-penguins-data-frame" class="level3" data-number="29.2.1"><h3 data-number="29.2.1" class="anchored" data-anchor-id="the-penguins-data-frame">
+<span class="header-section-number">29.2.1</span> The <code>penguins</code> data frame</h3>
+<p>You can test your answers to those questions with the <code>penguins</code> <strong>data frame</strong> found in palmerpenguins (a.k.a. <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">palmerpenguins::penguins</a></code>). A data frame is a rectangular collection of variables (in the columns) and observations (in the rows). <code>penguins</code> contains <code>r nrow(penguins)</code> observations collected and made available by Dr.&nbsp;Kristen Gorman and the Palmer Station, Antarctica LTER<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.<br>
+你可以使用 palmerpenguins 包中的 <code>penguins</code> <strong>数据框</strong>（也写作 <code><a href="https://allisonhorst.github.io/palmerpenguins/reference/penguins.html">palmerpenguins::penguins</a></code>）来检验你对这些问题的回答。数据框是一个矩形集合，包含变量（在列中）和观测值（在行中）。<code>penguins</code> 数据集包含了 <code>r nrow(penguins)</code> 条观测数据，由 Kristen Gorman 博士和南极帕默站长期生态研究项目（LTER）收集并提供<sup>2</sup>。</p>
+<p>To make the discussion easier, let’s define some terms:<br>
+为了让讨论更容易，我们来定义一些术语：</p>
+<p>- A <strong>variable</strong> is a quantity, quality, or property that you can measure.<br><strong>变量</strong> (variable) 是你可以测量的数量、质量或属性。</p>
+<p>- A <strong>value</strong> is the state of a variable when you measure it. The value of a variable may change from measurement to measurement.<br><strong>值</strong> (value) 是你在测量时一个变量的状态。一个变量的值可能在不同次测量中发生变化。</p>
+<p>- An <strong>observation</strong> is a set of measurements made under similar conditions (you usually make all of the measurements in an observation at the same time and on the same object). An observation will contain several values, each associated with a different variable. We’ll sometimes refer to an observation as a data point.<br><strong>观测</strong> (observation) 是在相似条件下进行的一组测量（通常你会在同一时间对同一对象进行一次观测中的所有测量）。一次观测会包含几个值，每个值都与一个不同的变量相关联。我们有时也将一次观测称为一个数据点。</p>
+<p>- <strong>Tabular data</strong> is a set of values, each associated with a variable and an observation. Tabular data is <em>tidy</em> if each value is placed in its own “cell”, each variable in its own column, and each observation in its own row.<br><strong>表格数据</strong> (Tabular data) 是一组值，每个值都与一个变量和一次观测相关联。如果每个值都放在自己的“单元格”中，每个变量在自己的列中，每个观测在自己的行中，那么这个表格数据就是<em>整洁</em>的。</p>
+<p>In this context, a variable refers to an attribute of all the penguins, and an observation refers to all the attributes of a single penguin.<br>
+在此背景下，一个变量指的是所有企鹅的一个属性，而一个观测指的是单只企鹅的所有属性。</p>
+<p>Type the name of the data frame in the console and R will print a preview of its contents. Note that it says <code>tibble</code> on top of this preview. In the tidyverse, we use special data frames called <strong>tibbles</strong> that you will learn more about soon.<br>
+在控制台中输入数据框的名称，R 将会打印其内容的预览。注意，在这个预览的顶部显示了 <code>tibble</code>。在 tidyverse 中，我们使用一种特殊的数据框，称为 <strong>tibbles</strong>，你很快就会学到更多关于它的知识。</p>
+<pre class="{r}"><code>penguins</code></pre>
+<p>This data frame contains <code>r ncol(penguins)</code> columns. For an alternative view, where you can see all variables and the first few observations of each variable, use <code>glimpse()</code>. Or, if you’re in RStudio, run <code>View(penguins)</code> to open an interactive data viewer.<br>
+该数据框包含 <code>r ncol(penguins)</code> 列。若要查看另一种视图，即可以看到所有变量以及每个变量的前几个观测值，请使用 <code>glimpse()</code>。或者，如果你在 RStudio 中，运行 <code>View(penguins)</code> 可以打开一个交互式数据查看器。</p>
+<pre class="{r}"><code>glimpse(penguins)</code></pre>
+<p>Among the variables in <code>penguins</code> are:<br><code>penguins</code> 数据框中的变量包括：</p>
+<ol type="1">
+<li><p><code>species</code>: a penguin’s species (Adelie, Chinstrap, or Gentoo).<br><code>species</code>: 企鹅的种类（阿德利、帽带或金图）。</p></li>
+<li><p><code>flipper_length_mm</code>: length of a penguin’s flipper, in millimeters.<br><code>flipper_length_mm</code>: 企鹅鳍状肢的长度，单位为毫米。</p></li>
+<li><p><code>body_mass_g</code>: body mass of a penguin, in grams.<br><code>body_mass_g</code>: 企鹅的体重，单位为克。</p></li>
+</ol>
+<p>To learn more about <code>penguins</code>, open its help page by running <code><a href="https://rdrr.io/r/datasets/penguins.html">?penguins</a></code>.<br>
+要了解更多关于 <code>penguins</code> 的信息，运行 <code><a href="https://rdrr.io/r/datasets/penguins.html">?penguins</a></code> 来打开它的帮助页面。</p>
+</section><section id="sec-ultimate-goal" class="level3" data-number="29.2.2"><h3 data-number="29.2.2" class="anchored" data-anchor-id="sec-ultimate-goal">
+<span class="header-section-number">29.2.2</span> Ultimate goal</h3>
+<p>Our ultimate goal in this chapter is to recreate the following visualization displaying the relationship between flipper lengths and body masses of these penguins, taking into consideration the species of the penguin.<br>
+我们在本章的最终目标是重新创建以下可视化图表，该图表展示了这些企鹅的鳍状肢长度和体重之间的关系，同时考虑了企鹅的种类。</p>
+<pre class="{r}"><code>#| echo: false
+#| warning: false
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins, with a
+#|   best fit line of the relationship between these two variables 
+#|   overlaid. The plot displays a positive, fairly linear, and relatively 
+#|   strong relationship between these two variables. Species (Adelie, 
+#|   Chinstrap, and Gentoo) are represented with different colors and 
+#|   shapes. The relationship between body mass and flipper length is 
+#|   roughly the same for these three species, and Gentoo penguins are 
+#|   larger than penguins from the other two species.
+#|   一张企鹅体重与鳍状肢长度的散点图，并叠加了这两个变量关系的
+#|   最佳拟合线。该图显示了这两个变量之间存在正向、相当线性且
+#|   相对较强的关系。物种（阿德利、帽带和金图）用不同的颜色和
+#|   形状表示。体重和鳍状肢长度之间的关系在这三个物种中大致相同，
+#|   而金图企鹅比其他两个物种的企鹅要大。
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species)) +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Body mass and flipper length",
+    subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+    x = "Flipper length (mm)",
+    y = "Body mass (g)",
+    color = "Species",
+    shape = "Species"
+  ) +
+  scale_color_colorblind()</code></pre>
+</section><section id="creating-a-ggplot" class="level3" data-number="29.2.3"><h3 data-number="29.2.3" class="anchored" data-anchor-id="creating-a-ggplot">
+<span class="header-section-number">29.2.3</span> Creating a ggplot</h3>
+<p>Let’s recreate this plot step-by-step.<br>
+让我们一步步地重新创建这个图。</p>
+<p>With ggplot2, you begin a plot with the function <code>ggplot()</code>, defining a plot object that you then add <strong>layers</strong> to. The first argument of <code>ggplot()</code> is the dataset to use in the graph and so <code>ggplot(data = penguins)</code> creates an empty graph that is primed to display the <code>penguins</code> data, but since we haven’t told it how to visualize it yet, for now it’s empty. This is not a very exciting plot, but you can think of it like an empty canvas you’ll paint the remaining layers of your plot onto.<br>
+使用 ggplot2 时，你通过 <code>ggplot()</code> 函数开始一个绘图，定义一个绘图对象，然后向其添加<strong>图层 (layers)</strong>。<code>ggplot()</code> 的第一个参数是要在图中使用的数据集，因此 <code>ggplot(data = penguins)</code> 会创建一个准备好显示 <code>penguins</code> 数据的空图，但由于我们还没有告诉它如何可视化这些数据，所以目前它还是空的。这虽然不是一个很激动人心的图，但你可以把它想象成一块空白的画布，你将在这上面绘制图的其余图层。</p>
+<pre class="{r}"><code>#| fig-alt: |
+#|   A blank, gray plot area.
+#|   一个空白的灰色绘图区域。
+ggplot(data = penguins)</code></pre>
+<p>Next, we need to tell <code>ggplot()</code> how the information from our data will be visually represented. The <code>mapping</code> argument of the <code>ggplot()</code> function defines how variables in your dataset are mapped to visual properties (<strong>aesthetics</strong>) of your plot. The <code>mapping</code> argument is always defined in the <code>aes()</code> function, and the <code>x</code> and <code>y</code> arguments of <code>aes()</code> specify which variables to map to the x and y axes. For now, we will only map flipper length to the <code>x</code> aesthetic and body mass to the <code>y</code> aesthetic. ggplot2 looks for the mapped variables in the <code>data</code> argument, in this case, <code>penguins</code>.<br>
+接下来，我们需要告诉 <code>ggplot()</code> 如何将我们数据中的信息进行可视化表示。<code>ggplot()</code> 函数的 <code>mapping</code> 参数定义了你数据集中的变量如何映射到图的视觉属性（<strong>美学 (aesthetics)</strong>）上。<code>mapping</code> 参数总是在 <code>aes()</code> 函数中定义，而 <code>aes()</code> 的 <code>x</code> 和 <code>y</code> 参数指定了将哪些变量映射到 x 轴和 y 轴。现在，我们只将鳍状肢长度映射到 <code>x</code> 美学，将体重映射到 <code>y</code> 美学。ggplot2 会在 <code>data</code> 参数（在这里是 <code>penguins</code>）中寻找被映射的变量。</p>
+<p>The following plot shows the result of adding these mappings.<br>
+下面的图表展示了添加这些映射后的结果。</p>
+<pre class="{r}"><code>#| fig-alt: |
+#|   The plot shows flipper length on the x-axis, with values that range from 
+#|   170 to 230, and body mass on the y-axis, with values that range from 3000 
+#|   to 6000.
+#|   该图在 x 轴上显示鳍状肢长度，取值范围从 170 到 230；
+#|   在 y 轴上显示体重，取值范围从 3000 到 6000。
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g)
+)</code></pre>
+<p>Our empty canvas now has more structure – it’s clear where flipper lengths will be displayed (on the x-axis) and where body masses will be displayed (on the y-axis). But the penguins themselves are not yet on the plot. This is because we have not yet articulated, in our code, how to represent the observations from our data frame on our plot.<br>
+我们空白的画布现在有了更多的结构——很清楚鳍状肢长度将显示在哪里（x 轴上），体重将显示在哪里（y 轴上）。但是企鹅本身还没有出现在图上。这是因为我们还没有在代码中明确说明如何将我们数据框中的观测值在图上表示出来。</p>
+<p>To do so, we need to define a <strong>geom</strong>: the geometrical object that a plot uses to represent data. These geometric objects are made available in ggplot2 with functions that start with <code>geom_</code>. People often describe plots by the type of geom that the plot uses. For example, bar charts use bar geoms (<code>geom_bar()</code>), line charts use line geoms (<code>geom_line()</code>), boxplots use boxplot geoms (<code>geom_boxplot()</code>), scatterplots use point geoms (<code>geom_point()</code>), and so on.<br>
+为此，我们需要定义一个 <strong>几何对象 (geom)</strong>：即图用来表示数据的几何对象。这些几何对象在 ggplot2 中通过以 <code>geom_</code> 开头的函数提供。人们通常用图所使用的几何对象类型来描述图。例如，条形图使用条形几何对象 (<code>geom_bar()</code>)，折线图使用线形几何对象 (<code>geom_line()</code>)，箱线图使用箱线图几何对象 (<code>geom_boxplot()</code>)，散点图使用点几何对象 (<code>geom_point()</code>) 等等。</p>
+<p>The function <code>geom_point()</code> adds a layer of points to your plot, which creates a scatterplot. ggplot2 comes with many geom functions that each adds a different type of layer to a plot. You’ll learn a whole bunch of geoms throughout the book, particularly in <a href="layers.html" class="quarto-xref"><span>Chapter 9</span></a>.<br>
+函数 <code>geom_point()</code> 会在你的图上添加一个点图层，从而创建一个散点图。ggplot2 提供了许多几何函数，每个函数都会给图添加不同类型的图层。你将在本书中学习到许多几何对象，特别是在 <a href="layers.html" class="quarto-xref"><span>Chapter 9</span></a> 中。</p>
+<pre class="{r}"><code>#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins. The plot 
+#|   displays a positive, linear, and relatively strong relationship between 
+#|   these two variables.
+#|   一张企鹅体重与鳍状肢长度的散点图。该图显示了这两个变量之间
+#|   存在正向、线性且相对较强的关系。
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) +
+  geom_point()</code></pre>
+<p>Now we have something that looks like what we might think of as a “scatterplot”. It doesn’t yet match our “ultimate goal” plot, but using this plot we can start answering the question that motivated our exploration: “What does the relationship between flipper length and body mass look like?” The relationship appears to be positive (as flipper length increases, so does body mass), fairly linear (the points are clustered around a line instead of a curve), and moderately strong (there isn’t too much scatter around such a line). Penguins with longer flippers are generally larger in terms of their body mass.<br>
+现在我们得到了一个看起来像是我们所认为的“散点图”的东西。它还不完全符合我们“最终目标”的图，但通过这张图，我们可以开始回答激发我们探索的问题：“鳍状肢长度和体重之间的关系是怎样的？” 这种关系看起来是正相关的（随着鳍状肢长度的增加，体重也增加），相当线性的（数据点聚集在一条直线周围而不是一条曲线），并且强度适中（围绕这条线的散点不多）。鳍状肢较长的企鹅通常体重也较重。</p>
+<p>Before we add more layers to this plot, let’s pause for a moment and review the warning message we got:<br>
+在为这张图添加更多图层之前，让我们暂停一下，回顾一下我们收到的警告信息：</p>
+<blockquote class="blockquote">
+<p>Removed 2 rows containing missing values (<code>geom_point()</code>).</p>
+</blockquote>
+<p>&gt; 已移除 2 个包含缺失值的行 (<code>geom_point()</code>).</p>
+<p>We’re seeing this message because there are two penguins in our dataset with missing body mass and/or flipper length values and ggplot2 has no way of representing them on the plot without both of these values. Like R, ggplot2 subscribes to the philosophy that missing values should never silently go missing. This type of warning is probably one of the most common types of warnings you will see when working with real data – missing values are a very common issue and you’ll learn more about them throughout the book, particularly in <a href="missing-values.html" class="quarto-xref"><span>Chapter 18</span></a>. For the remaining plots in this chapter we will suppress this warning so it’s not printed alongside every single plot we make.<br>
+我们看到这条消息是因为我们的数据集中有两只企鹅的体重和/或鳍状肢长度值缺失，而 ggplot2 在没有这两个值的情况下无法在图上表示它们。和 R 一样，ggplot2 也遵循这样的理念：缺失值不应该悄无声息地消失。这种类型的警告可能是你在处理真实数据时最常看到的警告之一——缺失值是一个非常普遍的问题，你将在本书中，特别是在 <a href="missing-values.html" class="quarto-xref"><span>Chapter 18</span></a> 中学到更多相关知识。对于本章中余下的图，我们将抑制此警告，这样它就不会在我们制作的每一张图旁边都打印出来。</p>
+</section><section id="sec-adding-aesthetics-layers" class="level3" data-number="29.2.4"><h3 data-number="29.2.4" class="anchored" data-anchor-id="sec-adding-aesthetics-layers">
+<span class="header-section-number">29.2.4</span> Adding aesthetics and layers</h3>
+<p>Scatterplots are useful for displaying the relationship between two numerical variables, but it’s always a good idea to be skeptical of any apparent relationship between two variables and ask if there may be other variables that explain or change the nature of this apparent relationship. For example, does the relationship between flipper length and body mass differ by species? Let’s incorporate species into our plot and see if this reveals any additional insights into the apparent relationship between these variables.<br>
+散点图对于展示两个数值变量之间的关系很有用，但对两个变量之间的任何明显关系持怀疑态度总是一个好主意，并且应该探究是否还有其他变量可以解释或改变这种明显关系的性质。例如，鳍状肢长度和体重之间的关系是否因物种而异？让我们将物种纳入我们的图中，看看这是否能揭示关于这些变量之间明显关系的更多见解。</p>
+<p>To achieve this, will we need to modify the aesthetic or the geom? If you guessed “in the aesthetic mapping, inside of <code>aes()</code>”, you’re already getting the hang of creating data visualizations with ggplot2! And if not, don’t worry. Throughout the book you will make many more ggplots and have many more opportunities to check your intuition as you make them.<br>
+为了实现这一点，我们需要修改美学还是几何对象？如果你猜的是“在美学映射中，即 <code>aes()</code> 内部”，那么你已经开始掌握用 ggplot2 创建数据可视化的窍门了！如果没猜对，也别担心。在本书中，你将制作更多的 ggplot 图，并在制作过程中有更多机会来检验你的直觉。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins. The plot 
+#|   displays a positive, fairly linear, and relatively strong relationship 
+#|   between these two variables. Species (Adelie, Chinstrap, and Gentoo) 
+#|   are represented with different colors.
+#|   一张企鹅体重与鳍状肢长度的散点图。该图显示了这两个变量之间
+#|   存在正向、相当线性且相对较强的关系。物种（阿德利、帽带和金图）
+#|   用不同的颜色表示。
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)
+) +
+  geom_point()</code></pre>
+<p>When a categorical variable is mapped to an aesthetic, ggplot2 will automatically assign a unique value of the aesthetic (here a unique color) to each unique level of the variable (each of the three species), a process known as <strong>scaling</strong>. ggplot2 will also add a legend that explains which values correspond to which levels.<br>
+当一个分类变量被映射到一个美学上时，ggplot2 会自动为该变量的每个唯一水平（这里是三个物种中的每一个）分配一个该美学的唯一值（这里是唯一的颜色），这个过程称为<strong>标度变换 (scaling)</strong>。ggplot2 还会添加一个图例，解释哪些值对应哪些水平。</p>
+<p>Now let’s add one more layer: a smooth curve displaying the relationship between body mass and flipper length. Before you proceed, refer back to the code above, and think about how we can add this to our existing plot.<br>
+现在我们再加一个图层：一条平滑曲线，用于显示体重和鳍状肢长度之间的关系。在继续之前，请回顾上面的代码，并思考我们如何将这个图层添加到现有的图中。</p>
+<p>Since this is a new geometric object representing our data, we will add a new geom as a layer on top of our point geom: <code>geom_smooth()</code>. And we will specify that we want to draw the line of best fit based on a <code>l</code>inear <code>m</code>odel with <code>method = "lm"</code>.<br>
+由于这是一个代表我们数据的新的几何对象，我们将在点几何对象之上添加一个新的几何对象图层：<code>geom_smooth()</code>。并且我们将指定我们希望基于一个<code>线</code>性<code>模</code>型（<code>l</code>inear <code>m</code>odel）来绘制最佳拟合线，即设置 <code>method = "lm"</code>。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins. Overlaid 
+#|   on the scatterplot are three smooth curves displaying the 
+#|   relationship between these variables for each species (Adelie, 
+#|   Chinstrap, and Gentoo). Different penguin species are plotted in 
+#|   different colors for the points and the smooth curves.
+#|   一张企鹅体重与鳍状肢长度的散点图。在散点图上叠加了三条平滑曲线，
+#|   显示了每个物种（阿德利、帽带和金图）这两个变量之间的关系。
+#|   不同种类的企鹅的点和平滑曲线用不同的颜色绘制。
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)
+) +
+  geom_point() +
+  geom_smooth(method = "lm")</code></pre>
+<p>We have successfully added lines, but this plot doesn’t look like the plot from <a href="quarto-formats.html#sec-ultimate-goal" class="quarto-xref"><span>Section 30.2.2</span></a>, which only has one line for the entire dataset as opposed to separate lines for each of the penguin species.<br>
+我们成功地添加了线，但这张图看起来不像 <a href="quarto-formats.html#sec-ultimate-goal" class="quarto-xref"><span>Section 30.2.2</span></a> 中的那张图，那张图只有一条贯穿整个数据集的线，而不是为每种企鹅都画一条单独的线。</p>
+<p>When aesthetic mappings are defined in <code>ggplot()</code>, at the <em>global</em> level, they’re passed down to each of the subsequent geom layers of the plot. However, each geom function in ggplot2 can also take a <code>mapping</code> argument, which allows for aesthetic mappings at the <em>local</em> level that are added to those inherited from the global level. Since we want points to be colored based on species but don’t want the lines to be separated out for them, we should specify <code>color = species</code> for <code>geom_point()</code> only.<br>
+当美学映射在 <code>ggplot()</code> 中定义时，即在<em>全局</em>层面，它们会被传递给图中后续的每个几何对象图层。然而，ggplot2 中的每个几何函数也可以接受一个 <code>mapping</code> 参数，这允许在<em>局部</em>层面进行美学映射，这些映射会添加到从全局层面继承的映射之上。因为我们希望点根据物种着色，但不希望线也因此分开，所以我们应该只为 <code>geom_point()</code> 指定 <code>color = species</code>。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins. Overlaid 
+#|   on the scatterplot is a single line of best fit displaying the 
+#|   relationship between these variables for each species (Adelie, 
+#|   Chinstrap, and Gentoo). Different penguin species are plotted in 
+#|   different colors for the points only.
+#|   一张企鹅体重与鳍状肢长度的散点图。在散点图上叠加了一条单一的最佳
+#|   拟合线，显示了每个物种（阿德利、帽带和金图）这两个变量之间的关系。
+#|   不同种类的企鹅只在点上用不同的颜色绘制。
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) +
+  geom_point(mapping = aes(color = species)) +
+  geom_smooth(method = "lm")</code></pre>
+<p>Voila! We have something that looks very much like our ultimate goal, though it’s not yet perfect. We still need to use different shapes for each species of penguins and improve labels.<br>
+瞧！我们得到了一个非常接近我们最终目标的图，尽管还不完美。我们还需要为每种企鹅使用不同的形状，并改进标签。</p>
+<p>It’s generally not a good idea to represent information using only colors on a plot, as people perceive colors differently due to color blindness or other color vision differences. Therefore, in addition to color, we can also map <code>species</code> to the <code>shape</code> aesthetic.<br>
+通常来说，在图上仅用颜色来表示信息不是一个好主意，因为由于色盲或其他色觉差异，人们对颜色的感知是不同的。因此，除了颜色，我们还可以将 <code>species</code> 映射到 <code>shape</code> 美学上。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins. Overlaid 
+#|   on the scatterplot is a single line of best fit displaying the 
+#|   relationship between these variables for each species (Adelie, 
+#|   Chinstrap, and Gentoo). Different penguin species are plotted in 
+#|   different colors and shapes for the points only.
+#|   一张企鹅体重与鳍状肢长度的散点图。在散点图上叠加了一条单一的最佳
+#|   拟合线，显示了每个物种（阿德利、帽带和金图）这两个变量之间的关系。
+#|   不同种类的企鹅只在点上用不同的颜色和形状绘制。
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) +
+  geom_point(mapping = aes(color = species, shape = species)) +
+  geom_smooth(method = "lm")</code></pre>
+<p>Note that the legend is automatically updated to reflect the different shapes of the points as well.<br>
+请注意，图例也会自动更新，以反映点的不同形状。</p>
+<p>And finally, we can improve the labels of our plot using the <code>labs()</code> function in a new layer. Some of the arguments to <code>labs()</code> might be self explanatory: <code>title</code> adds a title and <code>subtitle</code> adds a subtitle to the plot. Other arguments match the aesthetic mappings, <code>x</code> is the x-axis label, <code>y</code> is the y-axis label, and <code>color</code> and <code>shape</code> define the label for the legend. In addition, we can improve the color palette to be colorblind safe with the <code>scale_color_colorblind()</code> function from the ggthemes package.<br>
+最后，我们可以通过在一个新图层中使用 <code>labs()</code> 函数来改进我们图的标签。<code>labs()</code> 的一些参数可能是不言自明的：<code>title</code> 为图添加一个标题，<code>subtitle</code> 添加一个副标题。其他参数与美学映射相对应，<code>x</code> 是 x 轴的标签，<code>y</code> 是 y 轴的标签，而 <code>color</code> 和 <code>shape</code> 定义了图例的标签。此外，我们可以使用 ggthemes 包中的 <code>scale_color_colorblind()</code> 函数来改进调色板，使其对色盲友好。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins, with a 
+#|   line of best fit displaying the relationship between these two variables 
+#|   overlaid. The plot displays a positive, fairly linear, and relatively 
+#|   strong relationship between these two variables. Species (Adelie, 
+#|   Chinstrap, and Gentoo) are represented with different colors and 
+#|   shapes. The relationship between body mass and flipper length is 
+#|   roughly the same for these three species, and Gentoo penguins are 
+#|   larger than penguins from the other two species.
+#|   一张企鹅体重与鳍状肢长度的散点图，并叠加了一条显示这两个变量关系的
+#|   最佳拟合线。该图显示了这两个变量之间存在正向、相当线性且相对较强
+#|   的关系。物种（阿德利、帽带和金图）用不同的颜色和形状表示。体重和
+#|   鳍状肢长度之间的关系在这三个物种中大致相同，而金图企鹅比其他两个物种的企鹅要大。
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) +
+  geom_point(aes(color = species, shape = species)) +
+  geom_smooth(method = "lm") +
+  labs(
+    title = "Body mass and flipper length",
+    subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+    x = "Flipper length (mm)", y = "Body mass (g)",
+    color = "Species", shape = "Species"
+  ) +
+  scale_color_colorblind()</code></pre>
+<p>We finally have a plot that perfectly matches our “ultimate goal”!<br>
+我们终于得到了一个与我们的“最终目标”完全匹配的图！</p>
+</section><section id="exercises" class="level3" data-number="29.2.5"><h3 data-number="29.2.5" class="anchored" data-anchor-id="exercises">
+<span class="header-section-number">29.2.5</span> Exercises</h3>
+<ol type="1">
+<li><p>How many rows are in <code>penguins</code>? How many columns?<br><code>penguins</code> 数据框中有多少行？多少列？</p></li>
+<li><p>What does the <code>bill_depth_mm</code> variable in the <code>penguins</code> data frame describe? Read the help for <code><a href="https://rdrr.io/r/datasets/penguins.html">?penguins</a></code> to find out.<br><code>penguins</code> 数据框中的 <code>bill_depth_mm</code> 变量描述了什么？阅读 <code><a href="https://rdrr.io/r/datasets/penguins.html">?penguins</a></code> 的帮助文档来找出答案。</p></li>
+<li><p>Make a scatterplot of <code>bill_depth_mm</code> vs.&nbsp;<code>bill_length_mm</code>. That is, make a scatterplot with <code>bill_depth_mm</code> on the y-axis and <code>bill_length_mm</code> on the x-axis. Describe the relationship between these two variables.<br>
+制作一个 <code>bill_depth_mm</code> 对 <code>bill_length_mm</code> 的散点图。也就是说，制作一个以 <code>bill_depth_mm</code> 为 y 轴，<code>bill_length_mm</code> 为 x 轴的散点图。描述这两个变量之间的关系。</p></li>
+<li><p>What happens if you make a scatterplot of <code>species</code> vs.&nbsp;<code>bill_depth_mm</code>? What might be a better choice of geom?<br>
+如果你制作一个 <code>species</code> 对 <code>bill_depth_mm</code> 的散点图会发生什么？什么可能是更好的几何对象选择？</p></li>
+<li>
+<p>Why does the following give an error and how would you fix it?<br>
+为什么下面的代码会报错？你将如何修复它？</p>
+<pre class="{r}"><code>#| eval: false
+ggplot(data = penguins) +
+  geom_point()</code></pre>
+</li>
+<li><p>What does the <code>na.rm</code> argument do in <code>geom_point()</code>? What is the default value of the argument? Create a scatterplot where you successfully use this argument set to <code>TRUE</code>.<br>
+geom_point()<code>中的</code>na.rm<code>参数有什么作用？该参数的默认值是什么？创建一个散点图，在其中成功地将此参数设置为</code>TRUE`。</p></li>
+<li><p>Add the following caption to the plot you made in the previous exercise: “Data come from the palmerpenguins package.” Hint: Take a look at the documentation for <code>labs()</code>.<br>
+在你上一个练习中制作的图上添加以下标题：“数据来自 palmerpenguins 包。” 提示：查看 <code>labs()</code> 的文档。</p></li>
+<li>
+<p>Recreate the following visualization. What aesthetic should <code>bill_depth_mm</code> be mapped to? And should it be mapped at the global level or at the geom level?<br>
+重新创建以下可视化图。<code>bill_depth_mm</code> 应该映射到哪个美学上？它应该在全局层面还是在几何对象层面进行映射？</p>
+<pre class="{r}"><code>#| eval: false
+#|   一张企鹅体重与鳍状肢长度的散点图，按喙深着色。
+#|   叠加了一条体重与鳍状肢长度关系的平滑曲线。
+#|   这种关系是正向的、相当线性的且强度适中。
+ggplot(data = penguins, mapping = aes(x = flipper_length_mm, y = body_mass_g)) +
+    geom_point(aes(color = bill_depth_mm)) +
+    geom_smooth()</code></pre>
+</li>
+<li>
+<p>Run this code in your head and predict what the output will look like. Then, run the code in R and check your predictions.<br>
+在脑海中运行这段代码，并预测输出会是什么样子。然后，在 R 中运行代码并检查你的预测。</p>
+<pre class="{r}"><code>#| eval: false
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g, color = island)
+) +
+  geom_point() +
+  geom_smooth(se = FALSE)</code></pre>
+</li>
+<li><p>Will these two graphs look different? Why/why not? 这两张图看起来会有所不同吗？为什么/为什么不？</p></li>
+</ol>
+<pre><code>```{r}
+#| eval: false
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper\_length\_mm, y = body\_mass\_g)
+) +
+  geom\_point() +
+  geom\_smooth()
+
+ggplot() +
+  geom\_point(
+    data = penguins,
+    mapping = aes(x = flipper\_length\_mm, y = body\_mass\_g)
+  ) +
+  geom\_smooth(
+    data = penguins,
+    mapping = aes(x = flipper\_length\_mm, y = body\_mass\_g)
+  )
+```</code></pre>
+</section></section><section id="sec-ggplot2-calls" class="level2" data-number="29.3"><h2 data-number="29.3" class="anchored" data-anchor-id="sec-ggplot2-calls">
+<span class="header-section-number">29.3</span> ggplot2 calls</h2>
+<p>As we move on from these introductory sections, we’ll transition to a more concise expression of ggplot2 code. So far we’ve been very explicit, which is helpful when you are learning:<br>
+随着我们从这些介绍性章节继续前进，我们将转向一种更简洁的 ggplot2 代码表达方式。到目前为止，我们一直非常明确，这在学习时很有帮助：</p>
+<pre class="{r}"><code>#| eval: false
+ggplot(
+  data = penguins,
+  mapping = aes(x = flipper_length_mm, y = body_mass_g)
+) +
+  geom_point()</code></pre>
+<p>Typically, the first one or two arguments to a function are so important that you should know them by heart. The first two arguments to <code>ggplot()</code> are <code>data</code> and <code>mapping</code>, in the remainder of the book, we won’t supply those names. That saves typing, and, by reducing the amount of extra text, makes it easier to see what’s different between plots. That’s a really important programming concern that we’ll come back to in <a href="functions.html" class="quarto-xref"><span>Chapter 25</span></a>.<br>
+通常，函数的前一两个参数非常重要，你应该熟记于心。<code>ggplot()</code> 的前两个参数是 <code>data</code> 和 <code>mapping</code>，在本书的其余部分，我们将不再提供这些名称。这样可以节省打字时间，并且通过减少额外的文本量，更容易看出图与图之间的区别。这是一个非常重要的编程考量，我们将在 <a href="functions.html" class="quarto-xref"><span>Chapter 25</span></a> 中再次讨论。</p>
+<p>Rewriting the previous plot more concisely yields:<br>
+更简洁地重写之前的图会得到：</p>
+<pre class="{r}"><code>#| eval: false
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) + 
+  geom_point()</code></pre>
+<p>In the future, you’ll also learn about the pipe, <code>|&gt;</code>, which will allow you to create that plot with:<br>
+将来，你还会学到管道符 <code>|&gt;</code>，它将允许你用以下方式创建该图：</p>
+<pre class="{r}"><code>#| eval: false
+penguins |&gt; 
+  ggplot(aes(x = flipper_length_mm, y = body_mass_g)) + 
+  geom_point()</code></pre>
+</section><section id="visualizing-distributions" class="level2" data-number="29.4"><h2 data-number="29.4" class="anchored" data-anchor-id="visualizing-distributions">
+<span class="header-section-number">29.4</span> Visualizing distributions</h2>
+<p>How you visualize the distribution of a variable depends on the type of variable: categorical or numerical.<br>
+如何可视化一个变量的分布，取决于该变量的类型：是分类变量还是数值变量。</p>
+<section id="a-categorical-variable" class="level3" data-number="29.4.1"><h3 data-number="29.4.1" class="anchored" data-anchor-id="a-categorical-variable">
+<span class="header-section-number">29.4.1</span> A categorical variable</h3>
+<p>A variable is <strong>categorical</strong> if it can only take one of a small set of values. To examine the distribution of a categorical variable, you can use a bar chart. The height of the bars displays how many observations occurred with each <code>x</code> value.<br>
+如果一个变量只能取一小组值中的一个，那么它就是<strong>分类 (categorical)</strong> 变量。要检查分类变量的分布，你可以使用条形图。条形的高度显示了每个 <code>x</code> 值出现了多少次观测。</p>
+<pre class="{r}"><code>#| fig-alt: |
+#|   A bar chart of frequencies of species of penguins: Adelie 
+#|   (approximately 150), Chinstrap (approximately 90), Gentoo 
+#|   (approximately 125).
+#|   一张企鹅种类频率的条形图：阿德利（约 150），
+#|   帽带（约 90），金图（约 125）。
+ggplot(penguins, aes(x = species)) +
+  geom_bar()</code></pre>
+<p>In bar plots of categorical variables with non-ordered levels, like the penguin <code>species</code> above, it’s often preferable to reorder the bars based on their frequencies. Doing so requires transforming the variable to a factor (how R handles categorical data) and then reordering the levels of that factor.<br>
+在处理具有无序水平的分类变量的条形图时，比如上面的企鹅 <code>species</code>，通常最好根据它们的频率对条形进行重新排序。这样做需要将变量转换为因子（R 处理分类数据的方式），然后重新排列该因子的水平。</p>
+<pre class="{r}"><code>#| fig-alt: |
+#|   A bar chart of frequencies of species of penguins, where the bars are 
+#|   ordered in decreasing order of their heights (frequencies): Adelie 
+#|   (approximately 150), Gentoo (approximately 125), Chinstrap 
+#|   (approximately 90).
+#|   一张企鹅种类频率的条形图，其中的条形按其高度（频率）
+#|   降序排列：阿德利（约 150），金图（约 125），
+#|   帽带（约 90）。
+ggplot(penguins, aes(x = fct_infreq(species))) +
+  geom_bar()</code></pre>
+<p>You will learn more about factors and functions for dealing with factors (like <code>fct_infreq()</code> shown above) in <a href="factors.html" class="quarto-xref"><span>Chapter 16</span></a>.<br>
+你将在 <a href="factors.html" class="quarto-xref"><span>Chapter 16</span></a> 中学习更多关于因子以及处理因子的函数（如上面展示的 <code>fct_infreq()</code>）的知识。</p>
+</section><section id="a-numerical-variable" class="level3" data-number="29.4.2"><h3 data-number="29.4.2" class="anchored" data-anchor-id="a-numerical-variable">
+<span class="header-section-number">29.4.2</span> A numerical variable</h3>
+<p>A variable is <strong>numerical</strong> (or quantitative) if it can take on a wide range of numerical values, and it is sensible to add, subtract, or take averages with those values. Numerical variables can be continuous or discrete.<br>
+如果一个变量可以取广泛的数值，并且对这些值进行加、减或求平均是有意义的，那么它就是<strong>数值 (numerical)</strong>（或定量）变量。数值变量可以是连续的或离散的。</p>
+<p>One commonly used visualization for distributions of continuous variables is a histogram.<br>
+一种常用于可视化连续变量分布的图是直方图。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A histogram of body masses of penguins. The distribution is unimodal 
+#|   and right skewed, ranging between approximately 2500 to 6500 grams.
+#|   一张企鹅体重的直方图。分布呈单峰且右偏，范围在
+#|   大约 2500 至 6500 克之间。
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 200)</code></pre>
+<p>A histogram divides the x-axis into equally spaced bins and then uses the height of a bar to display the number of observations that fall in each bin. In the graph above, the tallest bar shows that 39 observations have a <code>body_mass_g</code> value between 3,500 and 3,700 grams, which are the left and right edges of the bar.<br>
+直方图将 x 轴划分为等宽的区间（bins），然后用条形的高度来显示落入每个区间的观测数量。在上图中，最高的条形显示有 39 个观测的 <code>body_mass_g</code> 值在 3,500 到 3,700 克之间，这分别是该条形的左右边界。</p>
+<p>You can set the width of the intervals in a histogram with the binwidth argument, which is measured in the units of the <code>x</code> variable. You should always explore a variety of binwidths when working with histograms, as different binwidths can reveal different patterns. In the plots below a binwidth of 20 is too narrow, resulting in too many bars, making it difficult to determine the shape of the distribution. Similarly, a binwidth of 2,000 is too high, resulting in all data being binned into only three bars, and also making it difficult to determine the shape of the distribution. A binwidth of 200 provides a sensible balance.<br>
+你可以使用 binwidth 参数来设置直方图中区间的宽度，该宽度以 <code>x</code> 变量的单位来衡量。在使用直方图时，你应该总是尝试不同的区间宽度，因为不同的宽度可能会揭示出不同的模式。在下面的图中，20 的区间宽度太窄，导致条形过多，难以确定分布的形状。同样，2000 的区间宽度太高，导致所有数据只被分到三个条形中，也使得确定分布的形状变得困难。200 的区间宽度提供了一个合理的平衡。</p>
+<pre class="{r}"><code>#| warning: false
+#| layout-ncol: 2
+#| fig-width: 3
+#| fig-alt: |
+#|   Two histograms of body masses of penguins, one with binwidth of 20 
+#|   (left) and one with binwidth of 2000 (right). The histogram with binwidth 
+#|   of 20 shows lots of ups and downs in the heights of the bins, creating a 
+#|   jagged outline. The histogram  with binwidth of 2000 shows only three bins.
+#|   两张企鹅体重的直方图，一张区间宽度为 20（左），另一张区间宽度为 2000（右）。
+#|   区间宽度为 20 的直方图显示了条形高度的许多起伏，形成了一个锯齿状的轮廓。
+#|   区间宽度为 2000 的直方图只显示了三个条形。
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 20)
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth = 2000)</code></pre>
+<p>An alternative visualization for distributions of numerical variables is a density plot. A density plot is a smoothed-out version of a histogram and a practical alternative, particularly for continuous data that comes from an underlying smooth distribution. We won’t go into how <code>geom_density()</code> estimates the density (you can read more about that in the function documentation), but let’s explain how the density curve is drawn with an analogy. Imagine a histogram made out of wooden blocks. Then, imagine that you drop a cooked spaghetti string over it. The shape the spaghetti will take draped over blocks can be thought of as the shape of the density curve. It shows fewer details than a histogram but can make it easier to quickly glean the shape of the distribution, particularly with respect to modes and skewness.<br>
+数值变量分布的另一种可视化方法是密度图。密度图是直方图的平滑版本，是一种实用的替代方案，尤其适用于来自底层平滑分布的连续数据。我们不会深入探讨 <code>geom_density()</code> 如何估计密度（你可以在函数文档中了解更多信息），但让我们用一个类比来解释密度曲线是如何绘制的。想象一个由木块组成的直方图。然后，想象你把一根煮熟的意大利面条扔在它上面。意大利面条搭在木块上形成的形状可以被看作是密度曲线的形状。它比直方图显示的细节少，但可以更容易地快速了解分布的形状，特别是在众数和偏度方面。</p>
+<pre class="{r}"><code>#| fig-alt: |
+#|   A density plot of body masses of penguins. The distribution is unimodal 
+#|   and right skewed, ranging between approximately 2500 to 6500 grams.
+#|   一张企鹅体重的密度图。分布呈单峰且右偏，范围在
+#|   大约 2500 至 6500 克之间。
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_density()</code></pre>
+</section><section id="exercises-1" class="level3" data-number="29.4.3"><h3 data-number="29.4.3" class="anchored" data-anchor-id="exercises-1">
+<span class="header-section-number">29.4.3</span> Exercises</h3>
+<ol type="1">
+<li><p>Make a bar plot of <code>species</code> of <code>penguins</code>, where you assign <code>species</code> to the <code>y</code> aesthetic. How is this plot different?<br>
+制作一个 <code>penguins</code> 中 <code>species</code> 的条形图，其中你将 <code>species</code> 赋给 <code>y</code> 美学。这个图有什么不同？</p></li>
+<li>
+<p>How are the following two plots different? Which aesthetic, <code>color</code> or <code>fill</code>, is more useful for changing the color of bars?<br>
+下面这两个图有什么不同？哪个美学，<code>color</code> 还是 <code>fill</code>，对于改变条形的颜色更有用？</p>
+<pre class="{r}"><code>#| eval: false
+ggplot(penguins, aes(x = species)) +
+  geom\_bar(color = "red")
+
+ggplot(penguins, aes(x = species)) +
+  geom\_bar(fill = "red")</code></pre>
+</li>
+<li><p>What does the <code>bins</code> argument in <code>geom_histogram()</code> do?<br><code>geom_histogram()</code> 中的 <code>bins</code> 参数有什么作用？</p></li>
+<li><p>Make a histogram of the <code>carat</code> variable in the <code>diamonds</code> dataset that is available when you load the tidyverse package. Experiment with different binwidths. What binwidth reveals the most interesting patterns?<br>
+制作一个 <code>diamonds</code> 数据集中 <code>carat</code> 变量的直方图，该数据集在加载 tidyverse 包时可用。尝试不同的区间宽度。哪个区间宽度揭示了最有趣的模式？</p></li>
+</ol></section></section><section id="visualizing-relationships" class="level2" data-number="29.5"><h2 data-number="29.5" class="anchored" data-anchor-id="visualizing-relationships">
+<span class="header-section-number">29.5</span> Visualizing relationships</h2>
+<p>To visualize a relationship we need to have at least two variables mapped to aesthetics of a plot. In the following sections you will learn about commonly used plots for visualizing relationships between two or more variables and the geoms used for creating them.<br>
+要可视化一个关系，我们需要将至少两个变量映射到图的美学上。在接下来的部分，你将学习到常用于可视化两个或多个变量之间关系的图，以及用于创建它们的几何对象。</p>
+<section id="a-numerical-and-a-categorical-variable" class="level3" data-number="29.5.1"><h3 data-number="29.5.1" class="anchored" data-anchor-id="a-numerical-and-a-categorical-variable">
+<span class="header-section-number">29.5.1</span> A numerical and a categorical variable</h3>
+<p>To visualize the relationship between a numerical and a categorical variable we can use side-by-side box plots. A <strong>boxplot</strong> is a type of visual shorthand for measures of position (percentiles) that describe a distribution. It is also useful for identifying potential outliers. As shown in <a href="data-visualize.html#fig-eda-boxplot" class="quarto-xref">Figure&nbsp;<span>1.1</span></a>, each boxplot consists of:<br>
+为了可视化数值变量和分类变量之间的关系，我们可以使用并排的箱线图。<strong>箱线图 (boxplot)</strong> 是一种描述分布位置度量（百分位数）的视觉简写。它对于识别潜在的异常值也很有用。如 <a href="data-visualize.html#fig-eda-boxplot" class="quarto-xref">Figure&nbsp;<span>1.1</span></a> 所示，每个箱线图都由以下几部分组成：</p>
+<p>- A box that indicates the range of the middle half of the data, a distance known as the interquartile range (IQR), stretching from the 25th percentile of the distribution to the 75th percentile. In the middle of the box is a line that displays the median, i.e.&nbsp;50th percentile, of the distribution. These three lines give you a sense of the spread of the distribution and whether or not the distribution is symmetric about the median or skewed to one side.</p>
+<ul>
+<li>一个箱体，表示数据中间一半的范围，这个距离被称为四分位距 (IQR)，从分布的第 25 百分位数延伸到第 75 百分位数。箱体中间有一条线，显示分布的中位数，即第 50 百分位数。这三条线让你了解分布的离散程度以及分布是否关于中位数对称或偏向一侧。</li>
+</ul>
+<p>- Visual points that display observations that fall more than 1.5 times the IQR from either edge of the box. These outlying points are unusual so are plotted individually.</p>
+<ul>
+<li>显示离箱体任一边缘超过 1.5 倍 IQR 的观测值的视觉点。这些离群点是不寻常的，所以被单独绘制出来。</li>
+</ul>
+<p>- A line (or whisker) that extends from each end of the box and goes to the farthest non-outlier point in the distribution.</p>
+<ul>
+<li>从箱体两端延伸出的线（或须），一直延伸到分布中最远的非离群点。</li>
+</ul>
+<!-- end list --><pre class="{r}"><code>#| label: fig-eda-boxplot
+#| echo: false
+#| fig-cap: |
+#|   Diagram depicting how a boxplot is created.
+#|   描绘箱线图如何创建的图示。
+#| fig-alt: |
+#|   A diagram depicting how a boxplot is created following the steps outlined 
+#|   above.
+#|   一个描绘如何按照上述步骤创建箱线图的图示。
+knitr::include_graphics("images/EDA-boxplot.png")</code></pre>
+<p>Let’s take a look at the distribution of body mass by species using <code>geom_boxplot()</code>:<br>
+让我们使用 <code>geom_boxplot()</code> 来查看按物种分的体重分布：</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   Side-by-side box plots of distributions of body masses of Adelie, 
+#|   Chinstrap, and Gentoo penguins. The distribution of Adelie and 
+#|   Chinstrap penguins' body masses appear to be symmetric with 
+#|   medians around 3750 grams. The median body mass of Gentoo penguins 
+#|   is much higher, around 5000 grams, and the distribution of the 
+#|   body masses of these penguins appears to be somewhat right skewed.
+#|   阿德利、帽带和金图企鹅体重的并排箱线图。阿德利和帽带企鹅的体重分布
+#|   似乎是对称的，中位数在 3750 克左右。金图企鹅的中位体重更高，
+#|   在 5000 克左右，并且这些企鹅的体重分布似乎有些右偏。
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot()</code></pre>
+<p>Alternatively, we can make density plots with <code>geom_density()</code>.<br>
+或者，我们可以使用 <code>geom_density()</code> 制作密度图。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A density plot of body masses of penguins by species of penguins. Each 
+#|   species (Adelie, Chinstrap, and Gentoo) is represented with different 
+#|   colored outlines for the density curves.
+#|   按企鹅种类划分的企鹅体重密度图。每个种类（阿德利、帽带和金图）
+#|   的密度曲线都用不同颜色的轮廓表示。
+ggplot(penguins, aes(x = body_mass_g, color = species)) +
+  geom_density(linewidth = 0.75)</code></pre>
+<p>We’ve also customized the thickness of the lines using the <code>linewidth</code> argument in order to make them stand out a bit more against the background.<br>
+我们还使用了 <code>linewidth</code> 参数自定义了线条的粗细，以便它们在背景中更加突出。</p>
+<p>Additionally, we can map <code>species</code> to both <code>color</code> and <code>fill</code> aesthetics and use the <code>alpha</code> aesthetic to add transparency to the filled density curves. This aesthetic takes values between 0 (completely transparent) and 1 (completely opaque). In the following plot it’s <em>set</em> to 0.5.<br>
+此外，我们可以将 <code>species</code> 同时映射到 <code>color</code> 和 <code>fill</code> 美学，并使用 <code>alpha</code> 美学为填充的密度曲线添加透明度。这个美学的值介于 0（完全透明）和 1（完全不透明）之间。在下面的图中，它被<em>设置</em>为 0.5。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A density plot of body masses of penguins by species of penguins. Each 
+#|   species (Adelie, Chinstrap, and Gentoo) is represented in different 
+#|   colored outlines for the density curves. The density curves are also 
+#|   filled with the same colors, with some transparency added.
+#|   按企鹅种类划分的企鹅体重密度图。每个种类（阿德利、帽带和金图）的密度曲线
+#|   都用不同颜色的轮廓表示。密度曲线也用相同的颜色填充，并增加了一些透明度。
+ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
+  geom_density(alpha = 0.5)</code></pre>
+<p>Note the terminology we have used here:<br>
+注意我们在这里使用的术语：</p>
+<p>- We <em>map</em> variables to aesthetics if we want the visual attribute represented by that aesthetic to vary based on the values of that variable. - Otherwise, we <em>set</em> the value of an aesthetic.</p>
+<ul>
+<li>如果我们希望由某个美学代表的视觉属性根据某个变量的值而变化，我们就将变量<em>映射</em>到该美学。</li>
+<li>否则，我们就<em>设置</em>某个美学的值。</li>
+</ul></section><section id="two-categorical-variables" class="level3" data-number="29.5.2"><h3 data-number="29.5.2" class="anchored" data-anchor-id="two-categorical-variables">
+<span class="header-section-number">29.5.2</span> Two categorical variables</h3>
+<p>We can use stacked bar plots to visualize the relationship between two categorical variables. For example, the following two stacked bar plots both display the relationship between <code>island</code> and <code>species</code>, or specifically, visualizing the distribution of <code>species</code> within each island.<br>
+我们可以使用堆叠条形图来可视化两个分类变量之间的关系。例如，以下两个堆叠条形图都显示了 <code>island</code> 和 <code>species</code> 之间的关系，或者具体来说，可视化了每个岛屿内 <code>species</code> 的分布。</p>
+<p>The first plot shows the frequencies of each species of penguins on each island. The plot of frequencies shows that there are equal numbers of Adelies on each island. But we don’t have a good sense of the percentage balance within each island.<br>
+第一张图显示了每个岛屿上每种企鹅的频率。频率图显示，每个岛屿上的阿德利企鹅数量相等。但我们无法很好地了解每个岛屿内部的百分比平衡。</p>
+<pre class="{r}"><code>#| fig-alt: |
+#|   Bar plots of penguin species by island (Biscoe, Dream, and Torgersen)
+#|   按岛屿（比斯科、梦幻和托尔森）划分的企鹅种类条形图
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar()</code></pre>
+<p>The second plot, a relative frequency plot created by setting <code>position = "fill"</code> in the geom, is more useful for comparing species distributions across islands since it’s not affected by the unequal numbers of penguins across the islands. Using this plot we can see that Gentoo penguins all live on Biscoe island and make up roughly 75% of the penguins on that island, Chinstrap all live on Dream island and make up roughly 50% of the penguins on that island, and Adelie live on all three islands and make up all of the penguins on Torgersen.<br>
+第二张图是一个相对频率图，通过在几何对象中设置 <code>position = "fill"</code> 创建，它在比较不同岛屿间的物种分布时更有用，因为它不受各岛屿企鹅数量不等的影响。通过这张图我们可以看到，金图企鹅都生活在比斯科岛，约占该岛企鹅总数的 75%；帽带企鹅都生活在梦幻岛，约占该岛企鹅总数的 50%；而阿德利企鹅生活在所有三个岛屿上，并且占了托尔森岛上所有企鹅。</p>
+<pre class="{r}"><code>#| fig-alt: |
+#|   Bar plots of penguin species by island (Biscoe, Dream, and Torgersen)
+#|   the bars are scaled to the same height, making it a relative frequencies 
+#|   plot
+#|   按岛屿（比斯科、梦幻和托尔森）划分的企鹅种类条形图，
+#|   条形被缩放到相同的高度，使其成为一个相对频率图
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position = "fill")</code></pre>
+<p>In creating these bar charts, we map the variable that will be separated into bars to the <code>x</code> aesthetic, and the variable that will change the colors inside the bars to the <code>fill</code> aesthetic.<br>
+在创建这些条形图时，我们将要被分成条形的变量映射到 <code>x</code> 美学，将要改变条形内部颜色的变量映射到 <code>fill</code> 美学。</p>
+</section><section id="two-numerical-variables" class="level3" data-number="29.5.3"><h3 data-number="29.5.3" class="anchored" data-anchor-id="two-numerical-variables">
+<span class="header-section-number">29.5.3</span> Two numerical variables</h3>
+<p>So far you’ve learned about scatterplots (created with <code>geom_point()</code>) and smooth curves (created with <code>geom_smooth()</code>) for visualizing the relationship between two numerical variables. A scatterplot is probably the most commonly used plot for visualizing the relationship between two numerical variables.<br>
+到目前为止，你已经学习了用于可视化两个数值变量之间关系的散点图（用 <code>geom_point()</code> 创建）和平滑曲线（用 <code>geom_smooth()</code> 创建）。散点图可能是可视化两个数值变量之间关系最常用的图。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins. The plot 
+#|   displays a positive, linear, relatively strong relationship between 
+#|   these two variables.
+#|   一张企鹅体重与鳍状肢长度的散点图。该图显示了这两个变量之间存在
+#|   正向、线性、相对较强的关系。
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()</code></pre>
+</section><section id="three-or-more-variables" class="level3" data-number="29.5.4"><h3 data-number="29.5.4" class="anchored" data-anchor-id="three-or-more-variables">
+<span class="header-section-number">29.5.4</span> Three or more variables</h3>
+<p>As we saw in <a href="quarto-formats.html#sec-adding-aesthetics-layers" class="quarto-xref"><span>Section 30.2.4</span></a>, we can incorporate more variables into a plot by mapping them to additional aesthetics. For example, in the following scatterplot the colors of points represent species and the shapes of points represent islands.<br>
+正如我们在 <a href="quarto-formats.html#sec-adding-aesthetics-layers" class="quarto-xref"><span>Section 30.2.4</span></a> 中看到的，我们可以通过将更多变量映射到其他美学上，将它们融入到图中。例如，在下面的散点图中，点的颜色代表物种，点的形状代表岛屿。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins. The plot 
+#|   displays a positive, linear, relatively strong relationship between 
+#|   these two variables. The points are colored based on the species of the 
+#|   penguins and the shapes of the points represent islands (round points are 
+#|   Biscoe island, triangles are Dream island, and squared are Torgersen 
+#|   island). The plot is very busy and it's difficult to distinguish the shapes
+#|   of the points.
+#|   一张企鹅体重与鳍状肢长度的散点图。该图显示了这两个变量之间存在正向、
+#|   线性、相对较强的关系。点的颜色根据企鹅的物种着色，点的形状代表岛屿
+#|   （圆形点是比斯科岛，三角形是梦幻岛，方形是托尔森岛）。该图非常拥挤，
+#|   很难区分点的形状。
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = island))</code></pre>
+<p>However adding too many aesthetic mappings to a plot makes it cluttered and difficult to make sense of. Another way, which is particularly useful for categorical variables, is to split your plot into <strong>facets</strong>, subplots that each display one subset of the data.<br>
+然而，向图中添加太多的美学映射会使其变得杂乱无章，难以理解。另一种方法，特别是对分类变量很有用，就是将你的图分割成<strong>分面 (facets)</strong>，即每个子图显示数据的一个子集。</p>
+<p>To facet your plot by a single variable, use <code>facet_wrap()</code>. The first argument of <code>facet_wrap()</code> is a formula<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, which you create with <code>~</code> followed by a variable name. The variable that you pass to <code>facet_wrap()</code> should be categorical.<br>
+要按单个变量对图进行分面，请使用 <code>facet_wrap()</code>。<code>facet_wrap()</code> 的第一个参数是一个公式<sup>3</sup>，你通过 <code>~</code> 后跟一个变量名来创建它。传递给 <code>facet_wrap()</code> 的变量应该是分类变量。</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-width: 8
+#| fig-asp: 0.33
+#| fig-alt: |
+#|   A scatterplot of body mass vs. flipper length of penguins. The shapes and 
+#|   colors of points represent species. Penguins from each island are on a 
+#|   separate facet. Within each facet, the relationship between body mass and 
+#|   flipper length is positive, linear, relatively strong. 
+#|   一张企鹅体重与鳍状肢长度的散点图。点的形状和颜色代表物种。
+#|   每个岛屿的企鹅都在一个单独的分面中。在每个分面内，体重与
+#|   鳍状肢长度之间的关系是正向、线性、相对较强的。
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(aes(color = species, shape = species)) +
+  facet_wrap(~island)</code></pre>
+<p>You will learn about many other geoms for visualizing distributions of variables and relationships between them in <a href="layers.html" class="quarto-xref"><span>Chapter 9</span></a>.<br>
+你将在 <a href="layers.html" class="quarto-xref"><span>Chapter 9</span></a> 中学习到许多其他用于可视化变量分布和它们之间关系的几何对象。</p>
+</section><section id="exercises-2" class="level3" data-number="29.5.5"><h3 data-number="29.5.5" class="anchored" data-anchor-id="exercises-2">
+<span class="header-section-number">29.5.5</span> Exercises</h3>
+<ol type="1">
+<li><p>The <code>mpg</code> data frame that is bundled with the ggplot2 package contains <code>r nrow(mpg)</code> observations collected by the US Environmental Protection Agency on <code>r mpg |&gt; distinct(model) |&gt; nrow()</code> car models. Which variables in <code>mpg</code> are categorical? Which variables are numerical? (Hint: Type <code>?mpg</code> to read the documentation for the dataset.) How can you see this information when you run <code>mpg</code>?<br>
+ggplot2 软件包中包含的 <code>mpg</code> 数据框 (data frame) 含有 <code>r nrow(mpg)</code> 条观测数据，这些数据由美国环境保护署收集，涵盖了 <code>r mpg |&gt; distinct(model) |&gt; nrow()</code> 种车型。 <code>mpg</code> 中的哪些变量是分类 (categorical) 变量？ 哪些变量是数值 (numerical) 变量？ (提示：输入 <code>?mpg</code> 来阅读该数据集的文档。) 当你运行 <code>mpg</code> 时，如何看到这些信息？</p></li>
+<li><p>Make a scatterplot of <code>hwy</code> vs.&nbsp;<code>displ</code> using the <code>mpg</code> data frame. Next, map a third, numerical variable to <code>color</code>, then <code>size</code>, then both <code>color</code> and <code>size</code>, then <code>shape</code>. How do these aesthetics behave differently for categorical vs.&nbsp;numerical variables?<br>
+使用 <code>mpg</code> 数据框 (data frame) 创建一个 <code>hwy</code> 与 <code>displ</code> 的散点图 (scatterplot)。 接下来，将第三个数值 (numerical) 变量映射 (map) 到 <code>color</code>，然后是 <code>size</code>，然后是 <code>color</code> 和 <code>size</code>，最后是 <code>shape</code>。 对于分类 (categorical) 变量和数值 (numerical) 变量，这些图形属性 (aesthetics) 的行为有何不同？</p></li>
+<li><p>In the scatterplot of <code>hwy</code> vs.&nbsp;<code>displ</code>, what happens if you map a third variable to <code>linewidth</code>?<br>
+在 <code>hwy</code> 与 <code>displ</code> 的散点图 (scatterplot) 中，如果将第三个变量映射 (map) 到 <code>linewidth</code> 会发生什么？</p></li>
+<li><p>What happens if you map the same variable to multiple aesthetics?<br>
+如果将同一个变量映射 (map) 到多个图形属性 (aesthetics) 会发生什么？</p></li>
+<li><p>Make a scatterplot of <code>bill_depth_mm</code> vs.&nbsp;<code>bill_length_mm</code> and color the points by <code>species</code>. What does adding coloring by species reveal about the relationship between these two variables? What about faceting by <code>species</code>?<br>
+创建一个 <code>bill_depth_mm</code> 与 <code>bill_length_mm</code> 的散点图 (scatterplot)，并按 <code>species</code> 为点着色。 按物种 (species) 着色揭示了这两个变量之间关系的哪些信息？ 按 <code>species</code> 分面 (faceting) 呢？</p></li>
+<li>
+<p>Why does the following yield two separate legends? How would you fix it to combine the two legends?<br>
+为什么以下代码会产生两个独立的图例 (legends)？ 你将如何修改它以合并这两个图例 (legends)？</p>
+<pre class="{r}"><code>#| warning: false
+#| fig-show: hide
+ggplot(
+  data = penguins,
+  mapping = aes(
+    x = bill_length_mm, y = bill_depth_mm, 
+    color = species, shape = species
+  )
+) +
+  geom_point() +
+  labs(color = "Species")</code></pre>
+</li>
+<li>
+<p>Create the two following stacked bar plots. Which question can you answer with the first one? Which question can you answer with the second one?<br>
+创建以下两个堆叠条形图 (stacked bar plots)。 你可以用第一个图回答什么问题？ 你可以用第二个图回答什么问题？</p>
+<pre class="{r}"><code>#| fig-show: hide
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position = "fill")
+ggplot(penguins, aes(x = species, fill = island)) +
+  geom_bar(position = "fill")</code></pre>
+</li>
+</ol></section></section><section id="sec-ggsave" class="level2" data-number="29.6"><h2 data-number="29.6" class="anchored" data-anchor-id="sec-ggsave">
+<span class="header-section-number">29.6</span> Saving your plots</h2>
+<p>Once you’ve made a plot, you might want to get it out of R by saving it as an image that you can use elsewhere. That’s the job of <code>ggsave()</code>, which will save the plot most recently created to disk:<br>
+一旦你制作了图，你可能希望将其从 R 中导出，保存为可在其他地方使用的图像。这是 <code>ggsave()</code> 的工作，它会将最近创建的图保存到磁盘：</p>
+<pre class="{r}"><code>#| fig-show: hide
+#| warning: false
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point()
+ggsave(filename = "penguin-plot.png")</code></pre>
+<pre class="{r}"><code>#| include: false
+file.remove("penguin-plot.png")</code></pre>
+<p>This will save your plot to your working directory, a concept you’ll learn more about in <a href="workflow-scripts.html" class="quarto-xref"><span>Chapter 6</span></a>.<br>
+这会将你的图保存到你的工作目录，关于这个概念你将在 <a href="workflow-scripts.html" class="quarto-xref"><span>Chapter 6</span></a> 中学到更多。</p>
+<p>If you don’t specify the <code>width</code> and <code>height</code> they will be taken from the dimensions of the current plotting device. For reproducible code, you’ll want to specify them. You can learn more about <code>ggsave()</code> in the documentation.<br>
+如果你不指定 <code>width</code> 和 <code>height</code>，它们将取自当前绘图设备的尺寸。为了代码的可复现性，你会希望指定它们。你可以在文档中了解更多关于 <code>ggsave()</code> 的信息。</p>
+<p>Generally, however, we recommend that you assemble your final reports using Quarto, a reproducible authoring system that allows you to interleave your code and your prose and automatically include your plots in your write-ups. You will learn more about Quarto in <a href="#sec-quarto" class="quarto-xref"><span>Chapter 28</span></a>.<br>
+然而，通常我们建议你使用 Quarto 来组织你的最终报告，这是一个可复现的创作系统，它允许你将代码和文字交织在一起，并自动将你的图包含在你的报告中。你将在 <a href="#sec-quarto" class="quarto-xref"><span>Chapter 28</span></a> 中学习更多关于 Quarto 的信息。</p>
+<section id="exercises-3" class="level3" data-number="29.6.1"><h3 data-number="29.6.1" class="anchored" data-anchor-id="exercises-3">
+<span class="header-section-number">29.6.1</span> Exercises</h3>
+<ol type="1">
+<li>
+<p>Run the following lines of code. Which of the two plots is saved as <code>mpg-plot.png</code>? Why?<br>
+运行以下代码行。哪张图被保存为 <code>mpg-plot.png</code>？为什么？</p>
+<pre class="{r}"><code>#| eval: false
+ggplot(mpg, aes(x = class)) +
+  geom_bar()
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point()
+ggsave("mpg-plot.png")</code></pre>
+</li>
+<li><p>What do you need to change in the code above to save the plot as a PDF instead of a PNG? How could you find out what types of image files would work in <code>ggsave()</code>?<br>
+你需要如何更改上面的代码，才能将图保存为 PDF 而不是 PNG？你如何找出 <code>ggsave()</code> 支持哪些类型的图像文件？</p></li>
+</ol></section></section><section id="common-problems" class="level2" data-number="29.7"><h2 data-number="29.7" class="anchored" data-anchor-id="common-problems">
+<span class="header-section-number">29.7</span> Common problems</h2>
+<p>As you start to run R code, you’re likely to run into problems. Don’t worry — it happens to everyone. We have all been writing R code for years, but every day we still write code that doesn’t work on the first try!<br>
+当你开始运行 R 代码时，你很可能会遇到问题。别担心——这发生在每个人身上。我们都写了多年的 R 代码，但每天我们仍然会写出第一次尝试就不能工作的代码！</p>
+<p>Start by carefully comparing the code that you’re running to the code in the book. R is extremely picky, and a misplaced character can make all the difference. Make sure that every <code>(</code> is matched with a <code>)</code> and every <code>"</code> is paired with another <code>"</code>. Sometimes you’ll run the code and nothing happens. Check the left-hand of your console: if it’s a <code>+</code>, it means that R doesn’t think you’ve typed a complete expression and it’s waiting for you to finish it. In this case, it’s usually easy to start from scratch again by pressing ESCAPE to abort processing the current command.<br>
+首先，仔细比较你正在运行的代码和书中的代码。R 非常挑剔，一个放错位置的字符都可能导致天壤之别。确保每个 <code>(</code> 都与一个 <code>)</code> 匹配，每个 <code>"</code> 都与另一个 <code>"</code> 配对。有时你运行代码后什么也没发生。检查你的控制台左侧：如果它是一个 <code>+</code>，这意味着 R 认为你还没有输入一个完整的表达式，正在等待你完成它。在这种情况下，通常很容易通过按 ESCAPE 键中止当前命令的处理，然后从头开始。</p>
+<p>One common problem when creating ggplot2 graphics is to put the <code>+</code> in the wrong place: it has to come at the end of the line, not the start. In other words, make sure you haven’t accidentally written code like this:<br>
+在创建 ggplot2 图形时，一个常见的问题是把 <code>+</code> 放在了错误的位置：它必须放在行的末尾，而不是开头。换句话说，确保你没有意外地写出像下面这样的代码：</p>
+<pre class="{r}"><code>#| eval: false
+ggplot(data = mpg) 
++ geom_point(mapping = aes(x = displ, y = hwy))</code></pre>
+<p>If you’re still stuck, try the help. You can get help about any R function by running <code>?function_name</code> in the console, or highlighting the function name and pressing F1 in RStudio. Don’t worry if the help doesn’t seem that helpful - instead skip down to the examples and look for code that matches what you’re trying to do.<br>
+如果你仍然卡住了，试试帮助。你可以通过在控制台运行 <code>?function_name</code> 来获取任何 R 函数的帮助，或者在 RStudio 中高亮函数名并按 F1。如果帮助看起来不那么有用，别担心——直接跳到示例部分，寻找与你正在尝试做的事情相匹配的代码。</p>
+<p>If that doesn’t help, carefully read the error message. Sometimes the answer will be buried there! But when you’re new to R, even if the answer is in the error message, you might not yet know how to understand it. Another great tool is Google: try googling the error message, as it’s likely someone else has had the same problem, and has gotten help online.<br>
+如果那也帮不了你，仔细阅读错误信息。有时答案就藏在那里！但是当你刚接触 R 时，即使答案就在错误信息中，你可能还不知道如何理解它。另一个很棒的工具是谷歌：尝试用谷歌搜索错误信息，因为很可能其他人也遇到过同样的问题，并且在网上得到了帮助。</p>
+</section><section id="summary" class="level2" data-number="29.8"><h2 data-number="29.8" class="anchored" data-anchor-id="summary">
+<span class="header-section-number">29.8</span> Summary</h2>
+<p>In this chapter, you’ve learned the basics of data visualization with ggplot2. We started with the basic idea that underpins ggplot2: a visualization is a mapping from variables in your data to aesthetic properties like position, color, size and shape. You then learned about increasing the complexity and improving the presentation of your plots layer-by-layer. You also learned about commonly used plots for visualizing the distribution of a single variable as well as for visualizing relationships between two or more variables, by leveraging additional aesthetic mappings and/or splitting your plot into small multiples using faceting.<br>
+在本章中，你学习了使用 ggplot2 进行数据可视化的基础知识。我们从支撑 ggplot2 的基本思想开始：可视化是将数据中的变量映射到诸如位置、颜色、大小和形状等美学属性的过程。然后你学习了如何逐层增加图的复杂性并改善其呈现效果。你还学习了常用于可视化单个变量分布以及可视化两个或多个变量之间关系的图，这是通过利用额外的美学映射和/或使用分面将图分割成小倍数图来实现的。</p>
+<p>We’ll use visualizations again and again throughout this book, introducing new techniques as we need them as well as do a deeper dive into creating visualizations with ggplot2 in <a href="layers.html" class="quarto-xref"><span>Chapter 9</span></a> through <a href="communication.html" class="quarto-xref"><span>Chapter 11</span></a>.<br>
+在本书中，我们将反复使用可视化，在需要时引入新技术，并在 <a href="layers.html" class="quarto-xref"><span>Chapter 9</span></a> 到 <a href="communication.html" class="quarto-xref"><span>Chapter 11</span></a> 中更深入地探讨使用 ggplot2 创建可视化。</p>
+<p>With the basics of visualization under your belt, in the next chapter we’re going to switch gears a little and give you some practical workflow advice. We intersperse workflow advice with data science tools throughout this part of the book because it’ll help you stay organized as you write increasing amounts of R code.<br>
+掌握了可视化的基础知识后，在下一章中，我们将稍微转换一下思路，给你一些实用的工作流程建议。在本书的这一部分，我们将工作流程建议与数据科学工具穿插在一起，因为这将在你编写越来越多的 R 代码时帮助你保持条理清晰。</p>
+</section></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><hr>
+<ol>
+<li id="fn1"><p>You can eliminate that message and force conflict resolution to happen on demand by using the conflicted package, which becomes more important as you load more packages. You can learn more about conflicted at <a href="https://conflicted.r-lib.org">https://conflicted.r-lib.org</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. <a href="https://allisonhorst.github.io/palmerpenguins/">https://allisonhorst.github.io/palmerpenguins/</a>. doi: 10.5281/zenodo.3960218.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Here “formula” is the name of the thing created by <code>~</code>, not a synonym for “equation”.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ggvispro\.github\.io\/r4ds-cn\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./communicate.html" class="pagination-link" aria-label="沟通">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">沟通</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./quarto-formats.html" class="pagination-link" aria-label="Quarto 格式">
+        <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Quarto 格式</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ggvisPro/r4ds-cn/edit/main/quarto.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/ggvisPro/r4ds-cn/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
